@@ -1,0 +1,17 @@
+debug: false
+
+spring:
+  application:
+    name: calf
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: false
+  cache:
+    type: CAFFEINE
+    caffeine:
+      spec: initialCapacity=10240,maximumSize=102400,expireAfterAccess=10m
+
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
