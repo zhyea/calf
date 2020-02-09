@@ -1,0 +1,414 @@
+/* CSS Document */
+
+/* -------------------------------------- */
+h2, h3, h4, h5, h6 {
+    font-size: 15px;
+}
+
+body {
+    background: #A8ABA8;
+    font-size: 13px;
+}
+
+* {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.wrapper {
+    max-width: 870px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #FFF;
+    margin: 0 auto;
+    padding: 0;
+    box-shadow: 0 0 6px 6px rgba(200, 200, 200, .36);
+}
+
+.header, .navigator, .notice, .main, .footer {
+    width: 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+/* -------------- head -------------- */
+.header {
+    min-height: 120px;
+}
+
+/* -------------- navigator -------------- */
+
+
+.navigator {
+    padding: 0;
+}
+
+.navbar {
+    margin: 0;
+}
+
+.notice {
+    height: 42px;
+    padding: 2px 0 0 16px;
+    line-height: 42px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notice .breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* -------------- index -------------- */
+
+
+.recommend {
+    padding: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.recommend .item {
+    padding: 12px 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.recommend .item:hover {
+    background: #5FB878;
+}
+
+.recommend .item .cover, .remark {
+    margin: 0 auto;
+    width: 120px;
+}
+
+.recommend .item .remark {
+    height: 27px;
+    overflow: hidden;
+    line-height: 2.5em;
+    font-size: 13px;
+}
+
+.recommend .item .remark a {
+    color: #000 !important;
+}
+
+.popular {
+    padding: 12px 0;
+}
+
+.popular .item {
+    overflow: hidden;
+    padding-right: 16px;
+    color: #333;
+    line-height: 160%;
+}
+
+.popular .item a {
+    color: #000;
+}
+
+.popular .item:hover {
+    color: #255625;
+    background-color: #eee;
+}
+
+.popular .item .author {
+    float: right;
+    color: #129151;
+    font-size: 10px;
+    width: 69px;
+    overflow: hidden;
+}
+
+.popular .item .author a {
+    color: #129151;
+}
+
+
+/* ------------------------------------ cat ------------------------------------ */
+
+.category {
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.category .work {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.category .cover {
+    float: left;
+    width: 124px;
+    height: 156px;
+    overflow: hidden;
+}
+
+.category .brief {
+    padding: 0 8px;
+    margin-left: 124px;
+    height: 156px;
+    overflow: hidden;
+}
+
+.category .brief .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #1d6300;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.category .brief .title a {
+    color: #129151;
+}
+
+.category .brief .title a:hover {
+    color: #e8434c;
+}
+
+.category .brief .author {
+    line-height: 32px;
+}
+
+.category .brief .author a {
+    color: #129151;
+}
+
+.category .brief .author a:hover {
+    color: #999;
+}
+
+.category .brief .intro {
+    line-height: 150%;
+    overflow: hidden;
+}
+
+.pagination {
+    padding: 12px 0;
+}
+
+.pagination a {
+    padding: 6px 8px;
+    margin: 2px;
+    line-height: 100%;
+    border: 1px solid #1d6300;
+    color: #1d6300;
+}
+
+.pagination a:hover {
+    text-decoration: none;
+    background-color: #a5cadc;
+}
+
+.pagination .active {
+    text-decoration: none;
+    background-color: #63a563;
+}
+
+
+/* ------------------------------------ work ------------------------------------ */
+.work-header {
+    padding: 12px 15px 3px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.work-header .title {
+    font-weight: bolder;
+    font-size: 27px;
+    color: #1d6300;
+}
+
+.work-header .author {
+    padding-left: 12px;
+}
+
+.work-neck {
+    margin: 0;
+    padding: 9px 0 6px;
+    border-bottom: 1px solid #e2e2e2;
+    vertical-align: baseline;
+    height: auto;
+}
+
+.work-neck .cover {
+    height: 156px;
+    overflow: hidden;
+}
+
+.work-neck .brief {
+    padding: 0;
+}
+
+.work-neck .brief .intro {
+    padding: 6px 0;
+    overflow: hidden;
+    height: 132px;
+    color: #737383;
+    line-height: 180%;
+    text-indent: 2em;
+}
+
+.work-neck .brief .relate {
+    height: 24px;
+    padding: 8px 16px 0 0;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.work-neck .brief .relate a {
+    margin-right: 12px;
+    color: #7d7d7d;
+}
+
+.work-body {
+    margin-top: 6px;
+    padding: 0 15px;
+}
+
+
+.work-body .volume {
+    margin-top: 9px;
+    padding: 9px 12px 6px;
+    background-color: #ececec;
+    text-align: left;
+    font: 18px Arial;
+    color: #1d6300;
+    border-bottom: 1px solid #e2e2e2;
+    border-top: 2px solid #129151;
+}
+
+.work-body .chapter {
+    padding: 6px 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 210%;
+    border-bottom: 1px dashed #e2e2e2;
+}
+
+.work-body .chapter:hover {
+    background-color: #c9e2b3;
+}
+
+.work-body .chapter a {
+    color: #000;
+}
+
+.work-body .chapter a:hover {
+    color: #1d6300;
+}
+
+/* ------------------------------------ chapter ------------------------------------ */
+.readerTools {
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+}
+
+#contentContainer {
+    margin: 0;
+}
+
+.chapter-name {
+    margin: 0;
+    padding: 9px 0 6px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 240%;
+    color: #129151;
+    text-align: center;
+    border-bottom: 1px dotted #ddd;
+}
+
+.chapter-nav {
+    margin: 0;
+    font-size: 12px;
+    line-height: 32px;
+    text-align: center;
+    border-bottom: 1px dotted #ddd;
+}
+
+.chapter-nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #129151;
+}
+
+.chapter-content {
+    margin: 0;
+    padding: 24px 32px;
+    min-height: 90px;
+    line-height: 180%;
+    border-bottom: 1px dotted #ddd;
+}
+
+.chapter-content p {
+    text-indent: 2em;
+}
+
+/* -------------- foot -------------- */
+
+.footer {
+    margin: 12px 0 0;
+    border-top: 1px solid #ddd;
+    padding: 21px 24px 0;
+    height: 81px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.footer .copyright {
+    width: 100%;
+    line-height: 180%;
+    color: #8F989C;
+    font-size: 15px;
+}
+
+
+.footer .copyright a, a:hover {
+    color: #8F989C;
+    text-decoration: none;
+}
+
+
+/* ------------------------------------  bootstrap  ------------------------------------ */
+
+.page-header {
+    margin: 0 -15px;
+    padding: 0 0 0 12px;
+    color: #129151;
+}
+
+.page-header a {
+    color: #129151;
+    text-decoration: none;
+}
+
+
+/* ------------------------------------ multi device ------------------------------------ */
+@media screen and (min-width: 870px) {
+    .content {
+        border-right: 1px solid #CCC;
+        padding-right: 6px;
+    }
+}
+
+@media screen and (max-width: 870px) {
+    .wrapper {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        display: none;
+    }
+}

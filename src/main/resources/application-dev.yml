@@ -1,0 +1,23 @@
+debug: false
+
+spring:
+  datasource:
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/calf?useUnicode=true
+    platform: mysql
+    schema: classpath:db/schema.sql
+    username: root
+    password: root
+    dbcp2:
+      validation-query: SELECT 1
+      pool-prepared-statements: true
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+
+
+server:
+  port: 8190

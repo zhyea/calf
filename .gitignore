@@ -2,3 +2,5 @@
 */.idea
 .idea/
 Would skip repository zero/
+!/logs/
+logs/

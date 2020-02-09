@@ -6,9 +6,9 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/jspy.log</file>
+        <file>logs/calf.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/jspy.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/calf.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
