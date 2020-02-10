@@ -1,11 +1,11 @@
 package org.chobit.calf.spring;
 
-import org.chobit.calf.spring.ext.CalfThemePageInterceptor;
+import org.chobit.calf.spring.ext.CalfThemeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -16,12 +16,12 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     @Autowired
-    private CalfConfig calfConfig;
+    private CalfThemeConfig calfConfig;
 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CalfThemePageInterceptor(calfConfig.getThemePath()));
+        registry.addInterceptor(new CalfThemeInterceptor(calfConfig, calfConfig.getThemePath()));
     }
 
 
@@ -40,7 +40,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.viewResolver(new CalfThemeViewResolver());
     }
 
 

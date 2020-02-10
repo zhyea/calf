@@ -100,7 +100,7 @@ create table if not exists author
 insert into author (name, country)
 select '未知', '未知'
 from dual
-where not exists(select 1 from settings where name = '未知');
+where not exists(select 1 from author where name = '未知');
 
 
 -- works
@@ -169,7 +169,7 @@ create table if not exists feature
 insert into feature (name, alias, key_words)
 select '推荐', 'recommend', '推荐'
 from dual
-where not exists(select 1 from settings where name = '推荐');
+where not exists(select 1 from feature where name = '推荐');
 
 
 -- feature-work

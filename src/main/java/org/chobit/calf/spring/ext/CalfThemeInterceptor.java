@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.chobit.calf.constants.Constants.REDIRECT_PREFIX;
+import static org.chobit.calf.spring.CalfThemeConfig.PATH_ADMIN;
 import static org.chobit.calf.utils.Strings.isBlank;
 
 /**
  * @author robin
  */
-public class CalfThemePageInterceptor implements HandlerInterceptor {
+public class CalfThemeInterceptor implements HandlerInterceptor {
 
 
     private String themePath;
 
-    private static final String PATH_ADMIN = "admin/";
 
-
-    public CalfThemePageInterceptor(String themePath) {
+    public CalfThemeInterceptor(String themePath) {
         this.themePath = themePath;
     }
+
 
     @Override
     public void postHandle(HttpServletRequest request,
@@ -35,11 +35,10 @@ public class CalfThemePageInterceptor implements HandlerInterceptor {
                            Object handler,
                            @Nullable ModelAndView modelAndView) {
 
-        if (null == modelAndView || null == handler || isBlank(modelAndView.getViewName())) {
-            return;
-        }
-
-        if (!(handler instanceof HandlerMethod)) {
+        if (null == modelAndView
+                || null == handler
+                || isBlank(modelAndView.getViewName())
+                || !(handler instanceof HandlerMethod)) {
             return;
         }
 
@@ -58,10 +57,5 @@ public class CalfThemePageInterceptor implements HandlerInterceptor {
         }
     }
 
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-                                @Nullable Exception ex) {
-    }
 
 }
