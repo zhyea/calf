@@ -11,11 +11,14 @@ import static org.chobit.calf.utils.Strings.isNotBlank;
 public abstract class AbstractPageController {
 
 
-    public String forward(String viewName, ModelMap map, String title) {
+    /**
+     * 跳转到指定视图，并设置页面title信息
+     */
+    public String view(String viewName, ModelMap map, String title) {
         if (isNotBlank(title)) {
-            title = themeName() + title;
+            title = title + " - " + titleParent();
         } else {
-            title = themeName();
+            title = titleParent();
         }
 
         map.put("title", title);
@@ -32,5 +35,9 @@ public abstract class AbstractPageController {
     }
 
 
-    protected abstract String themeName();
+
+    /**
+     * 网页title前缀
+     */
+    protected abstract String titleParent();
 }

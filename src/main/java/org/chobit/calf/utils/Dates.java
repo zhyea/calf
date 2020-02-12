@@ -3,6 +3,11 @@ package org.chobit.calf.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 日期操作工具类
+ *
+ * @author robin
+ */
 public abstract class Dates {
 
 
@@ -50,8 +55,8 @@ public abstract class Dates {
     }
 
 
-    private Dates(){
-
+    private Dates() {
+        throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }
 
 }

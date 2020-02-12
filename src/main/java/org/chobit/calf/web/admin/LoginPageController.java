@@ -1,6 +1,5 @@
 package org.chobit.calf.web.admin;
 
-import org.chobit.calf.web.AbstractPageController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 
 @Controller
-public class LoginPageController extends AbstractPageController {
+public class LoginPageController extends AbstractAdminPageController {
 
 
     @RequestMapping("/login")
@@ -34,7 +33,7 @@ public class LoginPageController extends AbstractPageController {
 
 
     @Override
-    protected String themeName() {
+    protected String titleParent() {
         return "Calf";
     }
 }

@@ -1,7 +1,6 @@
 package org.chobit.calf.spring.ext;
 
-import org.chobit.calf.web.admin.AdminPageController;
-import org.chobit.calf.web.admin.LoginPageController;
+import org.chobit.calf.web.admin.AbstractAdminPageController;
 import org.chobit.calf.web.front.FrontPageController;
 import org.springframework.lang.Nullable;
 import org.springframework.web.method.HandlerMethod;
@@ -52,7 +51,7 @@ public class CalfThemeInterceptor implements HandlerInterceptor {
             modelAndView.setViewName(themePath + modelAndView.getViewName());
         }
 
-        if (m instanceof AdminPageController || m instanceof LoginPageController) {
+        if (m instanceof AbstractAdminPageController) {
             modelAndView.setViewName(PATH_ADMIN + modelAndView.getViewName());
         }
     }

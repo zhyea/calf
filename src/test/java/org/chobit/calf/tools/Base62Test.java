@@ -1,6 +1,7 @@
 package org.chobit.calf.tools;
 
 
+import org.chobit.calf.utils.Base62;
 import org.junit.Test;
 
 public class Base62Test {

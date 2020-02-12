@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin.header::header"></div>
+<body>
+
+<div class="wrapper">
+    <div th:replace="admin.nav::nav"></div>
+
+    <div class="container main">
+        <div class="page-header">
+            <h3>信息维护</h3>
+        </div>
+
+        <div role="alert" th:if="${alert}" th:object="${alert}"
+             th:class="|alert *{type.css} alert-dismissible fade in|">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>提示!</strong>
+            <th:block th:text="*{message}"/>
+        </div>
+
+
+        <form method="post" action="/admin/settings" enctype="multipart/form-data" th:object="${setting}">
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">站点名称</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="text" class="form-control" name="name" th:value="*{name}" required autofocus/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">站点描述</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <textarea class="form-control" name="description" th:text="*{description}"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">关键词</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="text" class="form-control" name="keywords" th:value="*{keywords}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">通知信息</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <textarea class="form-control" name="notice" th:text="*{notice}"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">LOGO</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="logo"/>
+                    <div th:if="*{logo}" class="form-input col-md-12 col-xs-12">
+                        <br/>
+                        <p class="lmt"><img th:src="@{*{logo}}" alt="LOGO"/></p>
+                        <a href="/admin/settings/info/delete-logo" target="_self">移除LOGO</a>
+                        <br/>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">背景图片</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="backgroundImg"/>
+                    <div th:if="*{backgroundImg}" class="form-input col-md-12 col-xs-12">
+                        <br/>
+                        <p class="lmt"><img th:src="@{*{backgroundImg}}" alt="BG_IMG"/></p>
+                        <a href="/admin/settings/info/delete-bg" target="_self">移除背景图</a>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3 col-xs-12">&nbsp;</div>
+                <div class="form-input col-md-9 col-xs-12">
+                    <button type="submit" class="btn btn-success">保存设置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="admin.footer::footer"></div>
+</div>
+
+</body>

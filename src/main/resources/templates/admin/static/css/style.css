@@ -39,6 +39,10 @@ input[type="file"] {
     box-shadow: 0 0 18px 18px rgba(200, 200, 200, .18);
 }
 
+.lmt {
+    overflow: hidden;
+}
+
 /* ----------------- header ----------------- */
 
 .navigator, .main, .footer {
@@ -79,10 +83,10 @@ input[type="file"] {
 .tag {
     margin-left: 16px;
     display: inline;
-    font-size: 10px ;
+    font-size: 10px;
 }
 
-.tag a{
+.tag a {
     font-size: 10px;
 }
 

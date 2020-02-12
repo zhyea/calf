@@ -1,12 +1,11 @@
 package org.chobit.calf.spring;
 
 import org.chobit.calf.spring.ext.CalfThemeInterceptor;
+import org.chobit.calf.spring.ext.SessionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.config.annotation.*;
 
 /**
  * @author robin
@@ -21,7 +20,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CalfThemeInterceptor(calfConfig, calfConfig.getThemePath()));
+        registry.addInterceptor(new CalfThemeInterceptor(calfConfig.getThemePath()));
+        registry.addInterceptor(new SessionInterceptor());
     }
 
 
@@ -40,8 +40,13 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/error").setViewName("error");
+        registry.addStatusController("/404", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.viewResolver(new CalfThemeViewResolver());
     }
 
 

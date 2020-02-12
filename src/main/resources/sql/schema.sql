@@ -46,7 +46,7 @@ where not exists(select 1 from meta where slug = 'default');
 
 --
 -- settings table
-create table if not exists settings
+create table if not exists setting
 (
     id      int         not null auto_increment primary key,
 
@@ -57,15 +57,15 @@ create table if not exists settings
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
 
-insert into settings (name, value)
-select 'site_name', 'Buffalo'
+insert into setting (name, value)
+select 'name', 'Calf'
 from dual
-where not exists(select 1 from settings where name = 'site_name');
+where not exists(select 1 from setting where name = 'name');
 
-insert into settings (name, value)
+insert into setting (name, value)
 select 'notice', '这是一条测试通知'
 from dual
-where not exists(select 1 from settings where name = 'notice');
+where not exists(select 1 from setting where name = 'notice');
 
 
 -- media

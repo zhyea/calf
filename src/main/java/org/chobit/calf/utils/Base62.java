@@ -1,7 +1,10 @@
-package org.chobit.calf.tools;
+package org.chobit.calf.utils;
 
 
-public class Base62 {
+/**
+ * @author robin
+ */
+public abstract class Base62 {
 
     private static final char[] digitsChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     private static final int BASE = digitsChar.length;
@@ -30,8 +33,12 @@ public class Base62 {
     }
 
     public static String encode(long number) {
-        if (number < 0) throw new IllegalArgumentException("Number(Base62) must be positive: " + number);
-        if (number == 0) return "0";
+        if (number < 0) {
+            throw new IllegalArgumentException("Number(Base62) must be positive: " + number);
+        }
+        if (number == 0) {
+            return "0";
+        }
         StringBuilder buf = new StringBuilder();
         while (number != 0) {
             buf.append(digitsChar[(int) (number % BASE)]);
@@ -50,5 +57,10 @@ public class Base62 {
             throw new IllegalArgumentException("Unknown character for Base62: " + s);
         }
         return index;
+    }
+
+
+    private Base62() {
+        throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }
 }

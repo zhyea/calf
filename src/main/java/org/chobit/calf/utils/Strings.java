@@ -2,9 +2,15 @@ package org.chobit.calf.utils;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 字符串操作工具类
+ *
+ * @author robin
+ */
 public abstract class Strings {
 
 
@@ -112,6 +118,17 @@ public abstract class Strings {
     }
 
 
+    /**
+     * 获取UUID
+     *
+     * @return UUID字符串
+     */
+    public static String uuid() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+
     private Strings() {
+        throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }
 }

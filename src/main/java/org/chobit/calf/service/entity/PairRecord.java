@@ -3,7 +3,7 @@ package org.chobit.calf.service.entity;
 /**
  * @author robin
  */
-public class Setting extends AbstractEntity {
+public class PairRecord extends AbstractEntity {
 
     private String name;
 
