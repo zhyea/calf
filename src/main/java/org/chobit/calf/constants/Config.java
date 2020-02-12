@@ -22,4 +22,10 @@ public final class Config {
 
     public static final String URI_UPLOAD = "/upload/";
 
+
+    /**
+     * 相对路径，指的是在template下的路径
+     */
+    public static final String PATH_ADMIN = "admin/";
+
 }

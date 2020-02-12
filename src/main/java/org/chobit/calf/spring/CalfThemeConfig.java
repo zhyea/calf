@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
+import static org.chobit.calf.constants.Config.PATH_ADMIN;
+
 /**
  * @author robin
  */
 @Component
 public class CalfThemeConfig implements InitializingBean {
-
-    public static final String PATH_ADMIN = "admin/";
 
     @Value("${calf.theme}")
     private String theme;

@@ -19,9 +19,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
-        if(uri.startsWith("/admin") && !uri.startsWith("/admin/static")){
+        if (uri.startsWith("/admin") && !uri.startsWith("/admin/static")) {
             SessionHolder.add(request);
         }
         return true;

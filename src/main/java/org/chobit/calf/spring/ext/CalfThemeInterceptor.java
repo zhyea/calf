@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.chobit.calf.constants.Config.PATH_ADMIN;
 import static org.chobit.calf.constants.Constants.REDIRECT_PREFIX;
-import static org.chobit.calf.spring.CalfThemeConfig.PATH_ADMIN;
 import static org.chobit.calf.utils.Strings.isBlank;
 
 /**
