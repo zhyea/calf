@@ -11,15 +11,7 @@
             <h3>信息维护</h3>
         </div>
 
-        <div role="alert" th:if="${alert}" th:object="${alert}"
-             th:class="|alert *{type.css} alert-dismissible fade in|">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>提示!</strong>
-            <th:block th:text="*{message}"/>
-        </div>
-
+        <div th:replace="admin.alert::alert"></div>
 
         <form method="post" action="/admin/settings" enctype="multipart/form-data" th:object="${setting}">
             <div class="row">
@@ -57,10 +49,9 @@
                     <div th:if="*{logo}" class="form-input col-md-12 col-xs-12">
                         <br/>
                         <p class="lmt"><img th:src="@{*{logo}}" alt="LOGO"/></p>
-                        <a href="/admin/settings/info/delete-logo" target="_self">移除LOGO</a>
+                        <a href="/admin/settings/delete/logo" target="_self">移除LOGO</a>
                         <br/>
                     </div>
-                    <?php endif; ?>
                 </div>
             </div>
 
@@ -71,7 +62,7 @@
                     <div th:if="*{backgroundImg}" class="form-input col-md-12 col-xs-12">
                         <br/>
                         <p class="lmt"><img th:src="@{*{backgroundImg}}" alt="BG_IMG"/></p>
-                        <a href="/admin/settings/info/delete-bg" target="_self">移除背景图</a>
+                        <a href="/admin/settings/delete/backgroundImg" target="_self">移除背景图</a>
                         <br/>
                     </div>
                 </div>
@@ -79,8 +70,8 @@
 
 
             <div class="row">
-                <div class="col-md-3 col-xs-12">&nbsp;</div>
-                <div class="form-input col-md-9 col-xs-12">
+                <div class="col-md-6 col-xs-12">&nbsp;</div>
+                <div class="form-input col-md-6 col-xs-12">
                     <button type="submit" class="btn btn-success">保存设置</button>
                 </div>
             </div>

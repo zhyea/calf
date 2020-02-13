@@ -1,5 +1,6 @@
 package org.chobit.calf.tools;
 
+import org.chobit.calf.model.AlertMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,8 @@ public abstract class SessionHolder {
 
 
     public static void add(HttpServletRequest request) {
-        HttpSession session = SESSION_HOLDER.get();
-        if (null == session) {
+        HttpSession session = request.getSession();
+        if (session.isNew() || null == SESSION_HOLDER.get()) {
             SESSION_HOLDER.set(request.getSession());
         }
     }
@@ -28,6 +29,19 @@ public abstract class SessionHolder {
 
     public static HttpSession get() {
         return SESSION_HOLDER.get();
+    }
+
+
+    public static void addAlert(AlertMessage alertMessage) {
+        HttpSession session = get();
+        if (null != session && null == session.getAttribute("alert")) {
+            addAttribute("alert", alertMessage);
+        }
+    }
+
+
+    public static AlertMessage takeAlert() {
+        return SessionHolder.takeAttribute("alert");
     }
 
 

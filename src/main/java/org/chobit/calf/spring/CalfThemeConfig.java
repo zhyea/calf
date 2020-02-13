@@ -31,6 +31,7 @@ public class CalfThemeConfig implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         templateResolver.addTemplateAlias("admin.header", PATH_ADMIN + "common/header");
         templateResolver.addTemplateAlias("admin.nav", PATH_ADMIN + "common/navigator");
+        templateResolver.addTemplateAlias("admin.alert", PATH_ADMIN + "common/alert");
         templateResolver.addTemplateAlias("admin.footer", PATH_ADMIN + "common/footer");
     }
 }

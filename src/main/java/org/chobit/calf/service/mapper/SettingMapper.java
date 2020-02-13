@@ -27,7 +27,7 @@ public interface SettingMapper {
      * @return 是否更新成功
      */
     @Insert("replace into setting (name, value) values (#{name}, #{value})")
-    boolean replace(@Param("name") String name,
+    Boolean replace(@Param("name") String name,
                     @Param("value") String value);
 
 
@@ -40,4 +40,13 @@ public interface SettingMapper {
     @Select("select value from setting where name=#{name}")
     String getByName(@Param("name") String name);
 
+
+    /**
+     * 删除配置项
+     *
+     * @param item 配置项
+     * @return 是否删除成功
+     */
+    @Delete("delete from setting where name=#{item}")
+    Boolean delete(@Param("item") String item);
 }

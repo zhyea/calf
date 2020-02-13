@@ -41,6 +41,8 @@ public class CalfThemeInterceptor implements HandlerInterceptor {
             return;
         }
 
+        String uri = request.getRequestURI();
+
         if (modelAndView.getViewName().startsWith(REDIRECT_PREFIX)) {
             return;
         }

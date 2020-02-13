@@ -28,10 +28,10 @@ public abstract class AbstractPageController {
     /**
      * 跳转
      *
-     * @param viewName 视图名称
+     * @param uri 跳转路径
      */
-    public String redirect(String viewName) {
-        return REDIRECT_PREFIX + viewName;
+    public String redirect(String uri) {
+        return REDIRECT_PREFIX + uri;
     }
 
 

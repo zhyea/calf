@@ -1,8 +1,6 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.constants.AlertType;
-import org.chobit.calf.except.CalfArgsException;
-import org.chobit.calf.model.AlertMessage;
+import org.chobit.calf.except.CalfAdminException;
 import org.chobit.calf.model.Setting;
 import org.chobit.calf.service.entity.PairRecord;
 import org.chobit.calf.service.mapper.SettingMapper;
@@ -17,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,12 +58,12 @@ public class SettingService {
 
 
     @CacheEvict(key = "'all'")
-    public AlertMessage maintain(String name,
-                                 String desc,
-                                 String keywords,
-                                 String notice,
-                                 MultipartFile logo,
-                                 MultipartFile bgImg) {
+    public void maintain(String name,
+                         String desc,
+                         String keywords,
+                         String notice,
+                         MultipartFile logo,
+                         MultipartFile bgImg) {
         try {
             Args.checkNotBlank(name, "网站名称不能为空");
 
@@ -82,15 +81,17 @@ public class SettingService {
             if (null != bgImg && isNotBlank(bgImgUrl)) {
                 mapper.replace("backgroundImg", bgImgUrl);
             }
-        } catch (CalfArgsException cae) {
-            return new AlertMessage(AlertType.WARNING, cae.getMessage());
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.error("Maintaining settings error.", e);
-            return new AlertMessage(AlertType.WARNING, "修改网站设置出现问题.");
+            throw new CalfAdminException("文件上传错误", e);
         }
-
-        return new AlertMessage(AlertType.SUCCESS, "修改网站设置成功.");
     }
 
+
+    @CacheEvict(key = "'all'")
+    public Boolean delete(String item) {
+        Args.check(item.equals("logo") || item.equals("backgroundImg"), "请求错误");
+        return mapper.delete(item);
+    }
 
 }

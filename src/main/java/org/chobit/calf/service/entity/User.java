@@ -1,17 +1,29 @@
 package org.chobit.calf.service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author robin
  */
 public class User extends AbstractEntity {
 
     private String username;
-
+    @JsonIgnore
     private String password;
 
     private String email;
 
     private String nickname;
+
+    public User() {
+    }
+
+    public User(String username, String password, String email, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+    }
 
     public String getUsername() {
         return username;

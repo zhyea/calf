@@ -31,7 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("classpath:upload/");
+                .addResourceLocations("classpath:upload/")
+                .addResourceLocations("/tmp/calf/upload");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:templates/" + calfConfig.getThemePath() + "static/");
         registry.addResourceHandler("/admin/static/**")
