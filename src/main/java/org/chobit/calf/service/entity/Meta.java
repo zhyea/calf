@@ -3,7 +3,7 @@ package org.chobit.calf.service.entity;
 /**
  * @author robin
  */
-public class Meta {
+public class Meta extends AbstractEntity {
 
     private int parent;
 

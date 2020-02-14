@@ -30,8 +30,9 @@ public interface UserMapper {
     User get(@Param("id") int id);
 
 
-    @Select("select * from user where username=#{username} or email=#{email}")
-    Integer checkByUsernameAndEmail(@Param("username") String username,
+    @Select("select * from user where id<>#{id} and (username=#{username} or email=#{email})")
+    Integer checkByUsernameAndEmail(@Param("id") int id,
+                                    @Param("username") String username,
                                     @Param("email") String email);
 
 

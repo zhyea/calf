@@ -13,7 +13,7 @@ function sendBootstrapTableRequest(table, method, url, data, successCallback, fa
             if (result) {
                 table.bootstrapTable('refresh');
                 if (successCallback) {
-                    successCallback();
+                    successCallback(result);
                 }
             }
         },

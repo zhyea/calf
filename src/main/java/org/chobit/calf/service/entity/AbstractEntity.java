@@ -11,6 +11,7 @@ import java.util.Date;
 public abstract class AbstractEntity implements Serializable {
 
     private int id;
+    
     @JsonIgnore
     private Date opTime;
 

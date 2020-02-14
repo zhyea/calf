@@ -14,7 +14,8 @@ public final class Config {
     static {
         String tmp = "/tmp/calf/upload/";
         try {
-            tmp = ResourceUtils.getFile("classpath:upload/").getPath();
+            tmp = ResourceUtils.getFile("classpath:").getPath();
+            tmp = tmp + "upload/";
         } catch (FileNotFoundException e) {
         }
         PATH_UPLOAD = tmp.endsWith("/") ? tmp : tmp + "/";

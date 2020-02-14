@@ -22,18 +22,18 @@ where not exists(select 1 from user where username = 'admin');
 -- meta data
 create table if not exists meta
 (
-    id      int       not null auto_increment primary key,
+    id      int                not null auto_increment primary key,
 
-    parent  int       not null default 0,
+    parent  int                not null default 0,
 
     type    varchar(16),
     name    varchar(64),
-    slug    varchar(32),
+    slug    varchar(32) unique not null,
     remark  varchar(128),
 
-    sn      int                default 0,
+    sn      int                         default 0,
 
-    op_time timestamp not null default current_timestamp on update current_timestamp
+    op_time timestamp          not null default current_timestamp on update current_timestamp
 
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;

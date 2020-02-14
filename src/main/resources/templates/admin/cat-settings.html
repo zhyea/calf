@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin.header::header"></div>
+<body>
+
+<div class="wrapper">
+    <div th:replace="admin.nav::nav"></div>
+
+    <div class="container main">
+        <div class="page-header">
+            <h3 th:text="${cat.id>0 ? '编辑分类' : '新增分类'}"></h3>
+        </div>
+
+        <div th:replace="admin.alert::alert"></div>
+
+        <form method="post" action="/admin/category/settings" th:object="${cat}">
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">名称</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="hidden" name="id" th:value="*{id}"/>
+                    <input type="hidden" name="parent" th:value="*{parent}"/>
+                    <input type="text" class="form-control" name="name" th:value="*{name}" required autofocus/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">缩略名</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="text" class="form-control" name="slug" th:value="*{slug}" required/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">备注</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <textarea class="form-control" name="remark" th:text="*{remark}"></textarea>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="btn-left col-md-6 col-xs-12">
+                    <a class="btn btn-default" th:href="|/admin/category/list/*{parent}|">返回列表</a>
+                </div>
+                <div class="btn-right col-md-6 col-xs-12">
+                    <button type="submit" class="btn btn-success">保存分类</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div th:replace="admin.footer::footer"></div>
+</div>
+
+</body>

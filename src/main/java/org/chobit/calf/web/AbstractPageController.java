@@ -15,13 +15,12 @@ public abstract class AbstractPageController {
      * 跳转到指定视图，并设置页面title信息
      */
     public String view(String viewName, ModelMap map, String title) {
+        String t = titleParent();
         if (isNotBlank(title)) {
-            title = title + " - " + titleParent();
-        } else {
-            title = titleParent();
+            t = title + " - " + titleParent();
         }
 
-        map.put("title", title);
+        map.put("title", t);
         return viewName;
     }
 
@@ -33,7 +32,6 @@ public abstract class AbstractPageController {
     public String redirect(String uri) {
         return REDIRECT_PREFIX + uri;
     }
-
 
 
     /**
