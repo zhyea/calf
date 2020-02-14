@@ -51,7 +51,7 @@ public class CategoryPageController extends AbstractAdminPageController {
                            @RequestParam("slug") String slug,
                            @RequestParam("remark") String remark) {
         metaService.maintain(id, parent, name, slug, remark);
-        interactMsg("分类信息维护成功");
+        interactMsg("分类信息[" + name + "]维护成功");
         return redirect("/admin/category/list/" + parent);
     }
 }

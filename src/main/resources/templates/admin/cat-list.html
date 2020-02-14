@@ -32,7 +32,7 @@
                data-toolbar="#categoryTableToolbar">
             <thead>
             <tr>
-                <th data-align="center" data-checkbox="true"></th>
+                <th data-align="center" data-checkbox="true" data-formatter="checkFormatter"></th>
                 <th data-halign="left" data-align="left" data-field="name" data-formatter="nameFormatter">分类名</th>
                 <th data-halign="left" data-align="left" data-field="slug">缩略名</th>
                 <th data-halign="center" data-align="center" data-field="subCount" data-formatter="childFormatter">子分类
@@ -62,9 +62,7 @@
         if (rows.length > 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
             let ids = [];// 声明一个数组
             $(rows).each(function () {// 通过获得别选中的来进行遍历
-                if (this.subCount * 1 === 0) {
-                    ids.push(this.id);// cid为获得到的整条数据中的一列
-                }
+                ids.push(this.id);// cid为获得到的整条数据中的一列
             });
 
             if (ids.length > 0) {
@@ -72,6 +70,14 @@
             }
         }
     });
+
+    function checkFormatter(value, row, index) {
+        if (row.id === 1 || row.subCount > 0) {
+            return {
+                disabled: true
+            }
+        }
+    }
 
     function nameFormatter(value, row, index) {
         return '<a href="/admin/category/settings/' + row.parent + '/' + row.id + '" target="_self">' + value + '</a>';
