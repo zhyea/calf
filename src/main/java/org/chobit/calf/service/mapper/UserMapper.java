@@ -1,6 +1,7 @@
 package org.chobit.calf.service.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.chobit.calf.model.Pair;
 import org.chobit.calf.service.entity.User;
 
 import java.util.List;
@@ -48,4 +49,13 @@ public interface UserMapper {
             "</foreach>",
             "</script>"})
     boolean deleteByIds(@Param("ids") Iterable<Integer> ids);
+
+
+    @Delete({"<script>",
+            "select id as `key`, name as `value` from user where id in",
+            "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    List<Pair<Integer, String>> findNameByIds(@Param("ids") Iterable<Integer> ids);
 }

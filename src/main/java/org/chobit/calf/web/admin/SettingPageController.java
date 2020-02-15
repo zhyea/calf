@@ -1,6 +1,6 @@
 package org.chobit.calf.web.admin;
 
-import org.chobit.calf.model.Setting;
+import org.chobit.calf.model.SettingModel;
 import org.chobit.calf.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class SettingPageController extends AbstractAdminPageController {
 
     @GetMapping
     public String get(ModelMap map) {
-        Setting setting = settingService.all();
+        SettingModel setting = settingService.all();
         map.put("setting", setting);
         return view("settings", map, "网站配置");
     }

@@ -12,6 +12,31 @@ import java.util.Map;
 public abstract class Collections2 {
 
 
+    /**
+     * 判断字符串集合是否为空
+     */
+    public static boolean isNotAllBlank(Iterable<String> itr) {
+        if (null == itr) {
+            return false;
+        }
+
+        for (String s : itr) {
+            if (Strings.isNotBlank(s)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 判断字符串集合是否为空
+     */
+    public static boolean isAllBlank(Iterable<String> itr) {
+        return !isNotAllBlank(itr);
+    }
+
+
     public static boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }

@@ -1,5 +1,6 @@
 package org.chobit.calf.tools;
 
+import org.chobit.calf.except.CalfAdminException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +26,7 @@ public abstract class UploadKit {
     private static final Logger logger = LoggerFactory.getLogger(UploadKit.class);
 
 
-    public static String upload(MultipartFile file) throws IOException {
+    public static String upload(MultipartFile file) {
 
         String srcFileName = "";
         try {
@@ -37,7 +38,7 @@ public abstract class UploadKit {
             }
         } catch (Exception e) {
             logger.error("upload file:[{}] failed.", srcFileName, e);
-            throw e;
+            throw new CalfAdminException("文件上传出现错误，请联系管理员", e);
         }
         return null;
     }

@@ -10,9 +10,9 @@ public class Page {
 
     private String search;
 
-    private int offset;
+    private int offset = 0;
 
-    private int limit;
+    private int limit = 0;
 
     private String sort;
 

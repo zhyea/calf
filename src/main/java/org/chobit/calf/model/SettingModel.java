@@ -3,7 +3,7 @@ package org.chobit.calf.model;
 /**
  * @author robin
  */
-public class Setting {
+public class SettingModel {
 
     private String name;
 

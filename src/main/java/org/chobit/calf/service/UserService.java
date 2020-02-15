@@ -33,6 +33,9 @@ public class UserService {
      * 根据ID获取用户信息
      */
     public User get(int id) {
+        if (id <= 0) {
+            return null;
+        }
         return userMapper.get(id);
     }
 
@@ -41,10 +44,10 @@ public class UserService {
      * 维护用户信息
      */
     public Integer maintain(int id, String username, String password, String email, String nickname) {
-        Args.checkNotNull(username, "用户名不能为空");
-        Args.checkNotNull(email, "邮箱不能为空");
-        Args.checkNotNull(nickname, "昵称不能为空");
-        Args.checkNotNull(password, "密码不能为空");
+        Args.checkNotBlank(username, "用户名不能为空");
+        Args.checkNotBlank(email, "邮箱不能为空");
+        Args.checkNotBlank(nickname, "昵称不能为空");
+        Args.checkNotBlank(password, "密码不能为空");
 
         Integer flag = userMapper.checkByUsernameAndEmail(id, username, email);
         Args.check(null == flag, "用户名或邮箱已存在");

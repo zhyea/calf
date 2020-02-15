@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import static org.chobit.calf.constants.MetaType.CATEGORY;
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Collections2.pairToMap;
+import static org.chobit.calf.utils.Strings.isBlank;
 
 /**
  * @author robin
@@ -77,7 +78,7 @@ public class MetaService {
     }
 
 
-    public Boolean delete(Collection<Integer> ids) {
+    public Boolean deleteByIds(Collection<Integer> ids) {
         if (null != ids) {
             ids.remove(1);
         }
@@ -96,6 +97,13 @@ public class MetaService {
 
     public boolean changerOrder(int id, int step) {
         return metaMapper.changeOrder(id, step);
+    }
+
+
+    public Pair<String, Object> findSuggest(String key) {
+        key = isBlank(key) ? "" : key;
+        Object value = metaMapper.findByKeyword("%" + key + "%");
+        return new Pair<>(key, value);
     }
 
 }

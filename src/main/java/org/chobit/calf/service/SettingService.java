@@ -1,7 +1,6 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.except.CalfAdminException;
-import org.chobit.calf.model.Setting;
+import org.chobit.calf.model.SettingModel;
 import org.chobit.calf.service.entity.PairRecord;
 import org.chobit.calf.service.mapper.SettingMapper;
 import org.chobit.calf.tools.UploadKit;
@@ -15,7 +14,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,14 +36,14 @@ public class SettingService {
 
 
     @Cacheable(key = "'all'")
-    public Setting all() {
+    public SettingModel all() {
         List<PairRecord> list = mapper.findAll();
         Map<String, String> map = new HashMap<>(6);
         for (PairRecord p : list) {
             map.put(p.getName(), p.getValue());
         }
 
-        Setting setting = new Setting();
+        SettingModel setting = new SettingModel();
         setting.setName(map.get("name"));
         setting.setDescription(map.get("description"));
         setting.setKeywords(map.get("keywords"));
@@ -57,7 +55,7 @@ public class SettingService {
     }
 
 
-    @CacheEvict(key = "'all'")
+    @CacheEvict(allEntries = true)
     public void maintain(String name,
                          String desc,
                          String keywords,
@@ -81,9 +79,8 @@ public class SettingService {
             if (null != bgImg && isNotBlank(bgImgUrl)) {
                 mapper.replace("backgroundImg", bgImgUrl);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("Maintaining settings error.", e);
-            throw new CalfAdminException("文件上传错误", e);
         }
     }
 

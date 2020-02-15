@@ -43,7 +43,7 @@ public class UserPageController extends AbstractAdminPageController {
             @RequestParam("nickname") String nickname) {
         userService.maintain(id, username, password, email, nickname);
         interactMsg("用户信息维护成功.");
-        return redirect("/admin/user/list");
+        return redirect(id > 0 ? "/admin/user/list" : "/admin/user/settings/" + id);
     }
 
 

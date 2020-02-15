@@ -1,6 +1,7 @@
 package org.chobit.calf.web.api;
 
 import org.chobit.calf.model.Category;
+import org.chobit.calf.model.Pair;
 import org.chobit.calf.service.MetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,12 @@ public class CategoryController {
 
     @PostMapping("/delete")
     public boolean delete(@RequestBody List<Integer> ids) {
-        return metaService.delete(ids);
+        return metaService.deleteByIds(ids);
+    }
+
+    @GetMapping("/suggest")
+    public Pair<String, Object> suggest(@RequestParam("key") String key) {
+        return metaService.findSuggest(key);
     }
 
 }

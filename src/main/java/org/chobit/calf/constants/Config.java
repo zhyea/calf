@@ -15,10 +15,11 @@ public final class Config {
         String tmp = "/tmp/calf/upload/";
         try {
             tmp = ResourceUtils.getFile("classpath:").getPath();
-            tmp = tmp + "upload/";
+            tmp = (tmp.endsWith("/") ? tmp : tmp + "/") + "upload/";
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        PATH_UPLOAD = tmp.endsWith("/") ? tmp : tmp + "/";
+        PATH_UPLOAD = tmp;
     }
 
     public static final String URI_UPLOAD = "/upload/";

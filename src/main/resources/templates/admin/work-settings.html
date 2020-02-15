@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin.header::header"></div>
+<body>
+
+<div class="wrapper">
+    <div th:replace="admin.nav::nav"></div>
+
+    <div class="container main">
+        <div class="page-header">
+            <h3 th:text="${work.id>0 ? '编辑作品' : '新增作品'}"></h3>
+        </div>
+
+        <div th:replace="admin.alert::alert"></div>
+
+        <form method="post" action="/admin/work/settings" enctype="multipart/form-data" th:object="${work}">
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">封面</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <div class="form-input col-md-12 col-xs-12" th:if="${null!=work.cover}">
+                        <p class="lmt"><img th:src="@{*{cover}}" th:alt="${null==work.name ? 'Cover' : work.name}"/></p>
+                    </div>
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="cover"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">作品名称</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="hidden" name="id" th:value="*{id}"/>
+                    <input type="text" class="form-control" name="name" th:value="*{name}" required autofocus/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">作者</div>
+                <div class="form-input col-md-7 col-xs-8">
+                    <div class="input-group">
+                        <input type="hidden" name="authorId" id="authorId" th:value="*{authorId}"/>
+                        <input type="text" class="form-control" name="author" th:value="*{author}" id="authorSelector"
+                               required/>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-input col-md-3 col-xs-4">
+                    <input type="text" class="form-control" name="country" id="authorCountry" th:value="*{country}"
+                           placeholder="作者国籍" required/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">分类</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <div class="input-group">
+                        <input type="hidden" name="catId" id="categoryId" th:value="*{catId}"/>
+                        <input type="text" name="cat" id="categorySelector" class="form-control" th:value="*{cat}"
+                               required/>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">概述</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <textarea class="form-control" name="brief" rows="8" th:text="*{brief}"></textarea>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="btn-left col-md-6 col-xs-12">
+                    <a href="/admin/work/list" class="btn btn-info">返回作品列表</a>
+                </div>
+                <div class="btn-right col-md-6 col-xs-12">
+                    <button type="submit" class="btn btn-success">保存作品信息</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="admin.footer::footer"></div>
+</div>
+
+<script charset="utf-8" th:src="@{/admin/static/js/bootstrap-suggest.js}"></script>
+<script>
+    $("#authorSelector").bsSuggest({
+        allowNoKeyword: true,
+        clearable: true,
+        url: "/api/author/suggest?key=",
+        getDataMethod: "url",
+        showBtn: true,
+        showHeader: false,
+        idField: "id",
+        keyField: "name",
+        effectiveFields: ["name", "country"]
+    }).on('onSetSelectValue', function (e, keyword, data) {
+        $("#authorId").val(data.id);
+        $("#authorCountry").val(data.country)
+    });
+
+
+    $("#categorySelector").bsSuggest({
+        clearable: true,
+        url: "/api/category/suggest?key",
+        showHeader: false,
+        showBtn: true,     //不显示下拉按钮
+        idField: "id",
+        keyField: "name",
+        effectiveFields: ["id", "name", "slug"]
+    }).on('onSetSelectValue', function (e, keyword, data) {
+        $("#categoryId").val(data.id)
+    });
+</script>
+
+</body>

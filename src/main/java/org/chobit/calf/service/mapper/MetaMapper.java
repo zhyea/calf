@@ -7,6 +7,7 @@ import org.chobit.calf.service.entity.Meta;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author robin
@@ -42,7 +43,6 @@ public interface MetaMapper {
                                                @Param("type") MetaType type);
 
 
-
     @Select("select * from meta where id=#{id}")
     Meta get(@Param("id") int id);
 
@@ -64,5 +64,10 @@ public interface MetaMapper {
 
     @Update({"update meta set sn=(sn+#{step}) where id=#{id}"})
     boolean changeOrder(@Param("id") int id, @Param("step") int step);
+
+
+    @Select({"select id, name, slug from meta ",
+            "where type='CATEGORY' and (name like #{key} or slug like #{key}) order by id desc limit 12"})
+    List<Map> findByKeyword(@Param("key") String keyword);
 
 }
