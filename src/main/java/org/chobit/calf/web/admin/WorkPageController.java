@@ -27,7 +27,7 @@ public class WorkPageController extends AbstractAdminPageController {
 
     @GetMapping({"/settings/{id}", "/settings"})
     public String settings(@PathVariable(value = "id", required = false) Integer id, ModelMap map) {
-        WorkModel work = workService.get(null == id ? 0 : id);
+        WorkModel work = workService.getWorkModel(null == id ? 0 : id);
         map.put("work", null == work ? new WorkModel() : work);
         return view("work-settings", map, null == work ? "新增作品" : "作品编辑");
     }

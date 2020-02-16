@@ -9,6 +9,20 @@ public class Volume extends AbstractEntity {
 
     private String name;
 
+    public Volume() {
+    }
+
+    public Volume(int workId, String name) {
+        this.workId = workId;
+        this.name = name;
+    }
+
+    public Volume(int id, int workId, String name) {
+        super.setId(id);
+        this.workId = workId;
+        this.name = name;
+    }
+
     public int getWorkId() {
         return workId;
     }

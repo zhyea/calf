@@ -43,26 +43,6 @@ public class WorkModel {
         this.cat = meta.getName();
     }
 
-    public Work obtainWork() {
-        Work w = new Work();
-        w.setId(id);
-        w.setAuthorId(authorId);
-        w.setCategoryId(catId);
-        w.setName(name);
-        w.setCover(cover);
-        w.setBrief(brief);
-        return w;
-    }
-
-
-    public Author obtainAuthor() {
-        Author a = new Author();
-        a.setId(authorId);
-        a.setName(author);
-        a.setCountry(country);
-        return a;
-    }
-
     public int getId() {
         return id;
     }

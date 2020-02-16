@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin.header::header"></div>
+<body>
+
+<div class="wrapper">
+    <div th:replace="admin.nav::nav"></div>
+
+    <div class="container main">
+        <div class="page-header">
+            <h3>
+                <span class="glyphicon glyphicon-book" th:text="| ${work.name}|"></span>
+                <span class="tag"><a href="/admin/work/list">返回列表</a></span>
+            </h3>
+        </div>
+
+        <div th:replace="admin.alert::alert"></div>
+
+        <div class="row chapter-container" th:if="${#lists.isEmpty(vols)}">
+            <form method="post" action="/admin/chapter/upload" enctype="multipart/form-data">
+                <input type="hidden" name="workId" th:value="${work.id}">
+                <div class="form-input col-md-8 col-xs-12">
+                    <input type="file" class="form-control" accept="text/plain" name="myTxt"/>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <button type="submit" class="btn btn-success">上传文件</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row chapter-container" th:each="vol : ${vols}">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-bookmark" th:text="| ${vol.name}|"></span></h3>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(vol.chapters)}" th:each="chp : ${vol.chapters}">
+                <div class="col-md-4 col-xs-12 chapter-unit">
+                    <div class="chapter">
+                        <a th:href="|/admin/chapter/${work.id}/${chp.id}|" th:text="${chp.name}"></a>
+                        <span class="operate">
+                            <a th:href="|/admin/chapter/delete/${work.id}/${vol.id}/${chp.id}|">
+                                <i class="glyphicon glyphicon-minus"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row chapter-container">
+            <div class="col-md-4 col-xs-12 chapter-unit">
+                <div class="chapter">
+                    <a th:href="|/admin/chapter/${work.id}|">新增章节...</a>
+                    <span class="operate">
+                            <a th:href="|/admin/chapter/${work.id}|"><i class="glyphicon glyphicon-plus"></i></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="admin.footer::footer"></div>
+</div>
+</body>

@@ -35,6 +35,10 @@ public abstract class Args {
         check(isNotBlank(src), errMsg);
     }
 
+    public static void checkNotNull(Object obj, String errMsg) {
+        check(null != obj, errMsg);
+    }
+
 
     private Args() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");

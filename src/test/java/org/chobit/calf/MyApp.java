@@ -1,27 +1,15 @@
 package org.chobit.calf;
 
 
-import org.springframework.util.ResourceUtils;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-
-import static org.chobit.calf.constants.Config.PATH_UPLOAD;
 
 public class MyApp {
 
+    private static final String PATTERN_SHORT = "^第?[\\s]{0,9}[\\d〇零一二三四五六七八九十百千万]{1,6}[\\s]{0,9}[章回节卷篇讲卷集]([\\s]{1,9}.{0,32})?$";
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        String p = ResourceUtils.getURL("classpath:").getPath();
-
-        System.out.println(p);
-        File f = ResourceUtils.getFile(PATH_UPLOAD + "/test");
-        System.out.println(f.exists());
-        File f2 = ResourceUtils.getFile(PATH_UPLOAD );
-
-        System.out.println(f.getPath());
-        System.out.println(f2.exists());
+        System.out.println("第二篇的内容十分繁复，分内、外、轻功，却须要兼修并进。".matches(PATTERN_SHORT));
 
     }
 

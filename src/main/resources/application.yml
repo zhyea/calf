@@ -8,6 +8,9 @@ spring:
     type: CAFFEINE
     caffeine:
       spec: initialCapacity=10240,maximumSize=102400,expireAfterAccess=10m
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 mybatis:
   configuration:

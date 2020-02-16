@@ -56,11 +56,16 @@ public abstract class SessionHolder {
     public static <T> T takeAttribute(String attributeName) {
         HttpSession session = get();
         if (null != session) {
-            Object obj = session.getAttribute(attributeName);
-            if (null != obj) {
-                session.removeAttribute(attributeName);
-                return (T) obj;
+            try {
+                Object obj = session.getAttribute(attributeName);
+                if (null != obj) {
+                    session.removeAttribute(attributeName);
+                    return (T) obj;
+                }
+            } catch (IllegalStateException ise) {
+                SESSION_HOLDER.remove();
             }
+
         }
         return null;
     }

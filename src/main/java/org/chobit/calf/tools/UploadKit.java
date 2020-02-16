@@ -14,8 +14,7 @@ import java.util.Date;
 import static org.chobit.calf.constants.Config.PATH_UPLOAD;
 import static org.chobit.calf.constants.Config.URI_UPLOAD;
 import static org.chobit.calf.utils.Dates.format;
-import static org.chobit.calf.utils.Strings.isNotBlank;
-import static org.chobit.calf.utils.Strings.uuid;
+import static org.chobit.calf.utils.Strings.*;
 
 /**
  * @author robin
@@ -62,6 +61,20 @@ public abstract class UploadKit {
         Files.write(Paths.get(filePath), bytes);
 
         return URI_UPLOAD + date + "/" + fName;
+    }
+
+    public static boolean delete(String path) {
+        if (isBlank(path)) {
+            return false;
+        }
+        if (path.startsWith(URI_UPLOAD)) {
+            path = path.substring(URI_UPLOAD.length());
+        }
+        File f = new File(PATH_UPLOAD + path);
+        if (f.exists()) {
+            return f.delete();
+        }
+        return true;
     }
 
 

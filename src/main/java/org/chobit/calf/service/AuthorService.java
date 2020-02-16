@@ -45,7 +45,7 @@ public class AuthorService {
         Args.checkNotBlank(country, "作者国籍不能为空");
 
         Author author = authorMapper.getByNameAndCountry(id, name, country);
-        Args.check(null == author, "用户信息已存在");
+        Args.check(null == author, "作者信息已存在");
 
         author = new Author(name, country);
         author.setId(id);

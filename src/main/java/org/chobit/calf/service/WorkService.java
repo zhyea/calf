@@ -74,7 +74,16 @@ public class WorkService {
 
 
     @Cacheable(key = "'get' + #id")
-    public WorkModel get(int id) {
+    public Work get(int id) {
+        if (id <= 0) {
+            return null;
+        }
+        return workMapper.get(id);
+    }
+
+
+    @Cacheable(key = "'getModel' + #id")
+    public WorkModel getWorkModel(int id) {
         if (id <= 0) {
             return null;
         }
