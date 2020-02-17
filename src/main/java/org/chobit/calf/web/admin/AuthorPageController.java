@@ -39,16 +39,27 @@ public class AuthorPageController extends AbstractAdminPageController {
                            @RequestParam("country") String country,
                            @RequestParam("bio") String bio, ModelMap map) {
         authorService.maintain(id, name, country, bio);
-        interactMsg("维护作者信息成功");
+        interactMsg("作者信息保存成功");
         return redirect(id > 0 ? "/admin/author/settings/" + id : "/admin/author/list");
     }
 
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         authorService.delete(id);
         interactMsg("删除作者信息成功");
         return redirect("/admin/author/list");
+    }
+
+
+    @GetMapping("/works/{id}")
+    public String works(@PathVariable("id") int id, ModelMap map) {
+        Author author = authorService.get(id);
+        if (null == author) {
+            return redirect("/admin/author/list");
+        }
+        map.put("author", author);
+        return view("author-works", map, author.getName() + "作品列表");
     }
 
 }

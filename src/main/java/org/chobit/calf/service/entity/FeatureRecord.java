@@ -5,11 +5,11 @@ package org.chobit.calf.service.entity;
  */
 public class FeatureRecord extends AbstractEntity {
 
-    private int type;
+    private int type = 1;
 
     private int featureId;
 
-    private int recordId;
+    private int workId;
 
     public int getType() {
         return type;
@@ -27,11 +27,11 @@ public class FeatureRecord extends AbstractEntity {
         this.featureId = featureId;
     }
 
-    public int getRecordId() {
-        return recordId;
+    public int getWorkId() {
+        return workId;
     }
 
-    public void setRecordId(int recordId) {
-        this.recordId = recordId;
+    public void setWorkId(int workId) {
+        this.workId = workId;
     }
 }

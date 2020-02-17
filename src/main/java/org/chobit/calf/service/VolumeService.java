@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -84,4 +85,9 @@ public class VolumeService {
         return volumeMapper.getByWorkIdAndName(workId, name);
     }
 
+
+    @CacheEvict(allEntries = true)
+    public int deleteByWorkIds(Collection<Integer> workIds){
+        return volumeMapper.deleteByWorkIds(workIds);
+    }
 }

@@ -83,7 +83,7 @@ public class ChapterService {
     }
 
 
-    //@Cacheable(key = "'chapters' + #workId")
+    @Cacheable(key = "'chapters' + #workId")
     public List<VolumeModel> chapters(int workId) {
 
         List<Chapter> chapters = chapterMapper.findByWorkId(workId);
@@ -120,11 +120,18 @@ public class ChapterService {
     }
 
 
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(int volId, int id) {
         chapterMapper.delete(id);
         deleteEmptyVolume(volId);
         return true;
+    }
+
+
+    @CacheEvict(allEntries = true)
+    public int deleteByWorkIds(Collection<Integer> workIds) {
+        return chapterMapper.deleteByWorkIds(workIds);
     }
 
 
@@ -154,7 +161,7 @@ public class ChapterService {
     }
 
 
-    private static final String PATTERN_VOLUME = "^第?[\\s]{0,9}[\\d〇零一二三四五六七八九十百千万]{1,6}[\\s]{0,9}[章回节卷篇讲卷集]([\\s]{1,9}.{0,32})?$";
+    private static final String PATTERN_VOLUME = "^第?[\\s]{0,9}[\\d〇零一二三四五六七八九十百千万]{1,6}[\\s]{0,9}[章回节卷篇讲卷集]?([\\s]{1,9}.{0,32})?$";
 
     private static final List<String> ARRAY_SHORT = Arrays.asList("楔子", "引子", "引言", "序章", "尾声", "终章", "后记", "序");
 

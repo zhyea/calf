@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +66,7 @@ public class AuthorService {
                 Arrays.asList("name", "country", "bio"), "id", "name", "country", "bio");
 
         List<Integer> ids = result.getRows().stream().map(e -> e.getInt("id")).distinct().collect(Collectors.toList());
-        List<Pair<Integer, Long>> authorWork = workMapper.countWithAuthor(ids);
+        List<Pair<Integer, Long>> authorWork = workMapper.countWithAuthorIds(ids);
         Map<Integer, Long> map = pairToMap(authorWork);
 
         result.getRows().forEach(e -> {
@@ -84,6 +85,7 @@ public class AuthorService {
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean delete(int id) {
         if (id <= DEFAULT_AUTHOR_ID) {
             return true;

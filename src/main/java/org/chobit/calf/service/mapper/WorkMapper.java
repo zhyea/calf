@@ -49,6 +49,40 @@ public interface WorkMapper {
     long countForSearch(@Param("search") String search);
 
 
+    @Select({"select w.id, w.name, a.name as author, m.name as cat ",
+            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "where w.name like #{key} or brief like #{key} or a.name like #{key} or m.name like #{key}"})
+    List<WorkModel> findWithKeywords(@Param("key") String key);
+
+
+    @Select({"select w.id, w.name, w.brief, a.name as author, m.name as cat ",
+            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "where w.author_id=#{author}",
+            "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+    List<WorkModel> findWithAuthor(@Param("p") Page p, @Param("author") int authorId);
+
+
+    @Select({"select count(w.id)",
+            "from work w",
+            "where w.author_id=#{author}"
+    })
+    long countWithAuthor(@Param("author") int authorId);
+
+
+    @Select({"select w.id, w.name, w.brief, a.name as author, m.name as cat ",
+            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "where w.category_id=#{cat}",
+            "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+    List<WorkModel> findWithCategory(@Param("p") Page p, @Param("cat") int catId);
+
+
+    @Select({"select count(w.id)",
+            "from work w",
+            "where w.category_id=#{cat}"
+    })
+    long countWithCategory(@Param("cat") int catId);
+
+
     @Select({"<script>",
             "select author_id as `key`, count(id) as `value` from work where author_id in",
             "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
@@ -56,6 +90,15 @@ public interface WorkMapper {
             "</foreach>",
             "group by author_id",
             "</script>"})
-    List<Pair<Integer, Long>> countWithAuthor(@Param("ids") Collection<Integer> ids);
+    List<Pair<Integer, Long>> countWithAuthorIds(@Param("ids") Collection<Integer> ids);
+
+
+    @Delete({"<script>",
+            "delete from work where id in",
+            "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    int deleteByIds(@Param("ids") Iterable<Integer> ids);
 
 }

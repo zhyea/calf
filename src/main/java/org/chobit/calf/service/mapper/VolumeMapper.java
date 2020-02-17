@@ -45,6 +45,11 @@ public interface VolumeMapper {
     boolean delete(@Param("id")int id);
 
 
-    @Delete("delete from volume where work_id=#{workId}")
-    boolean deleteByWorkId(@Param("workId")int workId);
+    @Delete({"<script>",
+            "delete from volume where work_id in",
+            "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    int deleteByWorkIds(@Param("ids") Iterable<Integer> ids);
 }

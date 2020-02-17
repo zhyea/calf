@@ -16,8 +16,8 @@
 
         <div id="categoryTableToolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="/admin/category/settings"><i class="glyphicon glyphicon-plus"></i>
-                    新增</a>
+                <a class="btn btn-default" th:href="|/admin/category/settings/${id}|">
+                    <i class="glyphicon glyphicon-plus"></i>新增</a>
                 <a id="btnDelete" class="btn btn-default"><i class="glyphicon glyphicon-minus"></i> 删除</a>
                 <a th:if="${id > 0}" class="btn btn-default" th:href="|/admin/category/list/${parent}|">
                     <i class="glyphicon glyphicon-chevron-left"></i> 返回上一级
@@ -58,7 +58,7 @@
 
     // 删除按钮事件
     $("#btnDelete").on("click", function () {
-        let rows = $("#categoryTable").bootstrapTable('getSelections');// 获得要删除的数据
+        let rows = $table.bootstrapTable('getSelections');// 获得要删除的数据
         if (rows.length > 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
             let ids = [];// 声明一个数组
             $(rows).each(function () {// 通过获得别选中的来进行遍历
@@ -66,7 +66,7 @@
             });
 
             if (ids.length > 0) {
-                sendBootstrapTableRequest($('#categoryTable'), 'post', '/api/category/delete', ids);
+                sendBootstrapTableRequest($table, 'post', '/api/category/delete', ids);
             }
         }
     });

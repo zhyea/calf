@@ -143,7 +143,7 @@ create table if not exists chapter
     work_id   int,
 
     name      varchar(64),
-    key_words varchar(64),
+    keywords varchar(64),
     content   mediumtext,
 
     op_time   timestamp not null default current_timestamp on update current_timestamp
@@ -159,14 +159,14 @@ create table if not exists feature
     cover     varchar(128),
     name      varchar(64) unique not null,
     alias     varchar(16),
-    key_words varchar(64),
+    keywords varchar(64),
     brief     tinytext,
 
     op_time   timestamp          not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
 
-insert into feature (name, alias, key_words)
+insert into feature (name, alias, keywords)
 select '推荐', 'recommend', '推荐'
 from dual
 where not exists(select 1 from feature where name = '推荐');

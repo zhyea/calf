@@ -12,7 +12,7 @@ public class Chapter extends AbstractEntity {
 
     private String name;
 
-    private String keyWords;
+    private String keywords;
 
     private String content;
 
@@ -40,12 +40,12 @@ public class Chapter extends AbstractEntity {
         this.name = name;
     }
 
-    public String getKeyWords() {
-        return keyWords;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getContent() {

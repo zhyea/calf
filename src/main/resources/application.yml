@@ -15,6 +15,7 @@ spring:
 mybatis:
   configuration:
     mapUnderscoreToCamelCase: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 calf:
   theme: pure

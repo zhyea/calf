@@ -14,7 +14,7 @@ public interface AuthorMapper {
 
 
     @Insert("insert into author (name, country, bio) values (#{name}, #{country}, #{bio})")
-    @Options(useGeneratedKeys = true)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Author author);
 
 
@@ -36,7 +36,7 @@ public interface AuthorMapper {
     boolean delete(@Param("id") int id);
 
 
-    @Select({"select id, name, country from author ",
+    @Select({"select id, name, country from author",
             "where name like #{key} or country like #{key} or bio like #{key} order by id desc limit 12"})
     List<LinkedHashMap> findByKeyword(@Param("key") String keyword);
 

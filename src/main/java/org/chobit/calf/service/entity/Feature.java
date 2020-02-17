@@ -11,9 +11,11 @@ public class Feature extends AbstractEntity {
 
     private String alias;
 
-    private String keyWords;
+    private String keywords;
 
     private String brief;
+
+    private long recordsCount;
 
     public String getCover() {
         return cover;
@@ -39,12 +41,12 @@ public class Feature extends AbstractEntity {
         this.alias = alias;
     }
 
-    public String getKeyWords() {
-        return keyWords;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getBrief() {
@@ -53,5 +55,13 @@ public class Feature extends AbstractEntity {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public long getRecordsCount() {
+        return recordsCount;
+    }
+
+    public void setRecordsCount(long recordsCount) {
+        this.recordsCount = recordsCount;
     }
 }

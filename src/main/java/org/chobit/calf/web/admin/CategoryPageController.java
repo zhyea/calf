@@ -35,11 +35,11 @@ public class CategoryPageController extends AbstractAdminPageController {
 
     @GetMapping({"/settings/{parent}/{id}", "/settings/{parent}", "/settings"})
     public String settings(@PathVariable(value = "parent", required = false) Integer parent,
-                           @PathVariable(value = "id", required = false) Integer catId, ModelMap map) {
+                           @PathVariable(value = "id", required = false) Integer catId,
+                           ModelMap map) {
         Meta meta = metaService.get(null == catId ? 0 : catId);
-        meta = null == meta ? new Meta() : meta;
-        meta.setParent(null == parent ? 0 : parent);
-        map.put("cat", meta);
+        map.put("parent", null == parent ? 0 : parent);
+        map.put("cat", null == meta ? new Meta() : meta);
         return view("cat-settings", map, null == meta ? "新增分类" : "编辑分类");
     }
 
@@ -51,7 +51,7 @@ public class CategoryPageController extends AbstractAdminPageController {
                            @RequestParam("slug") String slug,
                            @RequestParam("remark") String remark) {
         metaService.maintain(id, parent, name, slug, remark);
-        interactMsg("分类信息[" + name + "]维护成功");
-        return redirect(id > 0 ? "/admin/category/list/" + parent : "/admin/category/list/" + parent + "/" + id);
+        interactMsg("分类信息[" + name + "]保存成功");
+        return redirect(id <= 0 ? "/admin/category/list/" + parent : "/admin/category/settings/" + parent + "/" + id);
     }
 }

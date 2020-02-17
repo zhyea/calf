@@ -12,14 +12,14 @@ import java.util.List;
 public interface ChapterMapper {
 
 
-    @Insert({"insert into chapter (volume_id, work_id, name, key_words, content)",
+    @Insert({"insert into chapter (volume_id, work_id, name, keywords, content)",
             "values",
-            "(#{volumeId}, #{workId}, #{name}, #{keyWords}, #{content})"})
+            "(#{volumeId}, #{workId}, #{name}, #{keywords}, #{content})"})
     int insert(Chapter chapter);
 
 
     @Update({"update chapter set ",
-            "volume_id=#{volumeId}, work_id=#{workId}, name=#{name}, key_words=#{keyWords}, content=#{content}",
+            "volume_id=#{volumeId}, work_id=#{workId}, name=#{name}, keywords=#{keywords}, content=#{content}",
             "where id=#{id}"})
     boolean update(Chapter chapter);
 
@@ -40,6 +40,11 @@ public interface ChapterMapper {
     Long countByVolumeId(@Param("volId") int volId);
 
 
-    @Delete("delete from chapter where work_id=#{workId}")
-    boolean deleteByWorkId(@Param("workId") int workId);
+    @Delete({"<script>",
+            "delete from chapter where work_id in",
+            "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    int deleteByWorkIds(@Param("ids") Iterable<Integer> ids);
 }

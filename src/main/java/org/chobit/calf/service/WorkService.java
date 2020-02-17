@@ -15,11 +15,14 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
 
 /**
@@ -30,7 +33,7 @@ import static org.chobit.calf.utils.Strings.isBlank;
 public class WorkService {
 
 
-    private static final String DEFAULT_COVER = "/upload/default/cover.jpg";
+    private static final String PATH_DEFAULT_COVER = "/upload/default/cover";
 
     @Autowired
     private WorkMapper workMapper;
@@ -38,7 +41,14 @@ public class WorkService {
     private AuthorMapper authorMapper;
     @Autowired
     private MetaService metaService;
+    @Autowired
+    private VolumeService volumeService;
+    @Autowired
+    private ChapterService chapterService;
 
+    /**
+     * 数据维护
+     */
     @CacheEvict(allEntries = true)
     public void maintain(int id, String name,
                          int authorId, String author, String country,
@@ -64,7 +74,7 @@ public class WorkService {
         work.setAuthorId(authorId);
         work.setCategoryId(catId);
         work.setBrief(brief);
-        work.setCover(isBlank(pathCover) ? DEFAULT_COVER : pathCover);
+        work.setCover(isBlank(pathCover) ? PATH_DEFAULT_COVER : pathCover);
         if (id > 0) {
             workMapper.update(work);
         } else {
@@ -73,6 +83,9 @@ public class WorkService {
     }
 
 
+    /**
+     * 获取作品信息
+     */
     @Cacheable(key = "'get' + #id")
     public Work get(int id) {
         if (id <= 0) {
@@ -82,6 +95,9 @@ public class WorkService {
     }
 
 
+    /**
+     * 获取作品详情，前端呈现
+     */
     @Cacheable(key = "'getModel' + #id")
     public WorkModel getWorkModel(int id) {
         if (id <= 0) {
@@ -97,6 +113,9 @@ public class WorkService {
     }
 
 
+    /**
+     * 分页查询
+     */
     public PageResult<WorkModel> findInPage(Page p) {
         if (isBlank(p.getSearch())) {
             p.setSearch("");
@@ -112,9 +131,58 @@ public class WorkService {
     }
 
 
-    @Cacheable(key = "'count-search' + #search")
+    /**
+     * 分页统计
+     */
     public long countForSearch(String search) {
         return workMapper.countForSearch(search);
+    }
+
+
+    /**
+     * 根据关键字查询
+     */
+    public List<WorkModel> findWithKeyword(String key) {
+        key = isBlank(key) ? "" : key;
+        return workMapper.findWithKeywords("%" + key + "%");
+    }
+
+
+    /**
+     * 使用ID删除记录
+     */
+    @CacheEvict(allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteByIds(Collection<Integer> ids) {
+        if (isEmpty(ids)) {
+            return false;
+        }
+        workMapper.deleteByIds(ids);
+        volumeService.deleteByWorkIds(ids);
+        chapterService.deleteByWorkIds(ids);
+        return true;
+    }
+
+
+    public PageResult<WorkModel> findWithAuthor(int authorId, Page page) {
+        List<WorkModel> list = workMapper.findWithAuthor(page, authorId);
+        long count = countWithAuthor(authorId);
+        return new PageResult<>(count, list);
+    }
+
+    public long countWithAuthor(int authorId) {
+        return workMapper.countWithAuthor(authorId);
+    }
+
+
+    public PageResult<WorkModel> findWithCat(int catId, Page page) {
+        List<WorkModel> list = workMapper.findWithCategory(page, catId);
+        long count = countWithCat(catId);
+        return new PageResult<>(count, list);
+    }
+
+    public long countWithCat(int catId) {
+        return workMapper.countWithCategory(catId);
     }
 
 }
