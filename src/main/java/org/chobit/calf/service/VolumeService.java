@@ -87,7 +87,13 @@ public class VolumeService {
 
 
     @CacheEvict(allEntries = true)
-    public int deleteByWorkIds(Collection<Integer> workIds){
+    public int deleteByWorkIds(Collection<Integer> workIds) {
         return volumeMapper.deleteByWorkIds(workIds);
+    }
+
+
+    @CacheEvict(allEntries = true)
+    public int deleteByWorkId(int workId) {
+        return volumeMapper.deleteByWorkId(workId);
     }
 }

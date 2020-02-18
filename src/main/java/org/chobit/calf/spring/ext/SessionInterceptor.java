@@ -1,5 +1,6 @@
 package org.chobit.calf.spring.ext;
 
+import org.chobit.calf.service.entity.User;
 import org.chobit.calf.tools.SessionHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 public class SessionInterceptor implements HandlerInterceptor {
@@ -21,7 +24,25 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
-        if (uri.startsWith("/admin") && !uri.startsWith("/admin/static")) {
+        if (uri.startsWith("/admin") || uri.startsWith("/api")) {
+            if (uri.startsWith("/admin/static")) {
+                return true;
+            }
+            SessionHolder.add(request);
+            HttpSession session = SessionHolder.get();
+            if (null != session) {
+                Object user = session.getAttribute("user");
+                if (user instanceof User) {
+                    return true;
+                }
+            }
+            try {
+                response.sendRedirect("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else if (uri.startsWith("/login")) {
             SessionHolder.add(request);
         }
         return true;

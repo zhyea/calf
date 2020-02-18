@@ -1,14 +1,23 @@
 package org.chobit.calf.service;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.chobit.calf.except.CalfArgsException;
 import org.chobit.calf.service.entity.User;
 import org.chobit.calf.service.mapper.UserMapper;
+import org.chobit.calf.tools.SessionHolder;
 import org.chobit.calf.utils.Args;
 import org.chobit.calf.utils.MD5;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -16,10 +25,13 @@ import static org.springframework.util.CollectionUtils.isEmpty;
  * @author robin
  */
 @Service
-public class UserService {
+public class UserService implements InitializingBean {
 
     @Autowired
     private UserMapper userMapper;
+
+
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     /**
      * 查询全部用户信息
@@ -64,11 +76,40 @@ public class UserService {
     }
 
 
+    Cache<String, Long> ipCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+    Cache<String, Long> userCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+    Cache<String, Integer> retryCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+
     /**
      * 校验用户名和密码
      */
-    public User check(String username, String password) {
+    public User check(String username, String password, String ip) {
+        Long lastUserTime = userCache.getIfPresent(username);
+        Long lastIpTime = ipCache.getIfPresent(ip);
+
+        long time = Math.max(null == lastUserTime ? 0 : lastUserTime, null == lastIpTime ? 0 : lastIpTime);
+
+        if (System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(10L)) {
+            throw new CalfArgsException("您已被屏蔽，请稍后再尝试登录");
+        }
+
         User user = userMapper.getByUsernameAndPassword(username, MD5.encode(password));
+        if (null == user) {
+            Integer count = retryCache.getIfPresent(username);
+            count = null == count ? 0 : count;
+            retryCache.put(username, ++count);
+            if (count == 3) {
+                retryCache.invalidate(username);
+                userCache.put(username, System.currentTimeMillis());
+                ipCache.put(ip, System.currentTimeMillis());
+            }
+            throw new CalfArgsException("用户名或密码错误，十分钟内您还能重试" + (3 - count) + "次");
+        } else {
+            HttpSession session = SessionHolder.get();
+            if (null != session) {
+                session.setAttribute("user", user);
+            }
+        }
         return user;
     }
 
@@ -84,4 +125,12 @@ public class UserService {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        executorService.scheduleAtFixedRate(() -> {
+            ipCache.cleanUp();
+            userCache.cleanUp();
+            retryCache.cleanUp();
+        }, 0L, 6, TimeUnit.HOURS);
+    }
 }

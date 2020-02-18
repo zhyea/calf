@@ -85,7 +85,7 @@ public class FeatureService {
         Args.checkNotBlank(name, "专题名称不能为空");
         Args.checkNotBlank(name, "专题别名不能为空");
 
-        Long count = featureMapper.countByNameOrAlias(name, alias);
+        Long count = featureMapper.countByNameOrAlias(id, name, alias);
         Args.check(count <= 0, "名称或别名已存在");
 
         String pathCover = UploadKit.upload(cover);
@@ -105,6 +105,7 @@ public class FeatureService {
     }
 
 
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(int featureId) {
         if (featureId <= 1) {
@@ -113,6 +114,12 @@ public class FeatureService {
         featureMapper.delete(featureId);
         recordMapper.deleteByFeatureId(featureId);
         return true;
+    }
+
+
+    @CacheEvict(allEntries = true)
+    public int deleteByWorkIds(Collection<Integer> ids) {
+        return recordMapper.deleteByWorkIds(ids);
     }
 
 }

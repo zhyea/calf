@@ -1,6 +1,5 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.except.CalfAdminException;
 import org.chobit.calf.model.VolumeModel;
 import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Volume;
@@ -17,14 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
-import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
  * @author robin
@@ -38,13 +33,12 @@ public class ChapterService {
 
     @Autowired
     private ChapterMapper chapterMapper;
-
     @Autowired
     private VolumeService volumeService;
-
     @Autowired
     private WorkService workService;
-
+    @Autowired
+    private ChapterUploadComponent uploadComponent;
 
     @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
@@ -135,6 +129,11 @@ public class ChapterService {
     }
 
 
+    @CacheEvict(allEntries = true)
+    public int deleteByWorkId(int workId) {
+        return chapterMapper.deleteByWorkId(workId);
+    }
+
     /**
      * 删除空章节
      *
@@ -151,56 +150,12 @@ public class ChapterService {
     public void upload(int workId, MultipartFile file) {
         Work work = workService.get(workId);
         Args.checkNotNull(work, "无法获取作品信息");
-        try {
-            readFromFile(work, file);
-        } catch (IOException e) {
-            logger.error("upload content for work[{}-{}] failed", workId, work.getName(), e);
-            throw new CalfAdminException("上传失败，请联系管理员");
-        }
-
-    }
-
-
-    private static final String PATTERN_VOLUME = "^第?[\\s]{0,9}[\\d〇零一二三四五六七八九十百千万]{1,6}[\\s]{0,9}[章回节卷篇讲卷集]?([\\s]{1,9}.{0,32})?$";
-
-    private static final List<String> ARRAY_SHORT = Arrays.asList("楔子", "引子", "引言", "序章", "尾声", "终章", "后记", "序");
-
-    private void readFromFile(Work work, MultipartFile file) throws IOException {
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));) {
-            String volName = "";
-            String chapterName = "";
-            StringBuilder content = new StringBuilder();
-
-            String line = null;
-            while (null != (line = reader.readLine())) {
-                line = line.replaceAll("　", " ").trim();
-                if (ARRAY_SHORT.contains(line) || line.matches(PATTERN_VOLUME)) {
-                    if (content.length() == 0 && isNotBlank(chapterName)) {
-                        // 处理存在两级章节的情形
-                        chapterName = line;
-                    } else if (content.length() > 0) {
-                        // 处理读到章节末尾，出现新章节的情形
-                        addChapter(work, volName, chapterName, content.toString());
-                        content = new StringBuilder();
-                        volName = line;
-                        chapterName = line;
-                    } else {
-                        // 处理读到首章的情形
-                        volName = line;
-                        chapterName = line;
-                    }
-                } else {
-                    content.append("<p>").append(line).append("</p>");
-                }
-            }
-        }
+        uploadComponent.uploadChapters(workId, file);
     }
 
 
     @CacheEvict(allEntries = true)
-    public void addChapter(Work work, String volName, String chapterName, String content) {
-        int workId = work.getId();
+    public void addChapter(int workId, String volName, String chapterName, String content) {
         if (volName.equals(chapterName)) {
             volName = "正文";
         }

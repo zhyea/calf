@@ -43,4 +43,12 @@ public interface FeatureRecordMapper {
     boolean deleteByFeatureId(@Param("featureId") int featureId);
 
 
+
+    @Delete({"<script>",
+            "delete from feature_record where work_id in",
+            "<foreach collection='ids' item='item' separator=',' open='(' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    int deleteByWorkIds(@Param("ids") Iterable<Integer> ids);
 }

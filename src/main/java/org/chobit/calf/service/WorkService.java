@@ -45,6 +45,8 @@ public class WorkService {
     private VolumeService volumeService;
     @Autowired
     private ChapterService chapterService;
+    @Autowired
+    private FeatureService featureService;
 
     /**
      * 数据维护
@@ -160,6 +162,7 @@ public class WorkService {
         workMapper.deleteByIds(ids);
         volumeService.deleteByWorkIds(ids);
         chapterService.deleteByWorkIds(ids);
+        featureService.deleteByWorkIds(ids);
         return true;
     }
 
@@ -169,6 +172,7 @@ public class WorkService {
         long count = countWithAuthor(authorId);
         return new PageResult<>(count, list);
     }
+
 
     public long countWithAuthor(int authorId) {
         return workMapper.countWithAuthor(authorId);
@@ -181,8 +185,18 @@ public class WorkService {
         return new PageResult<>(count, list);
     }
 
+
     public long countWithCat(int catId) {
         return workMapper.countWithCategory(catId);
+    }
+
+
+    @CacheEvict(allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteChapters(int workId) {
+        chapterService.deleteByWorkId(workId);
+        volumeService.deleteByWorkId(workId);
+        return true;
     }
 
 }

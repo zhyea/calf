@@ -31,8 +31,8 @@ public interface FeatureMapper {
     Feature get(@Param("id") int id);
 
 
-    @Select("select count(id) from feature where name=#{name} or alias=#{alias}")
-    Long countByNameOrAlias(@Param("name") String name, @Param("alias") String alias);
+    @Select("select count(id) from feature where id<>#{id} and(name=#{name} or alias=#{alias})")
+    Long countByNameOrAlias(@Param("id") int id, @Param("name") String name, @Param("alias") String alias);
 
 
     @Delete("delete from feature where id=#{id}")

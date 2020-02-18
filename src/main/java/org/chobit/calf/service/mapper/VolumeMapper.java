@@ -24,7 +24,7 @@ public interface VolumeMapper {
     boolean update(Volume volume);
 
 
-    @Select("select * from volume where work_id=#{workId}")
+    @Select("select * from volume where work_id=#{workId} order by id asc")
     List<Volume> findByWorkId(@Param("workId") int workId);
 
 
@@ -42,7 +42,7 @@ public interface VolumeMapper {
 
 
     @Delete("delete from volume where id=#{id}")
-    boolean delete(@Param("id")int id);
+    boolean delete(@Param("id") int id);
 
 
     @Delete({"<script>",
@@ -52,4 +52,8 @@ public interface VolumeMapper {
             "</foreach>",
             "</script>"})
     int deleteByWorkIds(@Param("ids") Iterable<Integer> ids);
+
+
+    @Delete("delete from volume where work_id=#{workId}")
+    int deleteByWorkId(@Param("workId") int workId);
 }

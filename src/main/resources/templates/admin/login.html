@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Buffalo Login</title>
+    <title>Calf Login</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,7 +17,8 @@
 
 <div class="container login">
 
-    <form class="form-login" method="post" action="/check-login">
+
+    <form class="form-login" method="post" action="/login/check">
         <div class="logo"><img th:src="@{/admin/static/img/logo.png}" width="36%"/></div>
         <div class="form-item">
             <span class="form-label">用户名</span>
@@ -28,6 +29,8 @@
             <input name="password" type="password" class="form-control" placeholder="Password" required/>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+        <div th:replace="admin.alert::alert"></div>
     </form>
 
 </div> <!-- /container -->

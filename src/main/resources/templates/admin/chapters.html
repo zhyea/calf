@@ -57,6 +57,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="row chapter-container" th:if="${!#lists.isEmpty(vols)}">
+            <div class="col-md-4 col-xs-12 chapter-unit">
+                <div class="chapter">
+                    <a th:href="|/admin/chapter/delete-all/${work.id}|">删除全部章节...</a>
+                    <span class="operate">
+                            <a th:href="|/admin/chapter/delete-all/${work.id}|">
+                                <i class="glyphicon glyphicon-minus"></i></a>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:replace="admin.footer::footer"></div>
 </div>

@@ -28,7 +28,7 @@ public interface ChapterMapper {
     Chapter get(@Param("id") int id);
 
 
-    @Select("select * from chapter where work_id=#{workId}")
+    @Select("select * from chapter where work_id=#{workId} order by id asc")
     List<Chapter> findByWorkId(@Param("workId") int workId);
 
 
@@ -47,4 +47,8 @@ public interface ChapterMapper {
             "</foreach>",
             "</script>"})
     int deleteByWorkIds(@Param("ids") Iterable<Integer> ids);
+
+
+    @Delete("delete from chapter where work_id=#{workId}")
+    int deleteByWorkId(@Param("workId")int workId);
 }
