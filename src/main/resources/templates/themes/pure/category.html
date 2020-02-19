@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="header::header"></div>
+<body>
+
+<div class="wrapper">
+
+    <div th:replace="nav::nav"></div>
+
+    <div class="container notice">
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
+            <li th:text="${cat.name}"></li>
+        </ol>
+    </div>
+
+    <div class="container main">
+
+        <div th:replace="recommend::recommend"></div>
+
+        <div class="page-header">
+            <h3><a th:href="|/${cat.slug}|"><i class="glyphicon glyphicon-book"></i> [[${cat.name}]]</a></h3>
+        </div>
+        <div class="row category">
+            <div class="col-md-6 col-xs-12 work" th:each="w : ${works}" th:object="${w}">
+                <div class="cover">
+                    <a th:href="|/work/*{id}|"><img th:src="*{cover}" width="120px" height="156px"/></a>
+                </div>
+                <div class="brief">
+                    <div class="title"><a th:href="|/work/*{id}|" th:text="*{name}"></a></div>
+                    <div class="author">
+                        <a th:href="|/author/*{authorId}|" th:text="*{author}"></a>
+                    </div>
+                    <div class="intro"
+                         th:text="|${#strings.substring(w.brief, 0, #strings.length(w.brief) > 256 ? 256 : #strings.length(w.brief))} ...|"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <a th:each="i:${#numbers.sequence(1, total)}"
+               th:href="|/${cat.slug}/${i}|"
+               th:class="${i==page? 'active' : ''}"
+               th:text="${i}"></a>
+        </div>
+
+    </div>
+    <div th:replace="footer::footer"></div>
+</div>
+</body>

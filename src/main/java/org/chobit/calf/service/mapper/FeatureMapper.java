@@ -1,6 +1,7 @@
 package org.chobit.calf.service.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.chobit.calf.model.WorkModel;
 import org.chobit.calf.service.entity.Feature;
 
 import java.util.List;
@@ -33,6 +34,15 @@ public interface FeatureMapper {
 
     @Select("select count(id) from feature where id<>#{id} and(name=#{name} or alias=#{alias})")
     Long countByNameOrAlias(@Param("id") int id, @Param("name") String name, @Param("alias") String alias);
+
+
+    @Select({"select w.id, w.name, w.cover, a.name as author, a.country as country",
+            "from feature_record r",
+            "left join work w on r.work_id=w.id",
+            "left join author a on w.author_id=a.id",
+            "left join feature f on r.feature_id=f.id",
+            "where f.alias=#{alias}"})
+    List<WorkModel> findRecordsByAlias(@Param("alias") String alias);
 
 
     @Delete("delete from feature where id=#{id}")

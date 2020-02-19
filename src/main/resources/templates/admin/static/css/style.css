@@ -214,7 +214,8 @@ input[type="file"] {
     left: 50%;
     margin-top: -160px;
     margin-left: -120px;
-    max-width: 320px;
+    max-width: 240px;
+    max-height: 420px;
     background-color: #fff;
     padding: 15px;
 }
@@ -253,6 +254,10 @@ input[type="file"] {
 
 input[readonly], .form-control[readonly] {
     background-color: #FFFFFF;
+}
+
+.form-login .alert {
+    padding: 10px 5px;
 }
 
 /* ------------------table------------------ */

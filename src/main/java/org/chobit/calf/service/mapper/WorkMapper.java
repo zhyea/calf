@@ -69,7 +69,7 @@ public interface WorkMapper {
     long countWithAuthor(@Param("author") int authorId);
 
 
-    @Select({"select w.id, w.name, w.brief, a.name as author, m.name as cat ",
+    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.category_id=#{cat}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
@@ -100,5 +100,10 @@ public interface WorkMapper {
             "</foreach>",
             "</script>"})
     int deleteByIds(@Param("ids") Iterable<Integer> ids);
+
+
+    @Update("update work set category_id=#{newCat} where category_id=#{oldCat}")
+    boolean changeCatId(@Param("oldCat") int oldCatId,
+                        @Param("newCat") int newCateId);
 
 }

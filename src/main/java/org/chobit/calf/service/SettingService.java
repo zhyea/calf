@@ -91,4 +91,15 @@ public class SettingService {
         return mapper.delete(item);
     }
 
+
+    @Cacheable("'site-name'")
+    public String getSiteName(){
+        return mapper.getByName("name");
+    }
+
+    @Cacheable("'site-notice'")
+    public String getNotice(){
+        return mapper.getByName("notice");
+    }
+
 }

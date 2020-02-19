@@ -68,6 +68,14 @@ public interface MetaMapper {
 
     @Select({"select id, name, slug from meta ",
             "where type='CATEGORY' and (name like #{key} or slug like #{key}) order by id desc limit 12"})
-    List<Map> findByKeyword(@Param("key") String keyword);
+    List<Map> findCatsByKeyword(@Param("key") String keyword);
+
+
+    @Select("select * from meta where type=#{type}")
+    List<Meta> findByType(@Param("type") MetaType type);
+
+
+    @Select("select * from meta where slug=#{slug} order by id desc limit 1")
+    Meta getBySlug(@Param("slug") String slug);
 
 }

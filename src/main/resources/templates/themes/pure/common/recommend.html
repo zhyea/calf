@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:remove="tag" th:fragment="recommend">
+    <div class="page-header">
+        <h3><i class="glyphicon glyphicon-book"></i> 推荐内容</h3>
+    </div>
+    <div class="row recommend">
+        <div class="item col-md-2 col-xs-2" th:each="r: ${recommend}" th:object="${r}">
+            <div class="cover">
+                <a th:href="|/work/*{id}|">
+                    <img th:src="*{cover}" width="120px" height="156px"/>
+                </a>
+            </div>
+            <div class="remark"><a th:href="|/work/*{id}|" th:text="*{name}"></a></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

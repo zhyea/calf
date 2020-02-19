@@ -30,4 +30,9 @@ public final class Config {
      */
     public static final String PATH_ADMIN = "admin/";
 
+    /**
+     * 前端页长度
+     */
+    public static final int DEFAULT_PAGE_LENGTH = 12;
+
 }

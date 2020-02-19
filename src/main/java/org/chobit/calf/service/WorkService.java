@@ -1,5 +1,7 @@
 package org.chobit.calf.service;
 
+import org.chobit.calf.constants.MetaType;
+import org.chobit.calf.model.CategoryWork;
 import org.chobit.calf.model.Page;
 import org.chobit.calf.model.PageResult;
 import org.chobit.calf.model.WorkModel;
@@ -33,7 +35,7 @@ import static org.chobit.calf.utils.Strings.isBlank;
 public class WorkService {
 
 
-    private static final String PATH_DEFAULT_COVER = "/upload/default/cover";
+    private static final String PATH_DEFAULT_COVER = "/upload/default/cover/nocover.png";
 
     @Autowired
     private WorkMapper workMapper;
@@ -166,6 +168,11 @@ public class WorkService {
         return true;
     }
 
+    @CacheEvict(allEntries = true)
+    public boolean changeCat(int oldCat, int newCat) {
+        return workMapper.changeCatId(oldCat, newCat);
+    }
+
 
     public PageResult<WorkModel> findWithAuthor(int authorId, Page page) {
         List<WorkModel> list = workMapper.findWithAuthor(page, authorId);
@@ -197,6 +204,23 @@ public class WorkService {
         chapterService.deleteByWorkId(workId);
         volumeService.deleteByWorkId(workId);
         return true;
+    }
+
+
+    @Cacheable("'homeWorks'")
+    public List<CategoryWork> homeWorks() {
+        List<CategoryWork> result = new LinkedList<>();
+        List<Meta> cats = metaService.findByType(MetaType.CATEGORY);
+        for (Meta c : cats) {
+            PageResult<WorkModel> r = findWithCat(c.getId(), new Page(18));
+            if (isEmpty(r.getRows())) {
+                continue;
+            }
+            CategoryWork cw = new CategoryWork(c.getId(), c.getName(), c.getSlug());
+            cw.addWorks(r.getRows());
+            result.add(cw);
+        }
+        return result;
     }
 
 }

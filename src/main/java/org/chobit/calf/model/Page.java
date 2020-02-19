@@ -14,10 +14,22 @@ public class Page {
 
     private int limit = 0;
 
-    private String sort;
+    private String sort = "id";
 
     private Direct order = desc;
 
+
+    public Page() {
+    }
+
+    public Page(int limit) {
+        this.limit = limit;
+    }
+
+    public Page(int offset, int limit) {
+        this.offset = offset;
+        this.limit = limit;
+    }
 
     public String getSearch() {
         return search;

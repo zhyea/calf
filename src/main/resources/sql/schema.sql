@@ -14,7 +14,7 @@ create table if not exists user
   DEFAULT CHARSET = utf8mb4;
 
 insert into user (username, email, password, nickname)
-select 'admin', 'admin@chobit.org', '81b1c925de908ce13eaf44c5b9bbe6f0', 'long'
+select 'admin', 'admin@chobit.org', 'e2587017b295aad7a0b339c72d075e49', 'long'
 from dual
 where not exists(select 1 from user where username = 'admin');
 

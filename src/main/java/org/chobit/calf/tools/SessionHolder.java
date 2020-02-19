@@ -48,7 +48,11 @@ public abstract class SessionHolder {
     public static <T> void addAttribute(String attributeName, T value) {
         HttpSession session = get();
         if (null != session) {
-            session.setAttribute(attributeName, value);
+            try{
+                session.setAttribute(attributeName, value);
+            }catch(IllegalStateException e){
+                SESSION_HOLDER.remove();
+            }
         }
     }
 

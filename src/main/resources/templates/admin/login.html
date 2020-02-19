@@ -17,7 +17,6 @@
 
 <div class="container login">
 
-
     <form class="form-login" method="post" action="/login/check">
         <div class="logo"><img th:src="@{/admin/static/img/logo.png}" width="36%"/></div>
         <div class="form-item">
@@ -30,7 +29,10 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 
-        <div th:replace="admin.alert::alert"></div>
+        <div role="alert" th:if="${alert}" th:object="${alert}"
+             th:class="|alert *{type.css}|">
+            <th:block th:text="*{message}"/>
+        </div>
     </form>
 
 </div> <!-- /container -->

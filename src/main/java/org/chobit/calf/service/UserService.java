@@ -8,6 +8,8 @@ import org.chobit.calf.service.mapper.UserMapper;
 import org.chobit.calf.tools.SessionHolder;
 import org.chobit.calf.utils.Args;
 import org.chobit.calf.utils.MD5;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,11 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @Service
 public class UserService implements InitializingBean {
 
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     private UserMapper userMapper;
-
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -76,9 +80,9 @@ public class UserService implements InitializingBean {
     }
 
 
-    Cache<String, Long> ipCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
-    Cache<String, Long> userCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
-    Cache<String, Integer> retryCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+    private Cache<String, Long> ipCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+    private Cache<String, Long> userCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
+    private Cache<String, Integer> retryCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
 
     /**
      * 校验用户名和密码
@@ -92,6 +96,8 @@ public class UserService implements InitializingBean {
         if (System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(10L)) {
             throw new CalfArgsException("您已被屏蔽，请稍后再尝试登录");
         }
+
+        logger.info("user {} signs in from {}", username, ip);
 
         User user = userMapper.getByUsernameAndPassword(username, MD5.encode(password));
         if (null == user) {

@@ -39,7 +39,7 @@ public class CategoryController {
 
     @GetMapping("/suggest")
     public Pair<String, Object> suggest(@RequestParam("key") String key) {
-        return metaService.findSuggest(key);
+        return metaService.findCatsSuggest(key);
     }
 
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="header::header"></div>
+<body>
+
+<div class="wrapper">
+
+    <div th:replace="nav::nav"></div>
+
+    <div class="container notice">
+        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> [[${notice}]]
+    </div>
+
+    <div class="container main">
+
+        <div th:replace="recommend::recommend"></div>
+
+        <div th:remove="tag" th:each="cat: ${all}" th:object="${cat}">
+            <div class="page-header">
+                <h3><a th:href="|/*{slug}|"><i class="glyphicon glyphicon-book"></i> [[*{name}]]</a></h3>
+            </div>
+            <div class="row popular">
+                <div class="item col-md-4 col-xs-4" th:each="w:${cat.works}" th:object="${w}">
+                    ■ <a th:href="|/work/*{id}|" th:text="*{name}"></a>
+                    <span class="author"><a th:href="|/author/*{authorId}|" th:text="*{author}"></a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="footer::footer"></div>
+</div>
+</body>

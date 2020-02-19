@@ -19,4 +19,6 @@ mybatis:
 
 calf:
   theme: pure
+  fragments:
+    recommend: common/recommend
 

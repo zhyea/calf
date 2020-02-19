@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<div th:fragment="nav">
+    <div class="container header">
+        &nbsp;
+    </div>
+    <div class="container navigator">
+        <nav class="navbar navbar-default">
+            <button type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#main-nav-items"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <ul class="nav navbar-nav" id="main-nav-items">
+                <li>
+                    <a href="/">
+                        <i class="glyphicon glyphicon-home" th:text="| ${siteName}|"></i><span
+                            class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <div th:if="${!#lists.isEmpty(cats.children)}"
+                     th:remove="tag"
+                     th:each="cat:${cats.children}"
+                     th:object="${cat}">
+                    <li class="dropdown" th:if="${!#lists.isEmpty(cat.children)}">
+                        <a th:href="|/*{slug}|"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">[[${cat.name}]]<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="|/*{slug}|" th:text="*{name}"></a>
+                            </li>
+
+                            <div th:each="sub:*{children}" th:remove="tag" th:object="${sub}">
+                                <li>
+                                    <a th:href="|/*{slug}|" th:text="*{name}"></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </li>
+                    <li th:if="${#lists.isEmpty(cat.children)}">
+                        <a th:href="|/*{slug}|" th:text="*{name}"></a></li>
+                </div>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>
