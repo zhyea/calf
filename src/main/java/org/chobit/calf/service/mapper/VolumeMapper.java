@@ -56,4 +56,5 @@ public interface VolumeMapper {
 
     @Delete("delete from volume where work_id=#{workId}")
     int deleteByWorkId(@Param("workId") int workId);
+
 }

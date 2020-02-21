@@ -74,6 +74,24 @@ public abstract class SessionHolder {
         return null;
     }
 
+    public static <T> T getAttribute(String attributeName) {
+        HttpSession session = get();
+        if (null != session) {
+            try {
+                Object obj = session.getAttribute(attributeName);
+                if (null != obj) {
+                    return (T) obj;
+                }
+            } catch (IllegalStateException ise) {
+                SESSION_HOLDER.remove();
+            }
+
+        }
+        return null;
+    }
+
+
+
 
     private SessionHolder() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");

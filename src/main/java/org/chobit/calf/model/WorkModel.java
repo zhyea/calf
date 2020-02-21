@@ -25,6 +25,8 @@ public class WorkModel {
 
     private String cat;
 
+    private String catSlug;
+
     private String brief;
 
 
@@ -47,68 +49,76 @@ public class WorkModel {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public int getCatId() {
-        return catId;
-    }
-
-    public String getCat() {
-        return cat;
-    }
-
-    public String getBrief() {
-        return brief;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getCover() {
+        return cover;
+    }
+
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public int getAuthorId() {
+        return authorId;
     }
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public void setCountry(String country) {
         this.country = country;
     }
 
+    public int getCatId() {
+        return catId;
+    }
+
     public void setCatId(int catId) {
         this.catId = catId;
     }
 
+    public String getCat() {
+        return cat;
+    }
+
     public void setCat(String cat) {
         this.cat = cat;
+    }
+
+    public String getCatSlug() {
+        return catSlug;
+    }
+
+    public void setCatSlug(String catSlug) {
+        this.catSlug = catSlug;
+    }
+
+    public String getBrief() {
+        return brief;
     }
 
     public void setBrief(String brief) {

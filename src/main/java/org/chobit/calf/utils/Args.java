@@ -39,6 +39,10 @@ public abstract class Args {
         check(null != obj, errMsg);
     }
 
+    public static void checkMaxLength(String str, int maxLen, String errMsg) {
+        check(str.length() < maxLen, errMsg);
+    }
+
 
     private Args() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");

@@ -26,6 +26,7 @@ import java.util.List;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
+import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
  * @author robin
@@ -63,6 +64,7 @@ public class WorkService {
         Args.checkNotBlank(country, "作者国籍不能为空");
         Args.checkPositive(catId, "分类信息不能为空");
         Args.checkNotBlank(cat, "分类信息不能为空");
+        Args.checkMaxLength(null == brief ? "" : brief, 200, "作品简介长度不能超过200");
 
         if (authorId <= 0) {
             Author a = new Author(author, country);
@@ -70,15 +72,21 @@ public class WorkService {
             authorId = a.getId();
         }
 
-        String pathCover = UploadKit.upload(cover);
-
-        Work work = new Work();
+        Work work = id > 0 ? get(id) : new Work();
         work.setId(id);
         work.setName(name);
         work.setAuthorId(authorId);
         work.setCategoryId(catId);
         work.setBrief(brief);
-        work.setCover(isBlank(pathCover) ? PATH_DEFAULT_COVER : pathCover);
+        String pathCover = work.getCover();
+        if (!cover.isEmpty()) {
+            if (isNotBlank(pathCover) && !PATH_DEFAULT_COVER.equals(pathCover)) {
+                UploadKit.delete(pathCover);
+            }
+            pathCover = UploadKit.upload(cover);
+        }
+        pathCover = isBlank(pathCover) ? PATH_DEFAULT_COVER : pathCover;
+        work.setCover(pathCover);
         if (id > 0) {
             workMapper.update(work);
         } else {
@@ -174,6 +182,7 @@ public class WorkService {
     }
 
 
+    @Cacheable(key = "'findWithAuthor' + #authorId + '-' + #page.limit+ '-' + #page.offset")
     public PageResult<WorkModel> findWithAuthor(int authorId, Page page) {
         List<WorkModel> list = workMapper.findWithAuthor(page, authorId);
         long count = countWithAuthor(authorId);
@@ -181,11 +190,13 @@ public class WorkService {
     }
 
 
+    @Cacheable(key = "'countWithAuthor' + #authorId")
     public long countWithAuthor(int authorId) {
         return workMapper.countWithAuthor(authorId);
     }
 
 
+    @Cacheable(key = "'findWithCat' + #catId + '-' + #page.limit+ '-' + #page.offset")
     public PageResult<WorkModel> findWithCat(int catId, Page page) {
         List<WorkModel> list = workMapper.findWithCategory(page, catId);
         long count = countWithCat(catId);
@@ -193,6 +204,7 @@ public class WorkService {
     }
 
 
+    @Cacheable(key = "'countWithCat' + #catId")
     public long countWithCat(int catId) {
         return workMapper.countWithCategory(catId);
     }
@@ -207,7 +219,7 @@ public class WorkService {
     }
 
 
-    @Cacheable("'homeWorks'")
+    @Cacheable(key = "'homeWorks'")
     public List<CategoryWork> homeWorks() {
         List<CategoryWork> result = new LinkedList<>();
         List<Meta> cats = metaService.findByType(MetaType.CATEGORY);
@@ -221,6 +233,12 @@ public class WorkService {
             result.add(cw);
         }
         return result;
+    }
+
+
+    @Cacheable(key = "'get-detail' + #id")
+    public WorkModel getDetail(int id) {
+        return workMapper.getDetail(id);
     }
 
 }

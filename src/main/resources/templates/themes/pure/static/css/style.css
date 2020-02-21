@@ -53,7 +53,7 @@ body {
 
 .notice {
     height: 42px;
-    padding: 2px 0 0 16px;
+    padding: 2px 0 0 12px;
     line-height: 42px;
     border-bottom: 1px solid #ddd;
 }
@@ -107,7 +107,7 @@ body {
     overflow: hidden;
     padding-right: 16px;
     color: #333;
-    line-height: 160%;
+    line-height: 240%;
 }
 
 .popular .item a {
@@ -134,60 +134,60 @@ body {
 
 /* ------------------------------------ cat ------------------------------------ */
 
-.category {
+.work-show {
     padding: 0;
     vertical-align: baseline;
 }
 
-.category .work {
+.work-show .work {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
     overflow: hidden;
 }
 
-.category .cover {
+.work-show .cover {
     float: left;
     width: 124px;
     height: 156px;
     overflow: hidden;
 }
 
-.category .brief {
+.work-show .brief {
     padding: 0 8px;
     margin-left: 124px;
     height: 156px;
     overflow: hidden;
 }
 
-.category .brief .title {
+.work-show .brief .title {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #1d6300;
-    font-size: 20px;
+    font-size: 17px;
     white-space: nowrap;
 }
 
-.category .brief .title a {
+.work-show .brief .title a {
     color: #129151;
 }
 
-.category .brief .title a:hover {
+.work-show .brief .title a:hover {
     color: #e8434c;
 }
 
-.category .brief .author {
+.work-show .brief .author {
     line-height: 32px;
 }
 
-.category .brief .author a {
+.work-show .brief .author a {
     color: #129151;
 }
 
-.category .brief .author a:hover {
+.work-show .brief .author a:hover {
     color: #999;
 }
 
-.category .brief .intro {
+.work-show .brief .intro {
     line-height: 150%;
     overflow: hidden;
 }
@@ -216,6 +216,11 @@ body {
 
 
 /* ------------------------------------ work ------------------------------------ */
+.work-block {
+    margin: 0 -15px;
+}
+
+
 .work-header {
     padding: 12px 15px 3px;
     border-bottom: 1px solid #e2e2e2;
@@ -223,7 +228,7 @@ body {
 
 .work-header .title {
     font-weight: bolder;
-    font-size: 27px;
+    font-size: 18px;
     color: #1d6300;
 }
 
@@ -233,7 +238,7 @@ body {
 
 .work-neck {
     margin: 0;
-    padding: 9px 0 6px;
+    padding: 12px 16px;
     border-bottom: 1px solid #e2e2e2;
     vertical-align: baseline;
     height: auto;
@@ -280,7 +285,7 @@ body {
     padding: 9px 12px 6px;
     background-color: #ececec;
     text-align: left;
-    font: 18px Arial;
+    font: 17px Arial;
     color: #1d6300;
     border-bottom: 1px solid #e2e2e2;
     border-top: 2px solid #129151;

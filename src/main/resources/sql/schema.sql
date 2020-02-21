@@ -114,7 +114,7 @@ create table if not exists work
     file        varchar(128),
 
     name        varchar(64),
-    brief       tinytext,
+    brief       varchar(512),
 
     op_time     timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
@@ -143,7 +143,7 @@ create table if not exists chapter
     work_id   int,
 
     name      varchar(64),
-    keywords varchar(64),
+    keywords  varchar(64),
     content   mediumtext,
 
     op_time   timestamp not null default current_timestamp on update current_timestamp
@@ -154,15 +154,15 @@ create table if not exists chapter
 -- feature
 create table if not exists feature
 (
-    id        int                not null auto_increment primary key,
+    id       int                not null auto_increment primary key,
 
-    cover     varchar(128),
-    name      varchar(64) unique not null,
-    alias     varchar(16),
+    cover    varchar(128),
+    name     varchar(64) unique not null,
+    alias    varchar(16),
     keywords varchar(64),
-    brief     tinytext,
+    brief    tinytext,
 
-    op_time   timestamp          not null default current_timestamp on update current_timestamp
+    op_time  timestamp          not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
 

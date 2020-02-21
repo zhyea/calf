@@ -2,24 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="header::header"></div>
 <body>
-
 <div class="wrapper">
+
 
     <div th:replace="nav::nav"></div>
 
     <div class="container notice">
         <ol class="breadcrumb">
             <li><a href="/"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
-            <li th:text="${cat.name}"></li>
+            <li class="active">[[${author.name}]]</li>
         </ol>
     </div>
 
     <div class="container main">
-
-        <div th:replace="recommend::recommend"></div>
+        <div class="work-block">
+            <div class="work-header">
+                <span class="title">[[${author.name}]]</span>
+            </div>
+            <div class="row work-neck">
+                [[${#strings.isEmpty(author.bio) ? '无作者信息，待完善' : author.bio}]]
+            </div>
+        </div>
 
         <div class="page-header">
-            <h3><a th:href="|/${cat.slug}|"><i class="glyphicon glyphicon-book"></i> [[${cat.name}]]</a></h3>
+            <h3><i class="glyphicon glyphicon-book"></i>&nbsp;作品列表</h3>
         </div>
         <div class="row work-show">
             <div class="col-md-6 col-xs-12 work" th:each="w : ${works}" th:object="${w}">
@@ -39,11 +45,10 @@
 
         <div class="pagination">
             <a th:each="i:${#numbers.sequence(0, total)}"
-               th:href="|/${cat.slug}/${i}|"
+               th:href="|/author/${author.id}/${i}|"
                th:class="${i==page? 'active' : ''}"
                th:text="${i+1}"></a>
         </div>
-
     </div>
     <div th:replace="footer::footer"></div>
 </div>

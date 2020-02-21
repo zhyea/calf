@@ -43,7 +43,7 @@ public class ChapterPageController extends AbstractAdminPageController {
         map.put("work", work);
         map.put("vols", vols);
 
-        return view("chapters", map, "章节信息" + "-" + work.getName());
+        return view("chapters", map, work.getName() + "-" + "章节信息");
     }
 
 
@@ -53,15 +53,15 @@ public class ChapterPageController extends AbstractAdminPageController {
                        ModelMap map) {
         Work work = workService.get(workId);
         Chapter chapter = chapterService.get(null == chapterId ? 0 : chapterId);
-        if (null == work || null == chapter) {
+        if (null == work) {
             return redirect("/admin/work/list");
         }
 
-        Volume volume = volumeService.get(chapter.getVolumeId());
+        Volume volume = volumeService.get(null == chapter ? 0 : chapter.getVolumeId());
 
         map.put("work", work);
-        map.put("volume", volume);
-        map.put("chapter", chapter);
+        map.put("volume", null == volume ? new Volume() : volume);
+        map.put("chapter", null == chapter ? new Chapter() : chapter);
 
         return view("chapter-edit", map, null == chapter ? "新增章节" : "编辑章节" + "-" + chapter.getName() + "-" + work.getName());
     }
@@ -77,7 +77,7 @@ public class ChapterPageController extends AbstractAdminPageController {
         chapterService.maintain(id, workId, name, volumeId, volume, content);
         interactMsg("章节信息保存成功");
         if (id <= 0) {
-            return redirect("/admin/chapter/" + workId);
+            return redirect("/admin/chapter/all/" + workId);
         }
         return redirect("/admin/chapter/" + workId + "/" + id);
     }

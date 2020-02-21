@@ -38,14 +38,19 @@ public class VolumeService {
     public int addOrUpdate(int id, int workId, String name) {
         if (isNotBlank(name)) {
             if (id <= 0) {
-                Volume vol = new Volume(workId, name);
+                Volume vol = volumeMapper.getByWorkIdAndName(workId, name);
+                if (null != vol) {
+                    return vol.getId();
+                }
+                vol = new Volume(workId, name);
                 volumeMapper.insert(vol);
-                id = vol.getId();
+                return vol.getId();
             } else {
                 volumeMapper.update(new Volume(id, workId, name));
+                return id;
             }
         }
-        return id;
+        return 0;
     }
 
 
@@ -74,7 +79,7 @@ public class VolumeService {
 
     @CacheEvict(allEntries = true)
     public boolean delete(int id) {
-        if (0 <= id) {
+        if (id <= 0) {
             return true;
         }
         return volumeMapper.delete(id);

@@ -10,7 +10,7 @@ public class Work extends AbstractEntity {
 
     private int categoryId;
 
-    private String cover = "sys/nocover.png";
+    private String cover;
 
     private String file;
 

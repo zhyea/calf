@@ -40,7 +40,7 @@ public class ChapterService {
     @Autowired
     private ChapterUploadComponent uploadComponent;
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void maintain(int id, int workId, String name, int volumeId, String volume, String content) {
         Args.checkPositive(workId, "找不到作品信息");
@@ -114,7 +114,7 @@ public class ChapterService {
     }
 
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(int volId, int id) {
         chapterMapper.delete(id);
@@ -123,13 +123,13 @@ public class ChapterService {
     }
 
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public int deleteByWorkIds(Collection<Integer> workIds) {
         return chapterMapper.deleteByWorkIds(workIds);
     }
 
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public int deleteByWorkId(int workId) {
         return chapterMapper.deleteByWorkId(workId);
     }
@@ -147,6 +147,7 @@ public class ChapterService {
     }
 
 
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public void upload(int workId, MultipartFile file) {
         Work work = workService.get(workId);
         Args.checkNotNull(work, "无法获取作品信息");
@@ -154,7 +155,7 @@ public class ChapterService {
     }
 
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public void addChapter(int workId, String volName, String chapterName, String content) {
         if (volName.equals(chapterName)) {
             volName = "正文";
@@ -179,5 +180,16 @@ public class ChapterService {
         chapterMapper.insert(chapter);
     }
 
+
+    @Cacheable(key = "'getNext' + #workId + '-' + #chapterId")
+    public Chapter getNext(int workId, int chapterId) {
+        return chapterMapper.getNext(workId, chapterId);
+    }
+
+
+    @Cacheable(key = "'getLast' + #workId + '-' + #chapterId")
+    public Chapter getLast(int workId, int chapterId) {
+        return chapterMapper.getLast(workId, chapterId);
+    }
 
 }

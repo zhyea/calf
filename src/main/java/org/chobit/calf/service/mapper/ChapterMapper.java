@@ -50,5 +50,14 @@ public interface ChapterMapper {
 
 
     @Delete("delete from chapter where work_id=#{workId}")
-    int deleteByWorkId(@Param("workId")int workId);
+    int deleteByWorkId(@Param("workId") int workId);
+
+
+    @Select("select * from chapter where work_id=#{workId} and id>#{currId} order by id asc limit 1")
+    Chapter getNext(@Param("workId") int workId,
+                    @Param("currId") int currId);
+
+    @Select("select * from chapter where work_id=#{workId} and id<#{currId} order by id desc limit 1")
+    Chapter getLast(@Param("workId") int workId,
+                    @Param("currId") int currId);
 }

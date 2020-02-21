@@ -77,7 +77,6 @@ public abstract class UploadKit {
         return true;
     }
 
-
     private UploadKit() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }

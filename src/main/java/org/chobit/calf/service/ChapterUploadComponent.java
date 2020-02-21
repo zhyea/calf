@@ -74,6 +74,8 @@ public class ChapterUploadComponent {
                     }
                 }
             }
+            // 处理读完文章不会出现新章节的情形
+            chapterService.addChapter(workId, volName, chapterName, content.toString());
         }
     }
 

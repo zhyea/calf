@@ -19,7 +19,7 @@ let ReadSet = {
     fontColorValue: "#008000",
     fontSize: ["14px", "16px", "18px", "20px", "24px"],
     fontSizeName: ["很小", "较小", "中等", "较大", "很大"],
-    fontSizeValue: "18px",
+    fontSizeValue: "16px",
     contentId: "contentContainer",
     fontSizeId: "contentText",
     SetBackgroundColor: function (color) {

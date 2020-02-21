@@ -35,7 +35,7 @@ public interface WorkMapper {
                          @Param("newAuthor") int newAuthor);
 
 
-    @Select({"select w.id, w.name, a.name as author, m.name as cat ",
+    @Select({"select w.id, w.name, a.name as author, a.id as author_id, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.name like #{p.search} or brief like #{p.search} or a.name like #{p.search} or m.name like #{p.search}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
@@ -55,7 +55,7 @@ public interface WorkMapper {
     List<WorkModel> findWithKeywords(@Param("key") String key);
 
 
-    @Select({"select w.id, w.name, w.brief, a.name as author, m.name as cat ",
+    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.author_id=#{author}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
@@ -69,7 +69,7 @@ public interface WorkMapper {
     long countWithAuthor(@Param("author") int authorId);
 
 
-    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, m.name as cat ",
+    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.category_id=#{cat}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
@@ -106,4 +106,9 @@ public interface WorkMapper {
     boolean changeCatId(@Param("oldCat") int oldCatId,
                         @Param("newCat") int newCateId);
 
+
+    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat, m.slug as cat_slug ",
+            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "where w.id=#{id}"})
+    WorkModel getDetail(@Param("id") int id);
 }

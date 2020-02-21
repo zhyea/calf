@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -17,8 +16,6 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 
     private final Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
-
-    private static final String HOME_URL = "/";
 
 
     @Override
@@ -29,15 +26,12 @@ public class SessionInterceptor implements HandlerInterceptor {
                 return true;
             }
             SessionHolder.add(request);
-            HttpSession session = SessionHolder.get();
-            if (null != session) {
-                Object user = session.getAttribute("user");
-                if (user instanceof User) {
-                    return true;
-                }
+            Object user = SessionHolder.getAttribute("user");
+            if (user instanceof User) {
+                return true;
             }
             try {
-                response.sendRedirect("");
+                response.sendRedirect("/");
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -43,7 +43,7 @@
                 <th data-align="left" data-sortable="true" data-field="name" data-formatter="nameFormatter">作品名称</th>
                 <th data-align="left" data-sortable="false" data-field="author">作者</th>
                 <th data-align="left" data-sortable="false" data-field="cat">分类</th>
-                <th data-align="center" data-sortable="false" data-formatter="operateFormatter">章节</th>
+                <th data-align="center" data-sortable="false" data-formatter="operateFormatter">编辑</th>
             </tr>
             </thead>
         </table>
@@ -69,11 +69,11 @@
     });
 
     function nameFormatter(value, row, index) {
-        return '<a href="/admin/work/settings/' + row.id + '" target="_self">' + value + '</a>';
+        return '<a href="/admin/chapter/all/' + row.id + '" target="_self">' + value + '</a>';
     }
 
     function operateFormatter(value, row, index) {
-        return '<a href="/admin/chapter/all/' + row.id + '" target="_self">查看</a>';
+        return '<a href="/admin/work/settings/' + row.id + '" target="_self">编辑</a>';
     }
 </script>
 </body>

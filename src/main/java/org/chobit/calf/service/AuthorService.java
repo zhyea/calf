@@ -11,6 +11,9 @@ import org.chobit.calf.utils.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,7 @@ import static org.chobit.calf.utils.Strings.isBlank;
  * @author robin
  */
 @Service
+@CacheConfig(cacheNames = "author")
 public class AuthorService {
 
 
@@ -41,6 +45,7 @@ public class AuthorService {
     private AssembleQueryService assembleQueryService;
 
 
+    @CacheEvict(allEntries = true)
     public void maintain(int id, String name, String country, String bio) {
         Args.checkNotBlank(name, "作者姓名不能为空");
         Args.checkNotBlank(country, "作者国籍不能为空");
@@ -77,6 +82,7 @@ public class AuthorService {
     }
 
 
+    @Cacheable(key = "'get' + #id")
     public Author get(int id) {
         if (id <= 0) {
             return null;
@@ -85,6 +91,7 @@ public class AuthorService {
     }
 
 
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public boolean delete(int id) {
         if (id <= DEFAULT_AUTHOR_ID) {
