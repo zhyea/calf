@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Collections2.pairToMap;
+import static org.chobit.calf.utils.Strings.toInt;
 
 /**
  * @author robin
@@ -81,7 +82,9 @@ public class FeatureService {
 
 
     @CacheEvict(allEntries = true)
-    public void maintain(int id, String name, String alias, String keywords, String brief, MultipartFile cover) {
+    public void maintain(int id, String name, String alias,
+                         String keywords, String brief,
+                         MultipartFile cover, MultipartFile bgImg, String bgRepeat) {
 
         Args.checkNotBlank(name, "专题名称不能为空");
         Args.checkNotBlank(name, "专题别名不能为空");
@@ -89,16 +92,23 @@ public class FeatureService {
         Long count = featureMapper.countByNameOrAlias(id, name, alias);
         Args.check(count <= 0, "名称或别名已存在");
 
-        String pathCover = UploadKit.upload(cover);
 
-        Feature feature = new Feature();
+        Feature feature = id > 0 ? get(id) : new Feature();
         feature.setName(name);
         feature.setAlias(alias);
         feature.setKeywords(keywords);
         feature.setBrief(brief);
+        feature.setBgRepeat(toInt(bgRepeat));
+
+        String pathCover = feature.getCover();
+        pathCover = UploadKit.uploadFile(cover, pathCover);
         feature.setCover(pathCover);
+
+        String pathBg = feature.getBackground();
+        pathBg = UploadKit.uploadFile(bgImg, pathBg);
+        feature.setBackground(pathBg);
+
         if (id > 0) {
-            feature.setId(id);
             featureMapper.update(feature);
         } else {
             featureMapper.insert(feature);

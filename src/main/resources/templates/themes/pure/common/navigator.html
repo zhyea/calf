@@ -5,7 +5,8 @@
 
 <div th:fragment="nav">
     <div class="container header">
-        &nbsp;
+        <a th:if="${null==logo}">&nbsp;</a>
+        <a th:if="${null!=logo}" href="/"><img th:src="${logo}" width="100%" height="100%"/></a>
     </div>
     <div class="container navigator">
         <nav class="navbar navbar-default">

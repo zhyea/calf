@@ -8,7 +8,7 @@
 
     <div class="container main">
         <div class="page-header">
-            <h3>信息维护</h3>
+            <h3><i class="glyphicon glyphicon-cog"></i> 信息维护</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>
@@ -46,6 +46,7 @@
                 <div class="form-label col-md-2 col-xs-12">LOGO</div>
                 <div class="form-input col-md-10 col-xs-12">
                     <input type="file" class="form-control" accept="image/png, image/jpeg" name="logo"/>
+                    <input type="hidden" name="currLogo" th:value="@{*{logo}}"/>
                     <div th:if="*{logo}" class="form-input col-md-12 col-xs-12">
                         <br/>
                         <p class="lmt"><img th:src="@{*{logo}}" alt="LOGO"/></p>
@@ -59,6 +60,7 @@
                 <div class="form-label col-md-2 col-xs-12">背景图片</div>
                 <div class="form-input col-md-10 col-xs-12">
                     <input type="file" class="form-control" accept="image/png, image/jpeg" name="backgroundImg"/>
+                    <input type="hidden" name="currBgImg" th:value="@{*{backgroundImg}}"/>
                     <div th:if="*{backgroundImg}" class="form-input col-md-12 col-xs-12">
                         <br/>
                         <p class="lmt"><img th:src="@{*{backgroundImg}}" alt="BG_IMG"/></p>
@@ -68,6 +70,17 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">背景重复</div>
+                <div class="form-input col-md-10 col-xs-12" style="padding-top:6px;">
+                    <label class="radio-inline">
+                        <input type="radio" name="bgRepeat" value="1" th:checked="${setting.bgRepeat == 1}"> 重复
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="bgRepeat" value="2" th:checked="${setting.bgRepeat == 2}"> 不重复
+                    </label>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-6 col-xs-12">&nbsp;</div>

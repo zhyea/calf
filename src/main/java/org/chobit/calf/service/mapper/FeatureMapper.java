@@ -13,13 +13,14 @@ import java.util.List;
 public interface FeatureMapper {
 
 
-    @Insert({"insert into feature (cover, name, alias, keywords, brief)",
+    @Insert({"insert into feature (cover, background, name, alias, keywords, brief, bg_repeat)",
             "values",
-            "(#{cover}, #{name}, #{alias}, #{keywords}, #{brief})"})
+            "(#{cover}, #{background}, #{name}, #{alias}, #{keywords}, #{brief}, #{bgRepeat})"})
     int insert(Feature feature);
 
 
-    @Update({"update feature set name=#{name}, cover=#{cover}, alias=#{alias}, keywords=#{keywords}, brief=#{brief}",
+    @Update({"update feature set ",
+            "name=#{name}, cover=#{cover}, background=#{background}, alias=#{alias}, keywords=#{keywords}, brief=#{brief}, bg_repeat=#{bgRepeat}",
             "where id=#{id}"})
     boolean update(Feature feature);
 

@@ -154,15 +154,17 @@ create table if not exists chapter
 -- feature
 create table if not exists feature
 (
-    id       int                not null auto_increment primary key,
+    id         int                not null auto_increment primary key,
 
-    cover    varchar(128),
-    name     varchar(64) unique not null,
-    alias    varchar(16),
-    keywords varchar(64),
-    brief    tinytext,
+    cover      varchar(128),
+    background varchar(128),
+    bg_repeat  tinyint                     default 1,
+    name       varchar(64) unique not null,
+    alias      varchar(16),
+    keywords   varchar(64),
+    brief      tinytext,
 
-    op_time  timestamp          not null default current_timestamp on update current_timestamp
+    op_time    timestamp          not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
 
@@ -191,6 +193,18 @@ create table if not exists remote_code
     id      int       not null auto_increment primary key,
     user_id int,
     code    varchar(32),
+    op_time timestamp not null default current_timestamp on update current_timestamp
+) ENGINE = MyISAM
+  DEFAULT CHARSET = utf8mb4;
+
+
+create table if not exists script
+(
+    id      int       not null auto_increment primary key,
+    name    varchar(64),
+    code    varchar(32),
+    script  varchar(512),
+    remark  varchar(256),
     op_time timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;

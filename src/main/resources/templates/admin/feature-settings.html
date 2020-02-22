@@ -8,21 +8,12 @@
 
     <div class="container main">
         <div class="page-header">
-            <h3 th:text="${f.id<=0 ? '新增专题' : '编辑专题' + f.name}"></h3>
+            <h3><i class="glyphicon glyphicon-folder-open"></i> [[${f.id>0?'编辑-'+f.name : '新增专题'}]]</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>
 
         <form method="post" action="/admin/feature/settings" enctype="multipart/form-data" th:object="${f}">
-            <div class="row">
-                <div class="form-label col-md-2 col-xs-12">封面</div>
-                <div class="form-input col-md-10 col-xs-12">
-                    <div class="form-input col-md-12 col-xs-12" th:if="${null!=f.cover}">
-                        <p class="lmt"><img th:src="@{*{cover}}" th:alt="${null==f.name ? 'Cover' : f.name}"/></p>
-                    </div>
-                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="cover"/>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="form-label col-md-2 col-xs-12">专题名称</div>
@@ -54,6 +45,36 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">封面</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="cover"/>
+                    <div class="form-input col-md-12 col-xs-12" th:if="${null!=f.cover}">
+                        <p class="lmt"><img th:src="@{*{cover}}" th:alt="${null==f.name ? 'Cover' : f.name}"/></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">背景</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <input type="file" class="form-control" accept="image/png, image/jpeg" name="background"/>
+                    <div class="form-input col-md-12 col-xs-12" th:if="${null!=f.background}">
+                        <p class="lmt"><img th:src="@{*{background}}" th:alt="${null==f.name ? 'Cover' : f.name}"/></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">背景重复</div>
+                <div class="form-input col-md-10 col-xs-12" style="padding-top:6px;">
+                    <label class="radio-inline">
+                        <input type="radio" name="bgRepeat" value="1" th:checked="${f.bgRepeat == 1}"> 重复
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="bgRepeat" value="2" th:checked="${f.bgRepeat == 2}"> 不重复
+                    </label>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="btn-left col-md-6 col-xs-12">

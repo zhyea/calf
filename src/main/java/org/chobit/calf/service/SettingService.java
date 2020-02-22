@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.chobit.calf.utils.Strings.isNotBlank;
+import static org.chobit.calf.utils.Strings.toInt;
 
 /**
  * @author robin
@@ -50,6 +51,7 @@ public class SettingService {
         setting.setNotice(map.get("notice"));
         setting.setLogo(map.get("logo"));
         setting.setBackgroundImg(map.get("backgroundImg"));
+        setting.setBgRepeat(toInt(map.get("bgRepeat"), 1));
 
         return setting;
     }
@@ -61,7 +63,10 @@ public class SettingService {
                          String keywords,
                          String notice,
                          MultipartFile logo,
-                         MultipartFile bgImg) {
+                         String currLogo,
+                         MultipartFile bgImg,
+                         String currBgImg,
+                         String bgRepeat) {
         try {
             Args.checkNotBlank(name, "网站名称不能为空");
 
@@ -71,14 +76,21 @@ public class SettingService {
             mapper.replace("notice", notice);
 
             String logoUrl = UploadKit.upload(logo);
-            if (null != logo && isNotBlank(logoUrl)) {
+            if (isNotBlank(logoUrl)) {
                 mapper.replace("logo", logoUrl);
+                if (isNotBlank(currLogo)) {
+                    UploadKit.delete(currLogo);
+                }
             }
 
             String bgImgUrl = UploadKit.upload(bgImg);
-            if (null != bgImg && isNotBlank(bgImgUrl)) {
+            if (isNotBlank(bgImgUrl)) {
                 mapper.replace("backgroundImg", bgImgUrl);
+                if (isNotBlank(currBgImg)) {
+                    UploadKit.delete(currBgImg);
+                }
             }
+            mapper.replace("bgRepeat", bgRepeat);
         } catch (Exception e) {
             logger.error("Maintaining settings error.", e);
         }
@@ -88,17 +100,19 @@ public class SettingService {
     @CacheEvict(key = "'all'")
     public Boolean delete(String item) {
         Args.check(item.equals("logo") || item.equals("backgroundImg"), "请求错误");
+        String path = mapper.getByName(item);
+        UploadKit.delete(path);
         return mapper.delete(item);
     }
 
 
     @Cacheable("'site-name'")
-    public String getSiteName(){
+    public String getSiteName() {
         return mapper.getByName("name");
     }
 
     @Cacheable("'site-notice'")
-    public String getNotice(){
+    public String getNotice() {
         return mapper.getByName("notice");
     }
 

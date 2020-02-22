@@ -8,41 +8,48 @@
 
     <div class="container main">
         <div class="page-header">
-            <h3><i class="glyphicon glyphicon-list-alt"></i> [[${cat.id>0 ? '编辑分类' : '新增分类'}]]</h3>
+            <h3><i class="glyphicon glyphicon-copyright-mark"></i> [[${spt.id>0?'编辑-'+spt.name:'新增脚本'}]]</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>
 
-        <form method="post" action="/admin/category/settings" th:object="${cat}">
+        <form method="post" action="/admin/spt/edit" th:object="${spt}">
+
             <div class="row">
-                <div class="form-label col-md-2 col-xs-12">名称</div>
+                <div class="form-label col-md-2 col-xs-12">脚本名称</div>
                 <div class="form-input col-md-10 col-xs-12">
                     <input type="hidden" name="id" th:value="*{id}"/>
-                    <input type="hidden" name="parent" th:value="${parent}"/>
                     <input type="text" class="form-control" name="name" th:value="*{name}" required autofocus/>
                 </div>
             </div>
+
             <div class="row">
-                <div class="form-label col-md-2 col-xs-12">缩略名</div>
+                <div class="form-label col-md-2 col-xs-12">脚本代号</div>
                 <div class="form-input col-md-10 col-xs-12">
-                    <input type="text" class="form-control" name="slug" th:value="*{slug}" required/>
+                    <input type="text" class="form-control" name="code" th:value="*{code}" required autofocus/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-label col-md-2 col-xs-12">脚本</div>
+                <div class="form-input col-md-10 col-xs-12">
+                    <textarea class="form-control" name="script" rows="6" th:text="*{script}"></textarea>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-label col-md-2 col-xs-12">备注</div>
                 <div class="form-input col-md-10 col-xs-12">
-                    <textarea class="form-control" name="remark" th:text="*{remark}"></textarea>
+                    <textarea class="form-control" name="remark" rows="6" th:text="*{remark}"></textarea>
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="btn-left col-md-6 col-xs-12">
-                    <a class="btn btn-info" th:href="|/admin/category/list/${parent}|">返回列表</a>
+                    <a href="/admin/spt/list" class="btn btn-info">返回脚本列表</a>
                 </div>
                 <div class="btn-right col-md-6 col-xs-12">
-                    <button type="submit" class="btn btn-success">保存分类</button>
+                    <button type="submit" class="btn btn-success">保存脚本信息</button>
                 </div>
             </div>
         </form>

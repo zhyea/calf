@@ -7,6 +7,10 @@ public class Feature extends AbstractEntity {
 
     private String cover;
 
+    private String background;
+
+    private int bgRepeat;
+
     private String name;
 
     private String alias;
@@ -23,6 +27,22 @@ public class Feature extends AbstractEntity {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public int getBgRepeat() {
+        return bgRepeat;
+    }
+
+    public void setBgRepeat(int bgRepeat) {
+        this.bgRepeat = bgRepeat;
     }
 
     public String getName() {

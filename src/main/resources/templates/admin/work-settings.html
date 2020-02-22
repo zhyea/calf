@@ -8,7 +8,7 @@
 
     <div class="container main">
         <div class="page-header">
-            <h3 th:text="${work.id>0 ? '编辑作品' : '新增作品'}"></h3>
+            <h3><i class="glyphicon glyphicon-hdd"></i> [[${work.id>0 ? '编辑作品' : '新增作品'}]]</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>

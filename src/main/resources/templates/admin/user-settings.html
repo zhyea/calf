@@ -10,7 +10,7 @@
     <div class="container main">
 
         <div class="page-header">
-            <h3 th:text="${user.id>0 ? '编辑用户':'新增用户'}"></h3>
+            <h3><i class="glyphicon glyphicon-user"></i> [[${user.id>0 ? '编辑用户':'新增用户'}]]</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>

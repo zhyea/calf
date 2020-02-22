@@ -26,7 +26,6 @@ import java.util.List;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
-import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
  * @author robin
@@ -35,8 +34,6 @@ import static org.chobit.calf.utils.Strings.isNotBlank;
 @CacheConfig(cacheNames = "work")
 public class WorkService {
 
-
-    private static final String PATH_DEFAULT_COVER = "/upload/default/cover/nocover.png";
 
     @Autowired
     private WorkMapper workMapper;
@@ -73,19 +70,14 @@ public class WorkService {
         }
 
         Work work = id > 0 ? get(id) : new Work();
-        work.setId(id);
         work.setName(name);
         work.setAuthorId(authorId);
         work.setCategoryId(catId);
         work.setBrief(brief);
         String pathCover = work.getCover();
-        if (!cover.isEmpty()) {
-            if (isNotBlank(pathCover) && !PATH_DEFAULT_COVER.equals(pathCover)) {
-                UploadKit.delete(pathCover);
-            }
-            pathCover = UploadKit.upload(cover);
-        }
-        pathCover = isBlank(pathCover) ? PATH_DEFAULT_COVER : pathCover;
+
+        pathCover = UploadKit.uploadCover(cover, pathCover);
+
         work.setCover(pathCover);
         if (id > 0) {
             workMapper.update(work);

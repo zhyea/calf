@@ -8,7 +8,7 @@
 
     <div class="container main">
         <div class="page-header">
-            <h3 th:if="${author.id>0 ? '编辑作者信息' : '新增作者信息'}"></h3>
+            <h3><i class="glyphicon glyphicon-pencil"></i> [[${author.id>0 ? '编辑作者信息' : '新增作者信息'}]]</h3>
         </div>
 
         <div th:replace="admin.alert::alert"></div>

@@ -118,6 +118,21 @@ public abstract class Strings {
     }
 
 
+    public static int toInt(String str) {
+        return toInt(str, 0);
+    }
+
+
+    public static int toInt(String str, int defaultValue) {
+        try {
+
+            return Integer.parseInt(str);
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
+
+
     /**
      * 获取UUID
      *

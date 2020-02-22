@@ -9,7 +9,7 @@
 
     <div class="container notice">
         <ol class="breadcrumb">
-            <li><a href="/"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
+            <li><a href="/"><i class="glyphicon glyphicon-folder-open">&nbsp;首页</i></a></li>
             <li th:text="${cat.name}"></li>
         </ol>
     </div>
@@ -32,7 +32,7 @@
                         <a th:href="|/author/*{authorId}|" th:text="*{author}"></a>
                     </div>
                     <div class="intro"
-                         th:text="|${#strings.substring(w.brief, 0, #strings.length(w.brief) > 256 ? 256 : #strings.length(w.brief))} ...|"></div>
+                         th:text="|${#strings.substring(w.brief, 0, #strings.length(w.brief) > 200 ? 200 : #strings.length(w.brief))} ...|"></div>
                 </div>
             </div>
         </div>

@@ -2,14 +2,19 @@ package org.chobit.calf.web.admin;
 
 import org.chobit.calf.constants.AlertType;
 import org.chobit.calf.model.AlertMessage;
+import org.chobit.calf.service.SettingService;
 import org.chobit.calf.tools.SessionHolder;
 import org.chobit.calf.web.AbstractPageController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
 /**
  * @author robin
  */
 public class AbstractAdminPageController extends AbstractPageController {
+
+    @Autowired
+    private SettingService settingService;
 
 
     @Override
@@ -32,6 +37,9 @@ public class AbstractAdminPageController extends AbstractPageController {
         if (null != alert) {
             map.put("alert", alert);
         }
+
+        map.put("siteName", settingService.getSiteName());
+
         return super.view(viewName, map, title);
     }
 }

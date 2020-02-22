@@ -11,8 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
 
-import static org.chobit.calf.constants.Config.PATH_UPLOAD;
-import static org.chobit.calf.constants.Config.URI_UPLOAD;
+import static org.chobit.calf.constants.Config.*;
+import static org.chobit.calf.constants.Config.PATH_DEFAULT_COVER;
 import static org.chobit.calf.utils.Dates.format;
 import static org.chobit.calf.utils.Strings.*;
 
@@ -62,6 +62,29 @@ public abstract class UploadKit {
 
         return URI_UPLOAD + date + "/" + fName;
     }
+
+
+    public static String uploadCover(MultipartFile cover, String curr) {
+        if (!cover.isEmpty()) {
+            if (isNotBlank(curr) && !PATH_DEFAULT_COVER.equals(curr)) {
+                delete(curr);
+            }
+            curr = upload(cover);
+        }
+        return isBlank(curr) ? PATH_DEFAULT_COVER : curr;
+    }
+
+
+    public static String uploadFile(MultipartFile file, String curr) {
+        if (!file.isEmpty()) {
+            if (isNotBlank(curr)) {
+                delete(curr);
+            }
+            curr = upload(file);
+        }
+        return isBlank(curr) ? null : curr;
+    }
+
 
     public static boolean delete(String path) {
         if (isBlank(path)) {

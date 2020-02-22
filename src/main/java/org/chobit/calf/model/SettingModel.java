@@ -17,6 +17,8 @@ public class SettingModel {
 
     private String backgroundImg;
 
+    private int bgRepeat;
+
     public String getName() {
         return name;
     }
@@ -63,5 +65,13 @@ public class SettingModel {
 
     public void setBackgroundImg(String backgroundImg) {
         this.backgroundImg = backgroundImg;
+    }
+
+    public int getBgRepeat() {
+        return bgRepeat;
+    }
+
+    public void setBgRepeat(int bgRepeat) {
+        this.bgRepeat = bgRepeat;
     }
 }

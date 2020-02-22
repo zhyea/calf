@@ -35,8 +35,11 @@ public class SettingPageController extends AbstractAdminPageController {
                            @RequestParam("keywords") String keywords,
                            @RequestParam("notice") String notice,
                            @RequestParam("logo") MultipartFile logo,
-                           @RequestParam("backgroundImg") MultipartFile backgroundImg) {
-        settingService.maintain(name, desc, keywords, notice, logo, backgroundImg);
+                           @RequestParam("currLogo") String currLogo,
+                           @RequestParam("backgroundImg") MultipartFile backgroundImg,
+                           @RequestParam("currBgImg") String currBgImg,
+                           @RequestParam("bgRepeat") String bgRepeat) {
+        settingService.maintain(name, desc, keywords, notice, logo, currLogo, backgroundImg, currBgImg, bgRepeat);
         interactMsg("维护网站设置成功。");
         return redirect("/admin/settings");
     }

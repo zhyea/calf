@@ -9,7 +9,7 @@
 
     <div class="container notice">
         <ol class="breadcrumb">
-            <li><a href="/"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
+            <li><a href="/"><i class="glyphicon glyphicon-folder-open">&nbsp;首页</i></a></li>
             <li><a th:href="|/${w.catSlug}|">[[${w.cat}]]</a></li>
             <li class="active">[[${w.name}]]</li>
         </ol>
@@ -22,14 +22,14 @@
         </div>
 
         <div class="work-neck row">
-            <div class="col-md-2 cover">
-                <img th:src="${w.cover}" width="120px" height="156px"/>
+            <div class="cover">
+                <img th:src="${w.cover}" width="80px" height="100px"/>
             </div>
 
-            <div class="col-md-10 col-xs-12 brief">
+            <div class="brief">
                 <div class="intro">[[${w.brief}]]</div>
                 <div class="relate">
-                    <i class="glyphicon glyphicon-tags"></i> [[${w.author}]]作品：
+                    <i class="glyphicon glyphicon-tags"></i>  [[${w.author}]]作品：
                     <a th:each="r : ${relate}" th:href="|/work/${r.id}|" th:text="${r.name}"></a>
                 </div>
             </div>

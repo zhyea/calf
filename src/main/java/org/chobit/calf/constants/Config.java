@@ -35,4 +35,9 @@ public final class Config {
      */
     public static final int DEFAULT_PAGE_LENGTH = 12;
 
+    /**
+     * 默认封面路径
+     */
+    public static final String PATH_DEFAULT_COVER = "/upload/default/cover/nocover.png";
+
 }

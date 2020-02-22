@@ -53,7 +53,7 @@ body {
 
 .notice {
     height: 42px;
-    padding: 2px 0 0 12px;
+    padding: 2px 0 0 16px;
     line-height: 42px;
     border-bottom: 1px solid #ddd;
 }
@@ -238,14 +238,16 @@ body {
 
 .work-neck {
     margin: 0;
-    padding: 12px 16px;
+    padding: 12px 9px;
     border-bottom: 1px solid #e2e2e2;
     vertical-align: baseline;
     height: auto;
 }
 
 .work-neck .cover {
-    height: 156px;
+    float: left;
+    width: 82px;
+    height: 108px;
     overflow: hidden;
 }
 
@@ -256,7 +258,7 @@ body {
 .work-neck .brief .intro {
     padding: 6px 0;
     overflow: hidden;
-    height: 132px;
+    height: 75px;
     color: #737383;
     line-height: 180%;
     text-indent: 2em;
@@ -264,7 +266,7 @@ body {
 
 .work-neck .brief .relate {
     height: 24px;
-    padding: 8px 16px 0 0;
+    padding: 8px 16px 0 6px;
     overflow: hidden;
     font-size: 12px;
 }

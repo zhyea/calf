@@ -40,8 +40,10 @@ public class FeaturePageController extends AbstractAdminPageController {
                            @RequestParam String alias,
                            @RequestParam String keywords,
                            @RequestParam String brief,
-                           @RequestParam MultipartFile cover) {
-        featureService.maintain(id, name, alias, keywords, brief, cover);
+                           @RequestParam MultipartFile cover,
+                           @RequestParam MultipartFile background,
+                           @RequestParam String bgRepeat) {
+        featureService.maintain(id, name, alias, keywords, brief, cover, background, bgRepeat);
         interactMsg("专题信息保存成功");
         if (id > 0) {
             return redirect("/admin/feature/settings/" + id);
