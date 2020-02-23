@@ -1,0 +1,19 @@
+[Unit]
+Description=Calf Service
+Documentation=https://calf.chobit.org
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/java -server -Xms128m -Xmx256m -jar /www/calf/calf.jar
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=always
+StandOutput=syslog
+
+StandError=inherit
+
+[Install]
+WantedBy=multi-user.target
+
+# the file should be placed at /usr/lib/systemd/system/
