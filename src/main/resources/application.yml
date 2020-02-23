@@ -3,7 +3,7 @@ spring:
   application:
     name: calf
   profiles:
-    active: dev
+    active: prod
   cache:
     type: CAFFEINE
     caffeine:
