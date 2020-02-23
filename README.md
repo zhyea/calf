@@ -35,3 +35,56 @@ sudo service calf stop
 # 查看 Calf 的运行状态
 sudo service calf status
 ```
+
+## Domain
+
+安装Nginx
+
+```shell script
+# 添加 Nginx 源
+sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+# 安装 Nginx
+sudo yum install -y nginx
+
+# 启动 Nginx
+sudo systemctl start nginx.service
+
+# 设置开机自启 Nginx
+sudo systemctl enable nginx.service
+```
+
+将配置文件calf.conf移动到如下位置
+
+```text
+/etc/nginx/conf.d/
+```
+
+修改calf.conf文件中的域名和端口信息。
+
+然后执行如下操作：
+
+```shell script
+# 检查配置是否有误
+sudo nginx -t
+
+# 重载 Nginx 配置
+sudo nginx -s reload
+```
+
+
+配置证书
+```shell script
+
+yum install -y epel-release
+
+# 安装 certbot 以及 certbot nginx 插件
+yum install -y certbot
+
+# 执行配置，中途会询问你的邮箱，如实填写即可
+certbot --nginx
+
+# 自动续约
+certbot renew --dry-run
+```
+
