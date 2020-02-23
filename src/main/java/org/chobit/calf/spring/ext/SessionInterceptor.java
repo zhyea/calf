@@ -21,13 +21,15 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String uri = request.getRequestURI();
-        if (uri.startsWith("/admin") || uri.startsWith("/api")) {
+        if (uri.equals("/api/remote/work")) {
+            return null != request.getHeader("code");
+        } else if (uri.startsWith("/admin") || uri.startsWith("/api")) {
             if (uri.startsWith("/admin/static")) {
                 return true;
             }
             SessionHolder.add(request);
-            Object user = SessionHolder.getAttribute("user");
-            if (user instanceof User) {
+            User user = SessionHolder.getUser();
+            if (null != user) {
                 return true;
             }
             try {

@@ -157,7 +157,7 @@ public class ChapterService {
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public void addChapter(int workId, String volName, String chapterName, String content) {
-        if (volName.equals(chapterName)) {
+        if (isBlank(volName) || volName.equals(chapterName)) {
             volName = "正文";
         }
 

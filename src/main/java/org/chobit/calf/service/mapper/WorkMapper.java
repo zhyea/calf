@@ -111,4 +111,8 @@ public interface WorkMapper {
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.id=#{id}"})
     WorkModel getDetail(@Param("id") int id);
+
+
+    @Select("select * from work where name=#{name}")
+    Work getByName(@Param("name")String name);
 }

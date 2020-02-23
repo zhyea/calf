@@ -4,5 +4,4 @@
      \     \____ / __ \_|  |__ |  |
       \______  /(____  /|____/ |__|
              \/      \/
-${AnsiColor.CYAN}=======CALF CMS===========chobit=================================================
-${AnsiStyle.NORMAL}
+=========${AnsiColor.CYAN}CALF CMS${AnsiColor.WHITE}======${AnsiColor.RED}chobit${AnsiColor.WHITE}=================================================

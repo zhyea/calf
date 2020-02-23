@@ -39,7 +39,7 @@ public class MetaService {
     @Autowired
     private WorkService workService;
 
-    private static final int DEFAULT_CATEGORY_ID = 1;
+    public static final int DEFAULT_CATEGORY_ID = 1;
 
 
     public List<Category> findCatByParent(int parent) {
@@ -79,7 +79,7 @@ public class MetaService {
         meta.setParent(parent);
         meta.setType(CATEGORY.name());
         meta.setName(name);
-        meta.setSlug(slug);
+        meta.setSlug(slug.trim());
         meta.setRemark(remark);
 
         if (id > 0) {

@@ -1,6 +1,7 @@
 package org.chobit.calf.tools;
 
 import org.chobit.calf.model.AlertMessage;
+import org.chobit.calf.service.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,18 @@ public abstract class SessionHolder {
     }
 
 
+    public static void clear() {
+        HttpSession session = get();
+        if (null != session) {
+            try {
+                session.invalidate();
+            } catch (IllegalStateException e) {
+            }
+        }
+        SESSION_HOLDER.remove();
+    }
+
+
     public static void addAlert(AlertMessage alertMessage) {
         HttpSession session = get();
         if (null != session && null == session.getAttribute("alert")) {
@@ -48,9 +61,9 @@ public abstract class SessionHolder {
     public static <T> void addAttribute(String attributeName, T value) {
         HttpSession session = get();
         if (null != session) {
-            try{
+            try {
                 session.setAttribute(attributeName, value);
-            }catch(IllegalStateException e){
+            } catch (IllegalStateException e) {
                 SESSION_HOLDER.remove();
             }
         }
@@ -91,7 +104,14 @@ public abstract class SessionHolder {
     }
 
 
+    public static User getUser() {
+        return getAttribute("user");
+    }
 
+
+    public static void addUser(User user) {
+        addAttribute("user", user);
+    }
 
     private SessionHolder() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -111,10 +110,7 @@ public class UserService implements InitializingBean {
             }
             throw new CalfArgsException("用户名或密码错误，十分钟内您还能重试" + (3 - count) + "次");
         } else {
-            HttpSession session = SessionHolder.get();
-            if (null != session) {
-                session.setAttribute("user", user);
-            }
+            SessionHolder.addUser(user);
         }
         return user;
     }

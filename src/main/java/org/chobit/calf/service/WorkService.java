@@ -87,6 +87,9 @@ public class WorkService {
     }
 
 
+
+
+
     /**
      * 获取作品信息
      */
@@ -231,6 +234,15 @@ public class WorkService {
     @Cacheable(key = "'get-detail' + #id")
     public WorkModel getDetail(int id) {
         return workMapper.getDetail(id);
+    }
+
+
+    @Cacheable(key = "'getByName' + #name")
+    public Work getByName(String name) {
+        if (isBlank(name)) {
+            return null;
+        }
+        return workMapper.getByName(name);
     }
 
 }

@@ -24,4 +24,6 @@ public class RemoteCode extends AbstractEntity {
     public void setCode(String code) {
         this.code = code;
     }
+
+
 }

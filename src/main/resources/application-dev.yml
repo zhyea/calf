@@ -4,7 +4,7 @@ spring:
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/calf?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&socketTimeout=30000&connectTimeout=3000
+    url: jdbc:mysql://127.0.0.1:3306/calf?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&rewriteBatchedStatements=true&useSSL=false&socketTimeout=30000&connectTimeout=3000
     username: root
     password: root
     dbcp2:

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author robin
  */
-
 @Controller
 @RequestMapping("/login")
 public class LoginPageController extends AbstractAdminPageController {

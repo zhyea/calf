@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.chobit.calf.constants.AlertType;
 import org.chobit.calf.except.CalfAdminException;
 import org.chobit.calf.except.CalfArgsException;
+import org.chobit.calf.except.CalfRemoteException;
 import org.chobit.calf.model.AlertMessage;
 import org.chobit.calf.tools.SessionHolder;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class ExceptionAlertAdvisor {
         } catch (CalfArgsException | CalfAdminException e) {
             SessionHolder.addAlert(new AlertMessage(AlertType.DANGER, e.getMessage()));
             return null;
+        } catch (CalfRemoteException cre) {
+            logger.error("服务器异常", cre);
+            throw cre;
         } catch (Exception e) {
             logger.error("服务器异常", e);
             SessionHolder.addAlert(new AlertMessage(AlertType.DANGER, "服务器异常，请联系管理员"));
