@@ -17,6 +17,10 @@ public abstract class SessionHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(SessionHolder.class);
 
+
+    private static final String KEY_USER = "user";
+    private static final String KEY_ALERT = "alert";
+
     private static final ThreadLocal<HttpSession> SESSION_HOLDER = new ThreadLocal<>();
 
 
@@ -47,14 +51,14 @@ public abstract class SessionHolder {
 
     public static void addAlert(AlertMessage alertMessage) {
         HttpSession session = get();
-        if (null != session && null == session.getAttribute("alert")) {
-            addAttribute("alert", alertMessage);
+        if (null != session && null == session.getAttribute(KEY_ALERT)) {
+            addAttribute(KEY_ALERT, alertMessage);
         }
     }
 
 
     public static AlertMessage takeAlert() {
-        return SessionHolder.takeAttribute("alert");
+        return SessionHolder.takeAttribute(KEY_ALERT);
     }
 
 
@@ -82,7 +86,6 @@ public abstract class SessionHolder {
             } catch (IllegalStateException ise) {
                 SESSION_HOLDER.remove();
             }
-
         }
         return null;
     }
@@ -105,13 +108,21 @@ public abstract class SessionHolder {
 
 
     public static User getUser() {
-        return getAttribute("user");
+        return getAttribute(KEY_USER);
     }
 
 
     public static void addUser(User user) {
-        addAttribute("user", user);
+        addAttribute(KEY_USER, user);
     }
+
+
+    public static User removeUser() {
+        User user = takeAttribute(KEY_USER);
+        SESSION_HOLDER.remove();
+        return user;
+    }
+
 
     private SessionHolder() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");

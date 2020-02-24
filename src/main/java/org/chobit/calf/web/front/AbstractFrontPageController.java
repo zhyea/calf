@@ -33,6 +33,9 @@ public abstract class AbstractFrontPageController extends AbstractPageController
         map.put("cats", cats);
         map.put("siteName", settings.getName());
         map.put("notice", settings.getNotice());
+        map.put("description", settings.getDescription());
+        map.put("keywords", settings.getKeywords());
+
         if (!map.containsKey("logo")) {
             map.put("logo", settings.getLogo());
         }

@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
  */
 public class AbstractAdminPageController extends AbstractPageController {
 
+
     @Autowired
     private SettingService settingService;
 

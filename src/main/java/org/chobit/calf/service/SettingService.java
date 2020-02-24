@@ -97,7 +97,7 @@ public class SettingService {
     }
 
 
-    @CacheEvict(key = "'all'")
+    @CacheEvict(allEntries = true)
     public Boolean delete(String item) {
         Args.check(item.equals("logo") || item.equals("backgroundImg"), "请求错误");
         String path = mapper.getByName(item);
@@ -106,12 +106,12 @@ public class SettingService {
     }
 
 
-    @Cacheable("'site-name'")
+    @Cacheable(key="'site-name'")
     public String getSiteName() {
         return mapper.getByName("name");
     }
 
-    @Cacheable("'site-notice'")
+    @Cacheable(key="'site-notice'")
     public String getNotice() {
         return mapper.getByName("notice");
     }
