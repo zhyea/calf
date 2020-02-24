@@ -15,10 +15,6 @@ spring:
     initialization-mode: always
   thymeleaf:
     cache: false
-  devtools:
-    restart:
-      enabled: true
-
 
 server:
   port: 8190
