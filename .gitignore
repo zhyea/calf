@@ -5,4 +5,4 @@ Would skip repository zero/
 !/logs/
 logs/
 !/src/main/resources/application-prod.yml
-!/src/main/resources/logback.xml
+!/src/main/resources/templates/themes/pure/static/imgs/favicon.ico
