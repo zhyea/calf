@@ -1,5 +1,8 @@
 debug: false
 
+server:
+  port: 8190
+
 spring:
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
@@ -16,5 +19,5 @@ spring:
   thymeleaf:
     cache: false
 
-server:
-  port: 8190
+calf:
+  passoword-salt: chobit

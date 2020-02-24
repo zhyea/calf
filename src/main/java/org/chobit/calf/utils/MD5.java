@@ -16,10 +16,16 @@ public abstract class MD5 {
 
     private static final String SALT = "#_9a.爨";
 
+
     public static String encode(String src) {
+        return encode(SALT, src);
+    }
+
+
+    public static String encode(String salt, String src) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
-            m.update((src + SALT).getBytes());
+            m.update((src + salt).getBytes());
             byte[] bytes = m.digest();
             String result = "";
             for (int i = 0; i < bytes.length; i++) {
@@ -30,7 +36,7 @@ public abstract class MD5 {
             logger.error("Encode with MD5 failed.", e);
         }
 
-        return new String((SALT + src).getBytes(), StandardCharsets.US_ASCII);
+        return new String((salt + src).getBytes(), StandardCharsets.US_ASCII);
     }
 
 

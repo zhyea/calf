@@ -18,6 +18,7 @@ mybatis:
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 calf:
+  passoword-salt: hehehe
   theme: pure
   fragments:
     recommend: common/recommend

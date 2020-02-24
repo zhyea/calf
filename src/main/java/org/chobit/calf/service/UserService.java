@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -33,6 +34,9 @@ public class UserService implements InitializingBean {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Value("${calf.passoword-salt}")
+    private String passwordSalt;
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -67,7 +71,7 @@ public class UserService implements InitializingBean {
         Integer flag = userMapper.checkByUsernameAndEmail(id, username, email);
         Args.check(null == flag, "用户名或邮箱已存在");
 
-        User user = new User(username, MD5.encode(password), email, nickname);
+        User user = new User(username, MD5.encode(passwordSalt, password), email, nickname);
         user.setId(id);
 
         if (id > 0) {
@@ -98,7 +102,7 @@ public class UserService implements InitializingBean {
 
         logger.info("user {} signs in from {}", username, ip);
 
-        User user = userMapper.getByUsernameAndPassword(username, MD5.encode(password));
+        User user = userMapper.getByUsernameAndPassword(username, MD5.encode(passwordSalt, password));
         if (null == user) {
             Integer count = retryCache.getIfPresent(username);
             count = null == count ? 0 : count;
