@@ -13,10 +13,10 @@ import static org.chobit.calf.constants.Config.PATH_ADMIN;
  * @author robin
  */
 @Component
-@ConfigurationProperties(prefix = "calf")
+@ConfigurationProperties(prefix = "calf.theme")
 public class CalfThemeConfig implements InitializingBean {
 
-    private String theme;
+    private String name;
 
     private Map<String, String> fragments;
 
@@ -27,7 +27,7 @@ public class CalfThemeConfig implements InitializingBean {
     }
 
     public String getThemePath() {
-        return "themes/" + theme + "/";
+        return "themes/" + name + "/";
     }
 
 
@@ -50,12 +50,12 @@ public class CalfThemeConfig implements InitializingBean {
         }
     }
 
-    public String getTheme() {
-        return theme;
+    public String getName() {
+        return name;
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Map<String, String> getFragments() {

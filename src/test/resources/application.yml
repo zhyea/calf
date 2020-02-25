@@ -15,8 +15,3 @@ spring:
 mybatis:
   configuration:
     mapUnderscoreToCamelCase: true
-
-
-
-calf:
-  theme: pure

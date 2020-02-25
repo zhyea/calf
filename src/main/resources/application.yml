@@ -19,7 +19,8 @@ mybatis:
 
 calf:
   passoword-salt: hehehe
-  theme: pure
-  fragments:
-    recommend: common/recommend
+  theme:
+    name: pure
+    fragments:
+      recommend: common/recommend
 
