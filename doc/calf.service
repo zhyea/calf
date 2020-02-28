@@ -6,7 +6,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/java -server -Xms128m -Xmx256m -jar /www/calf/calf.jar
+ExecStart=/path_to_boot
 ExecStop=/bin/kill -s QUIT $MAINPID
 Restart=always
 StandOutput=syslog
