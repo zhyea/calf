@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:remove="tag" th:fragment="work">
+
+    <div class="row work-show">
+        <div class="col-md-6 col-xs-12 work" th:each="w : ${works}" th:object="${w}">
+            <div class="cover">
+                <a th:href="|/work/*{id}|"><img th:src="*{cover}" width="118px" height="156px"/></a>
+            </div>
+            <div class="brief">
+                <div>
+                    <span class="title"><a th:href="|/work/*{id}|" th:text="*{name}"></a></span>
+                    <span class="author">
+                        <a class="author" th:href="|/author/*{authorId}|" th:text="*{author}"></a>
+                    </span>
+                </div>
+                <div class="intro"
+                     th:text="|${#strings.substring(w.brief, 0, #strings.length(w.brief) > 200 ? 200 : #strings.length(w.brief))} ...|"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -31,7 +31,7 @@ public class RemoteCodeService {
     @Autowired
     private ChapterService chapterService;
 
-    public String add() {
+    public RemoteCode add() {
         User user = SessionHolder.getUser();
         if (null == user) {
             SessionHolder.clear();
@@ -44,7 +44,7 @@ public class RemoteCodeService {
         }
         rc.setCode(ShortCode.gen());
         insertOrUpdate(rc);
-        return rc.getCode();
+        return rc;
     }
 
 

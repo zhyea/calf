@@ -15,8 +15,8 @@ public class UserServiceTest extends TestBase {
     private String passwordSalt;
 
     @Test
-    public void encode(){
-        System.out.println(MD5.encode(passwordSalt + "admin"));
+    public void encode() {
+        System.out.println(MD5.encode(passwordSalt, "admin"));
     }
 
 

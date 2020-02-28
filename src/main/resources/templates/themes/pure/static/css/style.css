@@ -140,21 +140,21 @@ body {
 }
 
 .work-show .work {
-    padding: 12px 15px;
+    padding: 12px;
     border-bottom: 1px solid #ddd;
     overflow: hidden;
 }
 
 .work-show .cover {
     float: left;
-    width: 124px;
+    width: 118px;
     height: 156px;
     overflow: hidden;
 }
 
 .work-show .brief {
-    padding: 0 8px;
-    margin-left: 124px;
+    padding: 0 0 0 8px;
+    margin-left: 110px;
     height: 156px;
     overflow: hidden;
 }
@@ -180,16 +180,17 @@ body {
 }
 
 .work-show .brief .author a {
-    color: #129151;
+    color: #5e5e5e;
 }
 
 .work-show .brief .author a:hover {
-    color: #999;
+    color: #129151;
 }
 
 .work-show .brief .intro {
-    line-height: 150%;
+    line-height: 160%;
     overflow: hidden;
+    letter-spacing: 1px;
 }
 
 .pagination {
@@ -297,7 +298,7 @@ body {
     padding: 6px 12px;
     overflow: hidden;
     white-space: nowrap;
-    line-height: 210%;
+    line-height: 196%;
     border-bottom: 1px dashed #e2e2e2;
 }
 
@@ -306,7 +307,7 @@ body {
 }
 
 .work-body .chapter a {
-    color: #000;
+    color: #333;
 }
 
 .work-body .chapter a:hover {
@@ -417,5 +418,53 @@ body {
 @media screen and (max-width: 480px) {
     .header {
         display: none;
+    }
+}
+
+
+@media (min-width: 600px) {
+
+
+    #floatPanel .ctrolPanel {
+        width: 36px;
+        height: 62px;
+        background: #fff url(/static/imgs/float-panel-bg.png) no-repeat left top;
+        border: solid 1px #ddd;
+        margin-left: 435px;
+        position: fixed;
+        _position: absolute;
+        bottom: 76px;
+        left: 50%;
+        overflow: hidden;
+        z-index: 10000;
+    }
+
+    #floatPanel .ctrolPanel .arrow {
+        height: 29px;
+        line-height: 28px;
+        display: block;
+        margin: 1px auto;
+    }
+
+    #floatPanel .ctrolPanel .arrow span {
+        display: none;
+    }
+
+    #floatPanel .ctrolPanel .arrow:hover {
+        background: #f4f4f4
+    }
+
+    #floatPanel .ctrolPanel .arrow:hover span {
+        display: block
+    }
+
+    #floatPanel .ctrolPanel a {
+        text-decoration: none;
+        width: 34px;
+        font-size: 12px;
+        color: #f60;
+        letter-spacing: 1px;
+        text-align: center;
+        overflow: hidden;
     }
 }

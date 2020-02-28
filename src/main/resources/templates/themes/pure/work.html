@@ -29,7 +29,7 @@
             <div class="brief">
                 <div class="intro">[[${w.brief}]]</div>
                 <div class="relate">
-                    <i class="glyphicon glyphicon-tags"></i>  [[${w.author}]]作品：
+                    <i class="glyphicon glyphicon-tags"></i> [[${w.author}]]作品：
                     <a th:each="r : ${relate}" th:href="|/work/${r.id}|" th:text="${r.name}"></a>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 
         <div class="work-body">
             <div class="row" th:each="vol : ${vols}">
-                <div class="col-md-12 col-xs-12 volume">
+                <div class="col-md-12 col-xs-12 volume" th:id="|vol_${vol.id}|">
                     <i class="glyphicon glyphicon-bookmark"></i> [[${vol.name}]]
                 </div>
                 <div class="col-md-4 col-xs-12 chapter" th:each="chp:${vol.chapters}">
@@ -48,4 +48,9 @@
     </div>
     <div th:replace="footer::footer"></div>
 </div>
+
+
+<script type="text/javascript">
+    backToTop();
+</script>
 </body>
