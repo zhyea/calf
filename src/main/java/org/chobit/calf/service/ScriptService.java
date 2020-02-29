@@ -63,6 +63,9 @@ public class ScriptService {
 
     @CacheEvict(allEntries = true)
     public Boolean delete(int id) {
+        if (id <= 6) {
+            return true;
+        }
         return scriptMapper.delete(id);
     }
 }

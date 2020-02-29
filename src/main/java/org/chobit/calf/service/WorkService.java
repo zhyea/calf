@@ -51,7 +51,7 @@ public class WorkService {
     /**
      * 数据维护
      */
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "chapter", "feature", "author"}, allEntries = true)
     public void maintain(int id, String name,
                          int authorId, String author, String country,
                          int catId, String cat,
@@ -85,9 +85,6 @@ public class WorkService {
             workMapper.insert(work);
         }
     }
-
-
-
 
 
     /**
@@ -158,7 +155,7 @@ public class WorkService {
     /**
      * 使用ID删除记录
      */
-    @CacheEvict(allEntries = true)
+    @CacheEvict(cacheNames = {"work", "chapter", "feature", "author"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteByIds(Collection<Integer> ids) {
         if (isEmpty(ids)) {

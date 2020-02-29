@@ -83,16 +83,31 @@ body {
     background: #5FB878;
 }
 
-.recommend .item .cover, .remark {
+.recommend .item .cover,
+.recommend .item .remark,
+.recommend .item .shade {
     margin: 0 auto;
     width: 120px;
 }
 
-.recommend .item .remark {
+.recommend .item .shade, .recommend .item .remark {
+    position: absolute;
+    bottom: 12px;
+    z-index: 900;
     height: 27px;
     overflow: hidden;
     line-height: 2.5em;
     font-size: 13px;
+    background-color: #255625;
+    opacity: 0.5;
+    color: #000;
+    font-weight: bold;
+}
+
+.recommend .item .remark {
+    background: none;
+    z-index: 999;
+    opacity: 1;
 }
 
 .recommend .item .remark a {
@@ -176,6 +191,7 @@ body {
 }
 
 .work-show .brief .author {
+    font-size: 12px;
     line-height: 32px;
 }
 
@@ -285,10 +301,10 @@ body {
 
 .work-body .volume {
     margin-top: 9px;
-    padding: 9px 12px 6px;
-    background-color: #ececec;
+    padding: 9px 12px 8px;
+    background-color: #f1fee8;
     text-align: left;
-    font: 17px Arial;
+    font: 16px Arial;
     color: #1d6300;
     border-bottom: 1px solid #e2e2e2;
     border-top: 2px solid #129151;
@@ -298,7 +314,7 @@ body {
     padding: 6px 12px;
     overflow: hidden;
     white-space: nowrap;
-    line-height: 196%;
+    line-height: 189%;
     border-bottom: 1px dashed #e2e2e2;
 }
 
@@ -415,8 +431,12 @@ body {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 560px) {
     .header {
+        display: none;
+    }
+
+    #floatPanel {
         display: none;
     }
 }
@@ -424,8 +444,8 @@ body {
 
 @media (min-width: 600px) {
 
-
-    #floatPanel .ctrolPanel {
+    /* ------------------------------ 上下移动按钮 ------------------------------ */
+    #floatPanel .ctrlPanel {
         width: 36px;
         height: 62px;
         background: #fff url(/static/imgs/float-panel-bg.png) no-repeat left top;
@@ -439,26 +459,26 @@ body {
         z-index: 10000;
     }
 
-    #floatPanel .ctrolPanel .arrow {
+    #floatPanel .ctrlPanel .arrow {
         height: 29px;
         line-height: 28px;
         display: block;
         margin: 1px auto;
     }
 
-    #floatPanel .ctrolPanel .arrow span {
+    #floatPanel .ctrlPanel .arrow span {
         display: none;
     }
 
-    #floatPanel .ctrolPanel .arrow:hover {
+    #floatPanel .ctrlPanel .arrow:hover {
         background: #f4f4f4
     }
 
-    #floatPanel .ctrolPanel .arrow:hover span {
+    #floatPanel .ctrlPanel .arrow:hover span {
         display: block
     }
 
-    #floatPanel .ctrolPanel a {
+    #floatPanel .ctrlPanel a {
         text-decoration: none;
         width: 34px;
         font-size: 12px;

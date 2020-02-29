@@ -23,7 +23,7 @@ public interface ScriptMapper {
     boolean update(Script script);
 
 
-    @Select("select id, name, code from script")
+    @Select("select id, name, code, script from script")
     List<Script> findAll();
 
 

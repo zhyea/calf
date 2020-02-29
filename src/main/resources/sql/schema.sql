@@ -171,7 +171,7 @@ create table if not exists feature
 insert into feature (name, alias, keywords)
 select '推荐', 'recommend', '推荐'
 from dual
-where not exists(select 1 from feature where name = '推荐');
+where not exists(select 1 from feature where alias = 'recommend');
 
 
 -- feature-work
@@ -208,4 +208,34 @@ create table if not exists script
     op_time timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
+
+insert into script (name, code)
+select '统计', 'statistic'
+from dual
+where not exists(select 1 from script where code = 'statistic');
+
+insert into script (name, code)
+select '底部文案', 'bottom_text'
+from dual
+where not exists(select 1 from script where code = 'bottom_text');
+
+insert into script (name, code)
+select '文章顶部广告', 'chapter_top_ad'
+from dual
+where not exists(select 1 from script where code = 'chapter_top_ad');
+
+insert into script (name, code)
+select '文章底部广告', 'chapter_bottom_ad'
+from dual
+where not exists(select 1 from script where code = 'chapter_bottom_ad');
+
+insert into script (name, code)
+select '导航页底部广告', 'volume_bottom_ad'
+from dual
+where not exists(select 1 from script where code = 'volume_bottom_ad');
+
+insert into script (name, code)
+select '导航页顶端广告', 'volume_top_ad'
+from dual
+where not exists(select 1 from script where code = 'volume_top_ad');
 

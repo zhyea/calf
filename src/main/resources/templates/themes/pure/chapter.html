@@ -47,6 +47,8 @@
                 →
                 <a th:if="${next>0}" th:href="|/chapter/${next}|">下一章</a> <a th:if="${next==0}">没有了</a>
             </div>
+
+            <div th:if="${!#strings.isEmpty(chapter_bottom_ad)}" th:utext="${chapter_bottom_ad}"></div>
         </div>
 
     </div>

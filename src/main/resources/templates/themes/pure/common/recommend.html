@@ -9,10 +9,11 @@
         <div class="item col-md-2 col-xs-2" th:each="r: ${recommend}" th:object="${r}">
             <div class="cover">
                 <a th:href="|/work/*{id}|">
-                    <img th:src="*{cover}" width="120px" height="156px"/>
+                    <img th:src="*{cover}" width="120px" height="172px"/>
                 </a>
+                <div class="remark"><a th:href="|/work/*{id}|" th:text="*{name}"></a></div>
+                <div class="shade"><a th:href="|/work/*{id}|" th:text="*{name}"></a></div>
             </div>
-            <div class="remark"><a th:href="|/work/*{id}|" th:text="*{name}"></a></div>
         </div>
     </div>
 </div>
