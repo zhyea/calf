@@ -46,7 +46,7 @@ public class FrontPageController extends AbstractFrontPageController {
     }
 
 
-    @GetMapping({"/{catSlug}", "/{catSlug}/{page}"})
+    @GetMapping({"/c/{catSlug}", "/c/{catSlug}/{page}"})
     public String category(@PathVariable("catSlug") String catSlug,
                            @PathVariable(value = "page", required = false) Integer pageNo,
                            ModelMap map) {
@@ -122,7 +122,7 @@ public class FrontPageController extends AbstractFrontPageController {
         map.put("last", null == last ? 0 : last.getId());
         map.put("next", null == next ? 0 : next.getId());
 
-        return view("chapter", map, chapter.getName());
+        return view("chapter", map, chapter.getName() + "-" + work.getName());
     }
 
 

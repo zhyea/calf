@@ -34,7 +34,7 @@
                      th:each="cat:${cats.children}"
                      th:object="${cat}">
                     <li class="dropdown" th:if="${!#lists.isEmpty(cat.children)}">
-                        <a th:href="|/*{slug}|"
+                        <a th:href="|/c/*{slug}|"
                            class="dropdown-toggle"
                            data-toggle="dropdown"
                            role="button"
@@ -42,18 +42,18 @@
                            aria-expanded="false">[[${cat.name}]]<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a th:href="|/*{slug}|" th:text="*{name}"></a>
+                                <a th:href="|/c/*{slug}|" th:text="*{name}"></a>
                             </li>
 
                             <div th:each="sub:*{children}" th:remove="tag" th:object="${sub}">
                                 <li>
-                                    <a th:href="|/*{slug}|" th:text="*{name}"></a>
+                                    <a th:href="|/c/*{slug}|" th:text="*{name}"></a>
                                 </li>
                             </div>
                         </ul>
                     </li>
                     <li th:if="${#lists.isEmpty(cat.children)}">
-                        <a th:href="|/*{slug}|" th:text="*{name}"></a></li>
+                        <a th:href="|/c/*{slug}|" th:text="*{name}"></a></li>
                 </div>
             </ul>
         </nav>
