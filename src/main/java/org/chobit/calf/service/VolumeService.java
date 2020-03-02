@@ -54,7 +54,7 @@ public class VolumeService {
     }
 
 
-    @Cacheable(key = "'getByWork'+#workId")
+    @Cacheable(key = "'findByWorkId'+#workId")
     public List<Volume> findByWorkId(int workId) {
         return volumeMapper.findByWorkId(workId);
     }
@@ -85,9 +85,16 @@ public class VolumeService {
         return volumeMapper.delete(id);
     }
 
+
     @Cacheable(key = "'getByWorkIdAndName' + #workId + '-' + #name")
     public Volume getByWorkIdAndName(int workId, String name) {
         return volumeMapper.getByWorkIdAndName(workId, name);
+    }
+
+
+    @Cacheable(key = "'getLatestByWorkId' + #workId")
+    public Volume getLatestByWorkId(int workId) {
+        return volumeMapper.getLatestByWorkId(workId);
     }
 
 

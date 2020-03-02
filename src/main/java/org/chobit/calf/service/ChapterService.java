@@ -1,5 +1,6 @@
 package org.chobit.calf.service;
 
+import org.chobit.calf.model.ChapterAndVol;
 import org.chobit.calf.model.VolumeModel;
 import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Volume;
@@ -20,6 +21,7 @@ import java.util.*;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
+import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
  * @author robin
@@ -42,7 +44,7 @@ public class ChapterService {
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void maintain(int id, int workId, String name, int volumeId, String volume, String content) {
+    public void maintain(int id, int workId, String name, int volumeId, String volume, String newVolume, String content) {
         Args.checkPositive(workId, "找不到作品信息");
         Args.checkNotBlank(name, "章节名称不能为空");
         Args.checkNotBlank(content, "章节内容不能为空");
@@ -50,7 +52,16 @@ public class ChapterService {
         Work work = workService.get(workId);
         Args.checkNotNull(work, "找不到作品信息");
 
-        volumeId = volumeService.addOrUpdate(volumeId, workId, volume);
+        if (isNotBlank(newVolume)) {
+            Volume v = volumeService.getByWorkIdAndName(workId, newVolume);
+            if (null != v) {
+                volumeId = v.getId();
+            } else {
+                volumeId = volumeService.addOrUpdate(0, workId, newVolume);
+            }
+        } else {
+            volumeId = volumeService.addOrUpdate(volumeId, workId, volume);
+        }
 
         Chapter chapter = new Chapter();
         chapter.setId(id);
@@ -74,6 +85,15 @@ public class ChapterService {
             return null;
         }
         return chapterMapper.get(id);
+    }
+
+
+    @Cacheable(key = "'getChapterAndVol' + #id")
+    public ChapterAndVol getChapterAndVol(int id) {
+        if (id <= 0) {
+            return null;
+        }
+        return chapterMapper.getDetail(id);
     }
 
 
@@ -157,16 +177,21 @@ public class ChapterService {
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     public void addChapter(int workId, String volName, String chapterName, String content) {
+        Volume vol = null;
         if (isBlank(volName) || volName.equals(chapterName)) {
-            volName = "正文";
+            vol = volumeService.getLatestByWorkId(workId);
+            if (null == vol) {
+                volName = "正文";
+            }
         }
 
         if (isBlank(chapterName)) {
             chapterName = "引子";
             volName = "引子";
         }
-
-        Volume vol = volumeService.getByWorkIdAndName(workId, volName);
+        if (null == vol) {
+            vol = volumeService.getByWorkIdAndName(workId, volName);
+        }
         if (null == vol) {
             vol = volumeService.add(workId, volName);
         }

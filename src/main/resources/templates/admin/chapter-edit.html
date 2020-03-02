@@ -44,6 +44,9 @@
                 </div>
 
                 <div class="row">
+                    <input type="text" name="newVolume" class="form-control" placeholder="新建分卷，如无必要可留空"/>
+                </div>
+                <div class="row">
                     <textarea name="content" id="calf_chapter_editor" th:text="*{content}"></textarea>
                     <script> CKEDITOR.replace('calf_chapter_editor');</script>
                 </div>

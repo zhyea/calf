@@ -57,4 +57,8 @@ public interface VolumeMapper {
     @Delete("delete from volume where work_id=#{workId}")
     int deleteByWorkId(@Param("workId") int workId);
 
+
+    @Select("select * from volume where work_id=#{workId} order by id desc limit 1")
+    Volume getLatestByWorkId(@Param("workId") int workId);
+
 }

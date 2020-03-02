@@ -1,6 +1,7 @@
 package org.chobit.calf.service.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.chobit.calf.model.ChapterAndVol;
 import org.chobit.calf.service.entity.Chapter;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public interface ChapterMapper {
 
     @Select("select * from chapter where id=#{id}")
     Chapter get(@Param("id") int id);
+
+
+    @Select("select c.*, v.name as vol_name from chapter c left join volume v on c.volume_id=v.id where c.id=#{id}")
+    ChapterAndVol getDetail(@Param("id") int id);
 
 
     @Select("select * from chapter where work_id=#{workId} order by id asc")

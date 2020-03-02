@@ -109,7 +109,7 @@ public class FrontPageController extends AbstractFrontPageController {
     @GetMapping({"/chapter/{id}"})
     public String chapter(@PathVariable("id") int id,
                           ModelMap map) {
-        Chapter chapter = chapterService.get(id);
+        ChapterAndVol chapter = chapterService.getChapterAndVol(id);
         if (null == chapter) {
             return redirect("/");
         }

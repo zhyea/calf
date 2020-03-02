@@ -16,7 +16,7 @@
 
         <div th:replace="admin.alert::alert"></div>
 
-        <div class="row chapter-container" th:if="${#lists.isEmpty(vols)}">
+        <div class="row chapter-container">
             <form method="post" action="/admin/chapter/upload" enctype="multipart/form-data">
                 <input type="hidden" name="workId" th:value="${work.id}">
                 <div class="form-input col-md-8 col-xs-12">

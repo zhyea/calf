@@ -17,7 +17,7 @@ public class VolumeController {
     private VolumeService volumeService;
 
 
-    @GetMapping("/{workId}")
+    @GetMapping("/suggest/{workId}")
     public Pair<String, Object> suggest(@PathVariable("workId") int workId,
                                         @RequestParam String key) {
         return volumeService.suggest(workId, key);
