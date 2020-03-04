@@ -30,7 +30,7 @@
 
         <div class="row chapter-container" th:each="vol : ${vols}">
             <div class="page-header">
-                <h3><span class="glyphicon glyphicon-bookmark" th:text="| ${vol.name}|"></span></h3>
+                <h3><i class="glyphicon glyphicon-bookmark" th:text="| ${vol.name}|"></i></h3>
             </div>
 
             <div th:if="${!#lists.isEmpty(vol.chapters)}" th:each="chp : ${vol.chapters}">

@@ -47,7 +47,7 @@ public class AdminPageController extends AbstractAdminPageController {
     public String check(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         HttpServletRequest request) {
-        User user = userService.check(username, password, request.getRemoteHost());
+        User user = userService.check(username, password, request);
         if (null == user) {
             return redirect("/login");
         }

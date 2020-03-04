@@ -18,7 +18,7 @@ public abstract class SessionHolder {
     private static final Logger logger = LoggerFactory.getLogger(SessionHolder.class);
 
 
-    private static final String KEY_USER = "user";
+    public static final String KEY_USER = "user";
     private static final String KEY_ALERT = "alert";
 
     private static final ThreadLocal<HttpSession> SESSION_HOLDER = new ThreadLocal<>();
@@ -29,6 +29,10 @@ public abstract class SessionHolder {
         if (session.isNew() || null == SESSION_HOLDER.get()) {
             SESSION_HOLDER.set(request.getSession());
         }
+    }
+
+    public static void addDirectly(HttpSession session) {
+        SESSION_HOLDER.set(session);
     }
 
 
@@ -112,7 +116,24 @@ public abstract class SessionHolder {
     }
 
 
-    public static void addUser(User user) {
+    public static User getUser(HttpServletRequest request) {
+        User user = getUser();
+        if (null != user) {
+            return user;
+        } else {
+            HttpSession session = request.getSession();
+            Object obj = session.getAttribute(KEY_USER);
+            if (obj instanceof User) {
+                SessionHolder.addDirectly(session);
+                return (User) obj;
+            }
+        }
+        return null;
+    }
+
+
+    public static void addUser(HttpServletRequest request, User user) {
+        addDirectly(request.getSession());
         addAttribute(KEY_USER, user);
     }
 

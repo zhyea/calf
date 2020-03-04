@@ -36,16 +36,21 @@ public class FrontPageController extends AbstractFrontPageController {
     private ChapterService chapterService;
 
 
+    /**
+     * 进入首页
+     */
     @GetMapping({"", "/"})
     public String index(ModelMap map) {
         List<CategoryWork> all = workService.homeWorks();
         List<WorkModel> recommend = featureService.findRecordsByAlias("recommend");
         map.put("all", all);
         map.put("recommend", recommend);
-        return view("index", map, "首页");
+        return view("index", map, "");
     }
 
-
+    /**
+     * 进入分类页
+     */
     @GetMapping({"/c/{catSlug}", "/c/{catSlug}/{page}"})
     public String category(@PathVariable("catSlug") String catSlug,
                            @PathVariable(value = "page", required = false) Integer pageNo,
@@ -67,7 +72,9 @@ public class FrontPageController extends AbstractFrontPageController {
         return view("category", map, cat.getName());
     }
 
-
+    /**
+     * 进入作品页
+     */
     @GetMapping({"/author/{id}", "/author/{id}/{page}"})
     public String author(@PathVariable("id") int id,
                          @PathVariable(value = "page", required = false) Integer pageNo,
@@ -90,6 +97,9 @@ public class FrontPageController extends AbstractFrontPageController {
     }
 
 
+    /**
+     * 进入作品
+     */
     @GetMapping({"/work/{id}"})
     public String work(@PathVariable("id") int workId,
                        ModelMap map) {
@@ -106,6 +116,9 @@ public class FrontPageController extends AbstractFrontPageController {
     }
 
 
+    /**
+     * 进入章节
+     */
     @GetMapping({"/chapter/{id}"})
     public String chapter(@PathVariable("id") int id,
                           ModelMap map) {
@@ -122,7 +135,7 @@ public class FrontPageController extends AbstractFrontPageController {
         map.put("last", null == last ? 0 : last.getId());
         map.put("next", null == next ? 0 : next.getId());
 
-        return view("chapter", map, chapter.getName() + "-" + work.getName());
+        return view("chapter", map, chapter.getName() + "-" + chapter.getVolName() + "-" + work.getName());
     }
 
 

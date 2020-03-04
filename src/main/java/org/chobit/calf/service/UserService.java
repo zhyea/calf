@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -82,7 +83,6 @@ public class UserService implements InitializingBean {
         return user.getId();
     }
 
-
     private Cache<String, Long> ipCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
     private Cache<String, Long> userCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
     private Cache<String, Integer> retryCache = Caffeine.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
@@ -90,7 +90,8 @@ public class UserService implements InitializingBean {
     /**
      * 校验用户名和密码
      */
-    public User check(String username, String password, String ip) {
+    public User check(String username, String password, HttpServletRequest request) {
+        String ip = request.getRemoteHost();
         Long lastUserTime = userCache.getIfPresent(username);
         Long lastIpTime = ipCache.getIfPresent(ip);
 
@@ -114,7 +115,7 @@ public class UserService implements InitializingBean {
             }
             throw new CalfArgsException("用户名或密码错误，十分钟内您还能重试" + (3 - count) + "次");
         } else {
-            SessionHolder.addUser(user);
+            SessionHolder.addUser(request, user);
         }
         return user;
     }

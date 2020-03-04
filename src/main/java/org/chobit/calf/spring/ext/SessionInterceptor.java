@@ -28,7 +28,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                 return true;
             }
             SessionHolder.add(request);
-            User user = SessionHolder.getUser();
+            User user = SessionHolder.getUser(request);
             if (null != user) {
                 return true;
             }
