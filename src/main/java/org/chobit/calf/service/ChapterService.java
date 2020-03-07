@@ -122,6 +122,9 @@ public class ChapterService {
 
             for (Chapter c : chapters) {
                 VolumeModel vm = map.getOrDefault(c.getVolumeId(), unBundled);
+                if (c.getName().length() < 5) {
+                    c.setName(c.getName() + "　　　　");
+                }
                 vm.addChapter(c);
             }
         }
