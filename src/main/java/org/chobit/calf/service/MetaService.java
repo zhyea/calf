@@ -99,6 +99,7 @@ public class MetaService {
         if (isEmpty(ids)) {
             return true;
         }
+        ids.remove(1);
         List<Pair<Integer, Long>> pairs = metaMapper.countChildrenCat(ids, CATEGORY);
         List<Integer> idList = pairs.stream().map(Pair::getKey).collect(Collectors.toList());
         ids.removeAll(idList);

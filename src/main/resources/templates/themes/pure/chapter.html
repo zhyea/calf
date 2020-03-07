@@ -37,6 +37,8 @@
                 <a th:href="|/work/${w.id}#vol_*{volumeId}|">返回目录</a>
                 →
                 <a th:if="${next>0}" th:href="|/chapter/${next}|">下一章</a> <a th:if="${next==0}">没有了</a>
+
+                <span class="chapter-author">作者：<a th:href="|/author/${w.authorId}|" th:text="${w.author}"></a></span>
             </div>
 
             <div class="row chapter-content" id="contentText" style="" th:utext="*{content}"></div>

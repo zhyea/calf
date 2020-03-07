@@ -107,7 +107,7 @@ public class FrontPageController extends AbstractFrontPageController {
         if (null == work) {
             return redirect("/");
         }
-        PageResult<WorkModel> r = workService.findWithAuthor(work.getAuthorId(), new Page(0, DEFAULT_PAGE_LENGTH));
+        PageResult<WorkModel> r = workService.findWithAuthor(work.getAuthorId(), new Page(0, 7));
         List<VolumeModel> vols = chapterService.chapters(workId);
         map.put("w", work);
         map.put("relate", r.getRows());

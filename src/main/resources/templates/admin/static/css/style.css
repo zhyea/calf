@@ -161,10 +161,14 @@ input[type="file"] {
 }
 
 .chapter .operate {
-    margin: 2px;
+    position: absolute;
+    z-index: 999;
+    right: 9px;
+    top: 8px;
+    float: right;
+    background-color: #ddd;
     padding: 0 6px;
     border: 1px dotted #9a9a9a;
-    float: right;
     line-height: 28px;
 }
 

@@ -23,5 +23,5 @@ calf:
     name: pure
     fragments:
       recommend: common/recommend
-      work: common/workShow
+      work: common/work-show
 
