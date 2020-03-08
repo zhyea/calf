@@ -10,7 +10,7 @@
     <div class="container notice">
         <ol class="breadcrumb">
             <li><a href="/"><i class="glyphicon glyphicon-folder-open">&nbsp;首页</i></a></li>
-            <li><a th:href="|/c/${w.catSlug}|">[[${w.cat}]]</a></li>
+            <li><a th:href="|/c/${w.catSlug}.html|">[[${w.cat}]]</a></li>
             <li class="active">[[${w.name}]]</li>
         </ol>
     </div>
@@ -18,7 +18,7 @@
     <div class="main">
         <div class="work-header">
             <span class="title">[[${w.name}]]</span>
-            <span class="author">作者：<a th:href="|/author/${w.authorId}|">[[${w.author}]]</a></span>
+            <span class="author">作者：<a th:href="|/author/${w.authorId}.html|">[[${w.author}]]</a></span>
         </div>
 
         <div class="work-neck row">
@@ -30,7 +30,7 @@
                 <div class="intro">[[${w.brief}]]</div>
                 <div class="relate">
                     <i class="glyphicon glyphicon-tags"></i> [[${w.author}]]作品：
-                    <a th:each="r : ${relate}" th:href="|/work/${r.id}|" th:text="${r.name}"></a>
+                    <a th:each="r : ${relate}" th:href="|/work/${r.id}.html|" th:text="${r.name}"></a>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                     <i class="glyphicon glyphicon-bookmark"></i> [[${vol.name}]]
                 </div>
                 <div class="col-md-4 col-xs-12 chapter" th:each="chp:${vol.chapters}">
-                    <a th:href="|/chapter/${chp.id}|">[[${chp.name}]]</a>
+                    <a th:href="|/chapter/${chp.id}.html|">[[${chp.name}]]</a>
                 </div>
             </div>
         </div>

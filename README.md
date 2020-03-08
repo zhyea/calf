@@ -2,7 +2,7 @@
 
 ## Summary
 
-一个基于Java SpringBoot实现的CMS服务。有许多尚未完善之处，只是初生的小牛。
+一个基于Java SpringBoot实现的小说站。支持多主题，伪静态等能力。不过仍有许多未完善之处，只是初生的小牛。
 
 ## Install
 
@@ -87,4 +87,6 @@ certbot --nginx
 # 自动续约
 certbot renew --dry-run
 ```
+# 服务器
 
+推荐使用 **[Vultr](https://www.vultr.com/?ref=8481921-6G)** 部署服务

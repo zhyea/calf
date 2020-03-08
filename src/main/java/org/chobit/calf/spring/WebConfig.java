@@ -1,11 +1,13 @@
 package org.chobit.calf.spring;
 
 import org.chobit.calf.spring.ext.CalfThemeInterceptor;
+import org.chobit.calf.spring.ext.PseudoStaticPathHelper;
 import org.chobit.calf.spring.ext.SessionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.util.UrlPathHelper;
 
 /**
  * @author robin
@@ -16,6 +18,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private CalfThemeConfig calfConfig;
+
+    private UrlPathHelper urlPathHelper = new PseudoStaticPathHelper();
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.setUrlPathHelper(urlPathHelper);
+    }
 
 
     @Override

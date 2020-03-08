@@ -32,7 +32,7 @@
 
         <div class="pagination">
             <a th:each="i:${#numbers.sequence(0, total)}"
-               th:href="|/author/${author.id}/${i}|"
+               th:href="|/author/${author.id}/${i}.html|"
                th:class="${i==page? 'active' : ''}"
                th:text="${i+1}"></a>
         </div>
