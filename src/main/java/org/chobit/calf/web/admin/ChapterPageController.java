@@ -102,6 +102,14 @@ public class ChapterPageController extends AbstractAdminPageController {
     }
 
 
+    @GetMapping("/delete-vol/{workId}/{volId}")
+    public String deleteVol(@PathVariable("workId") int workId, @PathVariable("volId") int volId) {
+        chapterService.deleteByVolumeId(volId);
+        interactMsg("删除成功");
+        return redirect("/admin/chapter/all/" + workId);
+    }
+
+
     @GetMapping("/delete-all/{workId}")
     public String deleteAll(@PathVariable("workId") int workId) {
         workService.deleteChapters(workId);

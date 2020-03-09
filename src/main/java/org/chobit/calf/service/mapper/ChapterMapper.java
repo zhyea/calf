@@ -58,6 +58,10 @@ public interface ChapterMapper {
     int deleteByWorkId(@Param("workId") int workId);
 
 
+    @Delete("delete from chapter where volume_id=#{volId}")
+    int deleteByVolumeId(@Param("volId") int volId);
+
+
     @Select("select * from chapter where work_id=#{workId} and id>#{currId} order by id asc limit 1")
     Chapter getNext(@Param("workId") int workId,
                     @Param("currId") int currId);

@@ -139,7 +139,7 @@ public class ChapterService {
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public boolean delete(int volId, int id) {
+    public Boolean delete(int volId, int id) {
         chapterMapper.delete(id);
         deleteEmptyVolume(volId);
         return true;
@@ -147,13 +147,13 @@ public class ChapterService {
 
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
-    public int deleteByWorkIds(Collection<Integer> workIds) {
+    public Integer deleteByWorkIds(Collection<Integer> workIds) {
         return chapterMapper.deleteByWorkIds(workIds);
     }
 
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
-    public int deleteByWorkId(int workId) {
+    public Integer deleteByWorkId(int workId) {
         return chapterMapper.deleteByWorkId(workId);
     }
 
@@ -167,6 +167,17 @@ public class ChapterService {
         if (null == count || 0 == count) {
             volumeService.delete(volId);
         }
+    }
+
+
+    @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    public Integer deleteByVolumeId(int volId) {
+        if (volId <= 0) {
+            return 0;
+        }
+        volumeService.delete(volId);
+        return chapterMapper.deleteByVolumeId(volId);
     }
 
 
