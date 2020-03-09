@@ -63,8 +63,8 @@
 <script type="text/javascript">
     window.addEventListener('load', LoadReadSet, false);
 
-    let last_page = "/chapter/[[${last}]]";
-    let next_page = "/chapter/[[${next}]]";
+    let last_page = "/chapter/[[${last}]].html";
+    let next_page = "/chapter/[[${next}]].html";
     document.onkeydown = function (evt) {
         let e = window.event || evt;
         if (e.keyCode == 37) location.href = last_page;
