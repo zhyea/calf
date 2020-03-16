@@ -10,7 +10,6 @@ import org.chobit.calf.service.entity.Meta;
 import org.chobit.calf.service.entity.Work;
 import org.chobit.calf.service.mapper.AuthorMapper;
 import org.chobit.calf.service.mapper.WorkMapper;
-import org.chobit.calf.tools.UploadKit;
 import org.chobit.calf.utils.Args;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -47,6 +46,8 @@ public class WorkService {
     private ChapterService chapterService;
     @Autowired
     private FeatureService featureService;
+    @Autowired
+    private UploadComponent uploadComponent;
 
     /**
      * 数据维护
@@ -76,7 +77,7 @@ public class WorkService {
         work.setBrief(brief);
         String pathCover = work.getCover();
 
-        pathCover = UploadKit.uploadCover(cover, pathCover);
+        pathCover = uploadComponent.uploadCover(cover, pathCover);
 
         work.setCover(pathCover);
         if (id > 0) {

@@ -6,7 +6,6 @@ import org.chobit.calf.service.entity.Feature;
 import org.chobit.calf.service.entity.FeatureRecord;
 import org.chobit.calf.service.mapper.FeatureMapper;
 import org.chobit.calf.service.mapper.FeatureRecordMapper;
-import org.chobit.calf.tools.UploadKit;
 import org.chobit.calf.utils.Args;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -36,6 +35,8 @@ public class FeatureService {
     private FeatureMapper featureMapper;
     @Autowired
     private FeatureRecordMapper recordMapper;
+    @Autowired
+    private UploadComponent uploadComponent;
 
 
     public List<Feature> findFeatures() {
@@ -101,11 +102,11 @@ public class FeatureService {
         feature.setBgRepeat(toInt(bgRepeat));
 
         String pathCover = feature.getCover();
-        pathCover = UploadKit.uploadFile(cover, pathCover);
+        pathCover = uploadComponent.uploadFile(cover, pathCover);
         feature.setCover(pathCover);
 
         String pathBg = feature.getBackground();
-        pathBg = UploadKit.uploadFile(bgImg, pathBg);
+        pathBg = uploadComponent.uploadFile(bgImg, pathBg);
         feature.setBackground(pathBg);
 
         if (id > 0) {

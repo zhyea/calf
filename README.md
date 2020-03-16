@@ -76,7 +76,10 @@ sudo nginx -s reload
 配置证书
 ```shell script
 
+# 安装 certbot 以及 certbot nginx 插件
 yum install -y epel-release
+
+yum install -y python2-certbot-nginx 
 
 # 安装 certbot 以及 certbot nginx 插件
 yum install -y certbot

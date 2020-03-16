@@ -1,5 +1,6 @@
 package org.chobit.calf.spring;
 
+import org.chobit.calf.service.UploadComponent;
 import org.chobit.calf.spring.ext.CalfThemeInterceptor;
 import org.chobit.calf.spring.ext.PseudoStaticPathHelper;
 import org.chobit.calf.spring.ext.SessionInterceptor;
@@ -18,6 +19,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private CalfThemeConfig calfConfig;
+    @Autowired
+    private UploadComponent uploadComponent;
+
 
     private UrlPathHelper urlPathHelper = new PseudoStaticPathHelper();
 
@@ -40,7 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("classpath:upload/", "file:///tmp/calf/upload/");
+                .addResourceLocations("classpath:upload/", uploadComponent.uploadPath());
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:templates/" + calfConfig.getThemePath() + "static/");
         registry.addResourceHandler("/admin/static/**")

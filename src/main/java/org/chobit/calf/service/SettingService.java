@@ -3,7 +3,6 @@ package org.chobit.calf.service;
 import org.chobit.calf.model.SettingModel;
 import org.chobit.calf.service.entity.PairRecord;
 import org.chobit.calf.service.mapper.SettingMapper;
-import org.chobit.calf.tools.UploadKit;
 import org.chobit.calf.utils.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,8 @@ public class SettingService {
 
     @Autowired
     private SettingMapper mapper;
-
+    @Autowired
+    private UploadComponent uploadComponent;
 
     @Cacheable(key = "'all'")
     public SettingModel all() {
@@ -75,19 +75,19 @@ public class SettingService {
             mapper.replace("keywords", keywords);
             mapper.replace("notice", notice);
 
-            String logoUrl = UploadKit.upload(logo);
+            String logoUrl = uploadComponent.upload(logo);
             if (isNotBlank(logoUrl)) {
                 mapper.replace("logo", logoUrl);
                 if (isNotBlank(currLogo)) {
-                    UploadKit.delete(currLogo);
+                    uploadComponent.delete(currLogo);
                 }
             }
 
-            String bgImgUrl = UploadKit.upload(bgImg);
+            String bgImgUrl = uploadComponent.upload(bgImg);
             if (isNotBlank(bgImgUrl)) {
                 mapper.replace("backgroundImg", bgImgUrl);
                 if (isNotBlank(currBgImg)) {
-                    UploadKit.delete(currBgImg);
+                    uploadComponent.delete(currBgImg);
                 }
             }
             mapper.replace("bgRepeat", bgRepeat);
@@ -101,17 +101,17 @@ public class SettingService {
     public Boolean delete(String item) {
         Args.check(item.equals("logo") || item.equals("backgroundImg"), "请求错误");
         String path = mapper.getByName(item);
-        UploadKit.delete(path);
+        uploadComponent.delete(path);
         return mapper.delete(item);
     }
 
 
-    @Cacheable(key="'site-name'")
+    @Cacheable(key = "'site-name'")
     public String getSiteName() {
         return mapper.getByName("name");
     }
 
-    @Cacheable(key="'site-notice'")
+    @Cacheable(key = "'site-notice'")
     public String getNotice() {
         return mapper.getByName("notice");
     }

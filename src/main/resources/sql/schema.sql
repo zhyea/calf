@@ -16,7 +16,7 @@ create table if not exists user
 insert into user (username, email, password, nickname)
 select 'admin', 'admin@chobit.org', 'e2587017b295aad7a0b339c72d075e49', 'long'
 from dual
-where not exists(select 1 from user where username = 'admin');
+where not exists(select 1 from user where id <= 1);
 
 --
 -- meta data
@@ -41,7 +41,7 @@ create table if not exists meta
 insert into meta (type, name, slug)
 select 'CATEGORY', '默认', 'default'
 from dual
-where not exists(select 1 from meta where slug = 'default');
+where not exists(select 1 from meta where id <= 1);
 
 
 --
@@ -100,7 +100,7 @@ create table if not exists author
 insert into author (name, country)
 select '未知', '未知'
 from dual
-where not exists(select 1 from author where name = '未知');
+where not exists(select 1 from author where id <= 1);
 
 
 -- works

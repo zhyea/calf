@@ -19,6 +19,7 @@ mybatis:
 
 calf:
   passoword-salt: hehehe
+  path-upload: /zhy
   theme:
     name: pure
     fragments:

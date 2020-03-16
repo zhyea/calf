@@ -1,26 +1,10 @@
 package org.chobit.calf.constants;
 
-import org.springframework.util.ResourceUtils;
-
-import java.io.FileNotFoundException;
-
 /**
  * @author robin
  */
 public final class Config {
 
-    public static final String PATH_UPLOAD;
-
-    static {
-        String tmp = "/tmp/calf/upload/";
-        try {
-            tmp = ResourceUtils.getFile("classpath:").getPath();
-            tmp = (tmp.endsWith("/") ? tmp : tmp + "/") + "upload/";
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        PATH_UPLOAD = tmp;
-    }
 
     public static final String URI_UPLOAD = "/upload/";
 
@@ -33,7 +17,7 @@ public final class Config {
     /**
      * 前端页长度
      */
-    public static final int DEFAULT_PAGE_LENGTH = 12;
+    public static final int DEFAULT_PAGE_LENGTH = 18;
 
     /**
      * 默认封面路径

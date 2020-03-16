@@ -26,9 +26,9 @@ public class Page {
         this.limit = limit;
     }
 
-    public Page(int offset, int limit) {
-        this.offset = offset;
-        this.limit = limit;
+    public Page(int pageNum, int pageLen) {
+        this.offset = pageNum * pageLen;
+        this.limit = pageLen;
     }
 
     public String getSearch() {
