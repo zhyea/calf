@@ -51,6 +51,7 @@
                     <input type="file" class="form-control" accept="image/png, image/jpeg" name="cover"/>
                     <div class="form-input col-md-12 col-xs-12" th:if="${null!=f.cover}">
                         <p class="lmt"><img th:src="@{*{cover}}" th:alt="${null==f.name ? 'Cover' : f.name}"/></p>
+                        <a th:href="|/admin/feature/delete/cover/*{id}|" target="_self">移除封面</a>
                     </div>
                 </div>
             </div>
@@ -61,6 +62,7 @@
                     <input type="file" class="form-control" accept="image/png, image/jpeg" name="background"/>
                     <div class="form-input col-md-12 col-xs-12" th:if="${null!=f.background}">
                         <p class="lmt"><img th:src="@{*{background}}" th:alt="${null==f.name ? 'Cover' : f.name}"/></p>
+                        <a th:href="|/admin/feature/delete/bg/*{id}|" target="_self">移除背景</a>
                     </div>
                 </div>
             </div>
@@ -68,7 +70,8 @@
                 <div class="form-label col-md-2 col-xs-12">背景重复</div>
                 <div class="form-input col-md-10 col-xs-12" style="padding-top:6px;">
                     <label class="radio-inline">
-                        <input type="radio" name="bgRepeat" value="1" th:checked="${f.bgRepeat == 1}"> 重复
+                        <input type="radio" name="bgRepeat" value="1"
+                               th:checked="${null==f.bgRepeat || f.bgRepeat == 1}"> 重复
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="bgRepeat" value="2" th:checked="${f.bgRepeat == 2}"> 不重复

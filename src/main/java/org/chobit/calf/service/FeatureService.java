@@ -129,6 +129,35 @@ public class FeatureService {
     }
 
 
+    public void deleteCover(int id) {
+        if (id <= 0) {
+            return;
+        }
+        Feature feature = get(id);
+        if (null == feature) {
+            return;
+        }
+        String cover = feature.getCover();
+        uploadComponent.delete(cover);
+        feature.setCover(null);
+        featureMapper.update(feature);
+    }
+
+    public void deleteBg(int id) {
+        if (id <= 0) {
+            return;
+        }
+        Feature feature = get(id);
+        if (null == feature) {
+            return;
+        }
+        String bg = feature.getBackground();
+        uploadComponent.delete(bg);
+        feature.setBackground(null);
+        featureMapper.update(feature);
+    }
+
+
     @CacheEvict(allEntries = true)
     public int deleteByWorkIds(Collection<Integer> ids) {
         return recordMapper.deleteByWorkIds(ids);

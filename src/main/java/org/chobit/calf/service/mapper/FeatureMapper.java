@@ -42,7 +42,8 @@ public interface FeatureMapper {
             "left join work w on r.work_id=w.id",
             "left join author a on w.author_id=a.id",
             "left join feature f on r.feature_id=f.id",
-            "where f.alias=#{alias}"})
+            "where f.alias=#{alias}",
+            "order by r.id desc"})
     List<WorkModel> findRecordsByAlias(@Param("alias") String alias);
 
 

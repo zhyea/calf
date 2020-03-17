@@ -19,6 +19,7 @@
                 <div class="form-input col-md-10 col-xs-12">
                     <div class="form-input col-md-12 col-xs-12" th:if="${null!=work.cover}">
                         <p class="lmt"><img th:src="@{*{cover}}" th:alt="${null==work.name ? 'Cover' : work.name}"/></p>
+                        <a th:href="|/admin/work/delete/cover/*{id}|" target="_self">移除封面</a>
                     </div>
                     <input type="file" class="form-control" accept="image/png, image/jpeg" name="cover"/>
                 </div>

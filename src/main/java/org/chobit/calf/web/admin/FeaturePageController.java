@@ -52,6 +52,22 @@ public class FeaturePageController extends AbstractAdminPageController {
     }
 
 
+    @GetMapping("/delete/cover/{id}")
+    public String deleteCover(@PathVariable("id") int id) {
+        featureService.deleteCover(id);
+        interactMsg("专题封面删除成功");
+        return redirect("/admin/feature/settings/" + id);
+    }
+
+
+    @GetMapping("/delete/bg/{id}")
+    public String deleteBackground(@PathVariable("id") int id) {
+        featureService.deleteBg(id);
+        interactMsg("专题背景删除成功");
+        return redirect("/admin/feature/settings/" + id);
+    }
+
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         featureService.delete(id);

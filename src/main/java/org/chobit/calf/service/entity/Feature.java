@@ -9,7 +9,7 @@ public class Feature extends AbstractEntity {
 
     private String background;
 
-    private int bgRepeat;
+    private int bgRepeat = 1;
 
     private String name;
 

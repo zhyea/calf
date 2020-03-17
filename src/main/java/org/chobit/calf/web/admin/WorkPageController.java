@@ -33,6 +33,14 @@ public class WorkPageController extends AbstractAdminPageController {
     }
 
 
+    @GetMapping("/delete/cover/{id}")
+    public String deleteCover(@PathVariable("id") int id) {
+        workService.deleteCover(id);
+        interactMsg("封面删除成功");
+        return redirect("/admin/work/settings/" + id);
+    }
+
+
     @PostMapping("/settings")
     public String maintain(@RequestParam int id,
                            @RequestParam String name,

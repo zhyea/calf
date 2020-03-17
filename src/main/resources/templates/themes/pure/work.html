@@ -29,7 +29,7 @@
             <div class="brief">
                 <div class="intro">[[${w.brief}]]</div>
                 <div class="relate">
-                    <i class="glyphicon glyphicon-tags"></i> [[${w.author}]]作品：
+                    <i class="glyphicon glyphicon-tags"></i> <a th:href="|/author/${w.authorId}.html|">[[${w.author}]]</a>作品：
                     <a th:each="r : ${relate}" th:href="|/work/${r.id}.html|" th:text="${r.name}"></a>
                 </div>
             </div>

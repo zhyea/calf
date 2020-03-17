@@ -118,6 +118,22 @@ public class WorkService {
     }
 
 
+    @CacheEvict(cacheNames = {"work"}, allEntries = true)
+    public void deleteCover(int workId) {
+        if (workId <= 0) {
+            return;
+        }
+        Work work = get(workId);
+        if (null == work) {
+            return;
+        }
+        String cover = work.getCover();
+        uploadComponent.delete(cover);
+        work.setCover(null);
+        workMapper.update(work);
+    }
+
+
     /**
      * 分页查询
      */
