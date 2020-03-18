@@ -67,7 +67,7 @@ public class FrontPageController extends AbstractFrontPageController {
         map.put("cat", cat);
         map.put("works", works);
         map.put("page", pageNo);
-        map.put("total", (total / DEFAULT_PAGE_LENGTH));
+        map.put("total", ((total > 0 ? total - 1 : 0) / DEFAULT_PAGE_LENGTH));
         map.put("recommend", recommend);
         return view("category", map, cat.getName());
     }
@@ -91,7 +91,7 @@ public class FrontPageController extends AbstractFrontPageController {
         map.put("author", author);
         map.put("works", works);
         map.put("page", pageNo);
-        map.put("total", (total / DEFAULT_PAGE_LENGTH));
+        map.put("total", ((total > 0 ? total - 1 : 0) / DEFAULT_PAGE_LENGTH));
         map.put("recommend", recommend);
         return view("author", map, author.getName());
     }

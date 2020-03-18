@@ -28,7 +28,7 @@
             <h3><i class="glyphicon glyphicon-book"></i>&nbsp;作品列表</h3>
         </div>
 
-        <div th:replace="work::work"></div>
+        <div th:remove="tag" th:replace="work::work"></div>
 
         <div class="pagination">
             <a th:each="i:${#numbers.sequence(0, total)}"

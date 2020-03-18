@@ -22,7 +22,7 @@
             <h3><a th:href="|/c/${cat.slug}.html|"><i class="glyphicon glyphicon-book"></i> [[${cat.name}]]</a></h3>
         </div>
 
-        <div th:replace="work::work"></div>
+        <div th:remove="tag" th:replace="work::work"></div>
 
         <div class="pagination">
             <a th:each="i:${#numbers.sequence(0, total)}"
