@@ -40,4 +40,8 @@ public interface AuthorMapper {
             "where name like #{key} or country like #{key} or bio like #{key} order by id desc limit 12"})
     List<LinkedHashMap> findByKeyword(@Param("key") String keyword);
 
+
+    @Select("select * from author where name=#{name} order by id desc limit 1")
+    Author getByName(@Param("name") String name);
+
 }

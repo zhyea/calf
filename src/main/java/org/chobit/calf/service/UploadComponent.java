@@ -72,7 +72,7 @@ public class UploadComponent {
 
 
     public String uploadCover(MultipartFile cover, String curr) {
-        if (!cover.isEmpty()) {
+        if (null != cover && !cover.isEmpty()) {
             if (isNotBlank(curr) && !PATH_DEFAULT_COVER.equals(curr)) {
                 delete(curr);
             }

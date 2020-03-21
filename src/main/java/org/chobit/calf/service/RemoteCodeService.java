@@ -2,11 +2,10 @@ package org.chobit.calf.service;
 
 import org.chobit.calf.except.CalfArgsException;
 import org.chobit.calf.except.CalfRemoteException;
-import org.chobit.calf.model.RemoteRequest;
+import org.chobit.calf.model.RemoteChapterRequest;
 import org.chobit.calf.model.RemoteResponse;
-import org.chobit.calf.service.entity.RemoteCode;
-import org.chobit.calf.service.entity.User;
-import org.chobit.calf.service.entity.Work;
+import org.chobit.calf.model.RemoteWorkRequest;
+import org.chobit.calf.service.entity.*;
 import org.chobit.calf.service.mapper.RemoteCodeMapper;
 import org.chobit.calf.tools.SessionHolder;
 import org.chobit.calf.tools.ShortCode;
@@ -30,6 +29,10 @@ public class RemoteCodeService {
     private WorkService workService;
     @Autowired
     private ChapterService chapterService;
+    @Autowired
+    private AuthorService authorService;
+    @Autowired
+    private MetaService metaService;
 
     public RemoteCode add() {
         User user = SessionHolder.getUser();
@@ -71,7 +74,7 @@ public class RemoteCodeService {
     }
 
 
-    public RemoteResponse handle(String code, RemoteRequest request) {
+    public RemoteResponse addChapter(String code, RemoteChapterRequest request) {
         if (null == request) {
             throw new CalfRemoteException("请求内容为空");
         }
@@ -101,5 +104,39 @@ public class RemoteCodeService {
         chapterService.addChapter(work.getId(), request.getVolName(), request.getChapterName(), request.getContent());
 
         return new RemoteResponse(true, "新增章节成功");
+    }
+
+
+    public RemoteResponse addWork(String code, RemoteWorkRequest request) {
+        if (null == request) {
+            throw new CalfRemoteException("请求内容为空");
+        }
+
+        if (isBlank(code) || !code.equals(request.getRemoteCode())) {
+            throw new CalfRemoteException("请求内容错误");
+        }
+
+        RemoteCode rc = getByCode(request.getRemoteCode());
+        if (!isValid(rc)) {
+            throw new CalfRemoteException("交互码无效或已过期");
+        }
+
+        Work work = workService.getByName(request.getWorkName());
+        if (null != work) {
+            throw new CalfRemoteException("同名作品已存在");
+        }
+        Author author = authorService.getByName(request.getAuthorName());
+        if (null == author) {
+            throw new CalfRemoteException("作者不存在");
+        }
+        Meta meta = metaService.getByName(request.getCatName());
+        if (null == meta) {
+            throw new CalfRemoteException("分类信息不存在");
+        }
+        workService.maintain(0, request.getWorkName(),
+                author.getId(), author.getName(), author.getCountry(),
+                meta.getId(), meta.getName(),
+                request.getBrief(), null);
+        return new RemoteResponse(true, "新增作品成功");
     }
 }

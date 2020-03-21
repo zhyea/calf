@@ -3,7 +3,7 @@ package org.chobit.calf.model;
 /**
  * @author robin
  */
-public class RemoteRequest {
+public class RemoteChapterRequest {
 
     private String remoteCode;
 

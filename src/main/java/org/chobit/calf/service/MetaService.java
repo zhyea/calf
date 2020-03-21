@@ -155,4 +155,13 @@ public class MetaService {
     public Meta getBySlug(String slug) {
         return metaMapper.getBySlug(slug);
     }
+
+
+    @Cacheable(key = "'getByName' + #name")
+    public Meta getByName(String name) {
+        if (isBlank(name)) {
+            return null;
+        }
+        return metaMapper.getByName(name);
+    }
 }

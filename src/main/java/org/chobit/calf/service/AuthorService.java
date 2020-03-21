@@ -102,9 +102,19 @@ public class AuthorService {
     }
 
 
+    @Cacheable(key = "'findSuggest' + #key")
     public Pair<String, Object> findSuggest(String key) {
         key = isBlank(key) ? "" : key;
         Object value = authorMapper.findByKeyword("%" + key + "%");
         return new Pair<>(key, value);
+    }
+
+
+    @Cacheable(key = "'getByName' + #name")
+    public Author getByName(String name) {
+        if (isBlank(name)) {
+            return null;
+        }
+        return authorMapper.getByName(name);
     }
 }

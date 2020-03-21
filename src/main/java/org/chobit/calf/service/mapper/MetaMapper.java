@@ -77,5 +77,9 @@ public interface MetaMapper {
 
     @Select("select * from meta where slug=#{slug} order by id desc limit 1")
     Meta getBySlug(@Param("slug") String slug);
+    
+
+    @Select("select * from meta where name=#{name} order by id desc limit 1")
+    Meta getByName(@Param("name") String name);
 
 }
