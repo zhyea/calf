@@ -25,7 +25,8 @@
         <div th:remove="tag" th:replace="work::work"></div>
 
         <div class="pagination">
-            <a th:each="i:${#numbers.sequence(0, total)}"
+            <a th:text="|共 ${total} 部|"></a>
+            <a th:each="i:${#numbers.sequence(0, totalPage)}"
                th:href="|/c/${cat.slug}/${i}.html|"
                th:class="${i==page? 'active' : ''}"
                th:text="${i+1}"></a>

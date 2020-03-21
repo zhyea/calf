@@ -47,6 +47,10 @@ body {
     padding: 0;
 }
 
+.navbar-brand {
+    font-size: 15px;
+}
+
 .navbar {
     margin: 0;
 }
@@ -138,7 +142,7 @@ body {
     float: right;
     color: #129151;
     font-size: 10px;
-    width: 69px;
+    width: 75px;
     overflow: hidden;
 }
 
@@ -446,6 +450,10 @@ body {
 
 @media screen and (max-width: 560px) {
     .header {
+        display: none;
+    }
+
+    #recommend {
         display: none;
     }
 
