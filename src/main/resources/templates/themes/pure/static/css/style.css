@@ -105,7 +105,7 @@ body {
     background-color: #255625;
     opacity: 0.5;
     color: #000;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .recommend .item .remark {
@@ -381,7 +381,7 @@ body {
 
 .chapter-content {
     margin: 0;
-    padding: 24px 32px;
+    padding: 24px 21px;
     min-height: 90px;
     line-height: 180%;
     border-bottom: 1px dotted #ddd;
