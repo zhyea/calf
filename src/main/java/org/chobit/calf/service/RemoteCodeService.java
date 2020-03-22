@@ -112,7 +112,7 @@ public class RemoteCodeService {
             throw new CalfRemoteException("请求内容为空");
         }
 
-        if (isBlank(code) || !code.equals(request.getRemoteCode())) {
+        if (isBlank(code) || isBlank(request.getRemoteCode()) || !code.equals(request.getRemoteCode())) {
             throw new CalfRemoteException("请求内容错误");
         }
 
@@ -125,6 +125,7 @@ public class RemoteCodeService {
         if (null != work) {
             throw new CalfRemoteException("同名作品已存在");
         }
+
         Author author = authorService.getByName(request.getAuthorName());
         if (null == author) {
             throw new CalfRemoteException("作者不存在");
