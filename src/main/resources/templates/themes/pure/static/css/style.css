@@ -55,6 +55,16 @@ body {
     margin: 0;
 }
 
+.navbar-nav li:hover {
+    background-color: #2b542c;
+    color: #FFF;
+}
+
+.navbar-nav li a:hover {
+    background-color: #2b542c !important;
+    color: #FFF !important;
+}
+
 .notice {
     height: 42px;
     padding: 2px 0 0 16px;
