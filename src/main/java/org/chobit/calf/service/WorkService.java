@@ -62,7 +62,7 @@ public class WorkService {
         Args.checkNotBlank(country, "作者国籍不能为空");
         Args.checkPositive(catId, "分类信息不能为空");
         Args.checkNotBlank(cat, "分类信息不能为空");
-        Args.checkMaxLength(null == brief ? "" : brief, 200, "作品简介长度不能超过200");
+        Args.checkMaxLength(null == brief ? "" : brief, 500, "作品简介长度不能超过500");
 
         if (authorId <= 0) {
             Author a = new Author(author, country);

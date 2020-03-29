@@ -124,6 +124,10 @@ body {
     opacity: 1;
 }
 
+.recommend .item .remark:hover {
+    background-color: #255625;
+}
+
 .recommend .item .remark a {
     color: #000 !important;
 }
@@ -133,6 +137,7 @@ body {
 }
 
 .popular .item {
+    white-space: nowrap;
     overflow: hidden;
     padding-right: 16px;
     color: #333;
@@ -149,10 +154,14 @@ body {
 }
 
 .popular .item .author {
+    position: absolute;
+    z-index: 999;
+    right: 0;
+    background-color: #FFF;
     float: right;
     color: #129151;
-    font-size: 10px;
-    width: 75px;
+    font-size: 12px;
+    width: 81px;
     overflow: hidden;
 }
 
@@ -160,6 +169,11 @@ body {
     color: #129151;
 }
 
+
+.popular .item .author:hover {
+    color: #223333;
+    background-color: #deeeee;
+}
 
 /* ------------------------------------ cat ------------------------------------ */
 
