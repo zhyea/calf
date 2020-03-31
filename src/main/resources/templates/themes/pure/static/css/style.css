@@ -104,7 +104,8 @@ body {
     width: 120px;
 }
 
-.recommend .item .shade, .recommend .item .remark {
+.recommend .item .shade,
+.recommend .item .remark {
     position: absolute;
     bottom: 12px;
     z-index: 900;
@@ -125,7 +126,7 @@ body {
 }
 
 .recommend .item .remark:hover {
-    background-color: #255625;
+    background-color: #d9edf7;
 }
 
 .recommend .item .remark a {
