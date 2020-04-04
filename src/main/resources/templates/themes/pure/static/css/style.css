@@ -157,12 +157,12 @@ body {
 .popular .item .author {
     position: absolute;
     z-index: 999;
-    right: 0;
+    right: 3px;
     background-color: #FFF;
     float: right;
     color: #129151;
     font-size: 12px;
-    width: 81px;
+    width: 90px;
     overflow: hidden;
 }
 
@@ -406,7 +406,7 @@ body {
 
 .chapter-content {
     margin: 0;
-    padding: 24px 21px;
+    padding: 24px 15px;
     min-height: 90px;
     line-height: 180%;
     border-bottom: 1px dotted #ddd;

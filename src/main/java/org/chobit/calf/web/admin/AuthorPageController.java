@@ -21,7 +21,7 @@ public class AuthorPageController extends AbstractAdminPageController {
 
     @GetMapping({"/list", ""})
     public String list(ModelMap map) {
-        return view("author-list", map, "用户列表");
+        return view("author-list", map, "作者列表");
     }
 
 
