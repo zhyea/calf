@@ -18,6 +18,8 @@ public class Work extends AbstractEntity {
 
     private String brief;
 
+    private long counter;
+
     public int getAuthorId() {
         return authorId;
     }
@@ -64,5 +66,13 @@ public class Work extends AbstractEntity {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public long getCounter() {
+        return counter;
+    }
+
+    public void setCounter(long counter) {
+        this.counter = counter;
     }
 }

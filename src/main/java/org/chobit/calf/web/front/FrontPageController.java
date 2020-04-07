@@ -5,6 +5,7 @@ import org.chobit.calf.service.*;
 import org.chobit.calf.service.entity.Author;
 import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Meta;
+import org.chobit.calf.tools.VisitCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -74,7 +75,7 @@ public class FrontPageController extends AbstractFrontPageController {
     }
 
     /**
-     * 进入作品页
+     * 进入作者页
      */
     @GetMapping({"/author/{id}", "/author/{id}/{page}"})
     public String author(@PathVariable("id") int id,
@@ -100,7 +101,7 @@ public class FrontPageController extends AbstractFrontPageController {
 
 
     /**
-     * 进入作品
+     * 进入作品页
      */
     @GetMapping({"/work/{id}"})
     public String work(@PathVariable("id") int workId,
@@ -109,6 +110,9 @@ public class FrontPageController extends AbstractFrontPageController {
         if (null == work) {
             return redirect("/");
         }
+
+        VisitCounter.add(workId, 1);
+
         PageResult<WorkModel> r = workService.findWithAuthor(work.getAuthorId(), new Page(0, 7));
         List<VolumeModel> vols = chapterService.chapters(workId);
         map.put("w", work);
@@ -128,6 +132,9 @@ public class FrontPageController extends AbstractFrontPageController {
         if (null == chapter) {
             return redirect("/");
         }
+
+        VisitCounter.add(chapter.getWorkId(), 0.2);
+
         WorkModel work = workService.getDetail(chapter.getWorkId());
         Chapter last = chapterService.getLast(chapter.getWorkId(), chapter.getId());
         Chapter next = chapterService.getNext(chapter.getWorkId(), chapter.getId());

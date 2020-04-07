@@ -10,6 +10,7 @@ import org.chobit.calf.service.entity.Meta;
 import org.chobit.calf.service.entity.Work;
 import org.chobit.calf.service.mapper.AuthorMapper;
 import org.chobit.calf.service.mapper.WorkMapper;
+import org.chobit.calf.tools.VisitCounter;
 import org.chobit.calf.utils.Args;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Strings.isBlank;
@@ -193,6 +195,7 @@ public class WorkService {
 
     @Cacheable(key = "'findWithAuthor' + #authorId + '-' + #page.limit+ '-' + #page.offset")
     public PageResult<WorkModel> findWithAuthor(int authorId, Page page) {
+        page.setOrder(Page.Direct.asc);
         List<WorkModel> list = workMapper.findWithAuthor(page, authorId);
         long count = countWithAuthor(authorId);
         return new PageResult<>(count, list);
@@ -228,6 +231,11 @@ public class WorkService {
     }
 
 
+    /**
+     * 首页作品集合
+     *
+     * @return 首页作品集合
+     */
     @Cacheable(key = "'homeWorks'")
     public List<CategoryWork> homeWorks() {
         List<CategoryWork> result = new LinkedList<>();
@@ -257,6 +265,15 @@ public class WorkService {
             return null;
         }
         return workMapper.getByName(name);
+    }
+
+
+    @CacheEvict(allEntries = true)
+    public void updateSn() {
+        Map<Integer, Long> map = VisitCounter.dumpAll();
+        for (Map.Entry<Integer, Long> e : map.entrySet()) {
+            workMapper.addSn(e.getKey(), e.getValue());
+        }
     }
 
 }

@@ -70,13 +70,13 @@ input[type="file"] {
 }
 
 .navbar-inverse .navbar-child-item a {
-    color: #adadad !important;
+    color: #fff !important;
     line-height: 180% !important;
 }
 
 .navbar-inverse .navbar-child-item a:hover {
     background: #222 !important;
-    color: #fff !important;
+    color: #adadad !important;
     text-decoration: none;
 }
 

@@ -72,7 +72,7 @@ public interface WorkMapper {
     @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.category_id=#{cat}",
-            "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+            "order by sn desc, ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findWithCategory(@Param("p") Page p, @Param("cat") int catId);
 
 
@@ -114,5 +114,9 @@ public interface WorkMapper {
 
 
     @Select("select * from work where name=#{name}")
-    Work getByName(@Param("name")String name);
+    Work getByName(@Param("name") String name);
+
+
+    @Update("update work set sn=sn+#{count} where id=#{id}")
+    boolean addSn(@Param("id") int workId, @Param("count") long count);
 }
