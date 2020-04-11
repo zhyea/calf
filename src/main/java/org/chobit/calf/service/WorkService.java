@@ -202,6 +202,15 @@ public class WorkService {
     }
 
 
+    @Cacheable(key = "'findWithFeature' + #alias + '-' + #page.limit+ '-' + #page.offset")
+    public PageResult<WorkModel> findWithFeature(String alias, Page page) {
+        page.setOrder(Page.Direct.asc);
+        List<WorkModel> list = workMapper.findWithFeature(page, alias);
+        long count = featureService.countFeatureRecords(alias);
+        return new PageResult<>(count, list);
+    }
+
+
     @Cacheable(key = "'countWithAuthor' + #authorId")
     public long countWithAuthor(int authorId) {
         return workMapper.countWithAuthor(authorId);

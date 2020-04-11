@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="admin.header::header"></div>
+<body>
+
+<div class="wrapper">
+    <div th:replace="admin.nav::nav"></div>
+
+    <div class="container main">
+        <div class="page-header">
+            <h3><i class="glyphicon glyphicon-list-alt"></i> [[${nav.id>0 ? '编辑' : '新增'}]]</h3>
+        </div>
+
+        <div th:replace="admin.alert::alert"></div>
+
+        <form method="post" action="/admin/nav/settings" th:object="${nav}">
+
+            <div class="row">
+                <input type="hidden" name="id" th:value="*{id}"/>
+                <input type="hidden" name="type" id="navType" th:value="*{type}"/>
+                <div class="col-md-5 col-xs-12" id="candidateTree"></div>
+                <div class="col-md-7 col-xs-12">
+                    <div class="row">
+                        <div class="form-label col-md-2 col-xs-12">父级</div>
+                        <div class="form-input col-md-10 col-xs-12">
+                            <select class="form-control" name="parent">
+                                <option value="0" th:selected="${parent==0}">无</option>
+                                <div th:remove="tag" th:each="candi: ${parentCandidates}" th:object="${candi}">
+                                    <option th:value="*{id}" th:text="*{name}"
+                                            th:selected="${candi.id==parent}"></option>
+                                </div>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-md-2 col-xs-12">名称</div>
+                        <div class="form-input col-md-10 col-xs-12">
+                            <input id="navName" type="text" class="form-control" name="name"
+                                   th:value="*{name}" th:readonly="*{type!='custome'}" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-md-2 col-xs-12">URL</div>
+                        <div class="form-input col-md-10 col-xs-12">
+                            <input id="navUrl" type="text" class="form-control" name="url"
+                                   th:value="*{url}" readonly required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="btn-left col-md-6 col-xs-12">
+                    <a class="btn btn-info" th:href="|/admin/nav/list/${parent}|">返回列表</a>
+                </div>
+                <div class="btn-right col-md-6 col-xs-12">
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div th:replace="admin.footer::footer"></div>
+</div>
+
+
+<script charset="utf-8" th:src="@{/admin/static/js/bootstrap-treeview.js}"></script>
+<script>
+    function renderTree() {
+        $.ajax({
+            type: 'post',
+            contentType: "application/json",
+            url: '/api/nav/candidates',
+            async: true,
+            timeout: 6 * 1000,
+            success: function (result) {
+                if (result) {
+                    $('#candidateTree').treeview({
+                        levels: 1,
+                        data: result,
+                        onNodeSelected: function (event, node) {
+                            if (node.id === 0 && node.ext2 === 'url') {
+                                $("#navName").attr('readonly', false);
+                                $("#navUrl").attr('readonly', false);
+
+                                $("#navName").val('');
+                                $("#navUrl").val('');
+                            } else {
+                                $("#navName").val(node.text);
+                                $("#navUrl").val(node.ext);
+                            }
+                            $("#navType").val(node.ext2);
+                        },
+                        onNodeUnselected: function (event, node) {
+                            if (node.id === 0) {
+                                $("#navName").attr('readonly', true);
+                                $("#navUrl").attr('readonly', true);
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (xhr, state, errMsg) {
+                console.log("操作失败:" + xhr.responseText);
+            }
+        });
+    }
+
+    renderTree();
+</script>
+</body>

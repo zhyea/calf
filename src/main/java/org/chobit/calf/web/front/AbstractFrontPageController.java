@@ -1,9 +1,8 @@
 package org.chobit.calf.web.front;
 
-import org.chobit.calf.constants.MetaType;
-import org.chobit.calf.model.MetaNode;
+import org.chobit.calf.model.NavNode;
 import org.chobit.calf.model.SettingModel;
-import org.chobit.calf.service.MetaService;
+import org.chobit.calf.service.NavService;
 import org.chobit.calf.service.ScriptService;
 import org.chobit.calf.service.SettingService;
 import org.chobit.calf.service.entity.Script;
@@ -21,21 +20,25 @@ public abstract class AbstractFrontPageController extends AbstractPageController
     @Autowired
     private SettingService settingService;
     @Autowired
-    private MetaService metaService;
+    private NavService navService;
     @Autowired
     private ScriptService scriptService;
 
     @Override
     public String view(String viewName, ModelMap map, String title) {
-        MetaNode cats = metaService.buildMetaTree(MetaType.CATEGORY);
+        NavNode nav = navService.buildNavTree();
         SettingModel settings = settingService.all();
 
-        map.put("cats", cats);
+        map.put("nav", nav);
         map.put("siteName", settings.getName());
         map.put("notice", settings.getNotice());
-        map.put("description", settings.getDescription());
-        map.put("keywords", settings.getKeywords());
 
+        if (!map.containsKey("keywords")) {
+            map.put("keywords", settings.getKeywords());
+        }
+        if (!map.containsKey("description")) {
+            map.put("description", settings.getDescription());
+        }
         if (!map.containsKey("logo")) {
             map.put("logo", settings.getLogo());
         }

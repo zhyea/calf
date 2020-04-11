@@ -65,12 +65,30 @@ input[type="file"] {
     margin: 0;
 }
 
+.navbar-inverse {
+    background-color: #223333;
+}
+
+.navbar {
+    border: 1px solid #223322;
+}
+
+.navbar-nav li a {
+    color: #eee !important;
+}
+
+.navbar-nav li a:hover {
+    background: #222 !important;
+    color: #adadad !important;
+    text-decoration: none;
+}
+
 .navbar-inverse .navbar-child {
-    background: #332 !important;
+    background: #223300 !important;
 }
 
 .navbar-inverse .navbar-child-item a {
-    color: #fff !important;
+    color: #eee !important;
     line-height: 180% !important;
 }
 
@@ -93,7 +111,7 @@ input[type="file"] {
 /* ----------------- main ----------------- */
 
 .main {
-    min-height: 240px;
+    min-height: 480px;
 }
 
 .page-header {

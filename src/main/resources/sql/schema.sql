@@ -199,6 +199,24 @@ create table if not exists remote_code
   DEFAULT CHARSET = utf8mb4;
 
 
+-- navigator
+create table if not exists navigator
+(
+    id      int       not null auto_increment primary key,
+    parent  int,
+    name    varchar(64),
+    type    varchar(32),
+    url     varchar(128),
+    remark  varchar(256),
+
+    sn      int                default 0,
+
+    op_time timestamp not null default current_timestamp on update current_timestamp
+) ENGINE = MyISAM
+  DEFAULT CHARSET = utf8mb4;
+
+
+-- script
 create table if not exists script
 (
     id      int       not null auto_increment primary key,

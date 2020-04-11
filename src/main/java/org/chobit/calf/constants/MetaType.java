@@ -9,6 +9,11 @@ public enum MetaType {
      * 分类信息
      */
     CATEGORY,
+
+    /**
+     * 导航信息
+     */
+    NAV,
     ;
 
 }

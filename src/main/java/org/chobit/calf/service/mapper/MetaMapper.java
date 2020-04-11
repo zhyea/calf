@@ -22,7 +22,7 @@ public interface MetaMapper {
     int insert(Meta meta);
 
 
-    @Update({"update meta set type=#{type}, name=#{name}, slug=#{slug}, remark=#{remark}",
+    @Update({"update meta set type=#{type}, name=#{name}, parent=#{parent}, slug=#{slug}, remark=#{remark}",
             "where id=#{id}"})
     boolean update(Meta meta);
 
@@ -77,7 +77,7 @@ public interface MetaMapper {
 
     @Select("select * from meta where slug=#{slug} order by id desc limit 1")
     Meta getBySlug(@Param("slug") String slug);
-    
+
 
     @Select("select * from meta where name=#{name} order by id desc limit 1")
     Meta getByName(@Param("name") String name);

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author robin
  */
@@ -38,8 +40,10 @@ public class CategoryPageController extends AbstractAdminPageController {
                            @PathVariable(value = "id", required = false) Integer catId,
                            ModelMap map) {
         Meta meta = metaService.get(null == catId ? 0 : catId);
+        List<Meta> candidateParents = metaService.findCandidateParentCats(null == catId ? -1 : catId);
         map.put("parent", null == parent ? 0 : parent);
         map.put("cat", null == meta ? new Meta() : meta);
+        map.put("parentCandidates", candidateParents);
         return view("cat-settings", map, null == meta ? "新增分类" : "编辑分类");
     }
 

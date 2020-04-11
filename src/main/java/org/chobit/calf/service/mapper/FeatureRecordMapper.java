@@ -25,6 +25,11 @@ public interface FeatureRecordMapper {
     List<Pair<Integer, Long>> countWithFeature();
 
 
+    @Select({"select count(r.id) from feature_record r left join feature f on r.feature_id",
+    "where f.alias=#{alias}"})
+    Long countFeatureRecords(@Param("alias")String alias);
+
+
     @Select({"select r.id, w.name, a.name as author, a.country as country from feature_record r left join work w on r.work_id=w.id left join author a on w.author_id=a.id",
             "where r.feature_id=#{featureId}"})
     List<WorkModel> findFeatureRecords(@Param("featureId") int featureId);

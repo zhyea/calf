@@ -168,6 +168,7 @@ body {
 }
 
 .popular .item .author a {
+    display: block;
     color: #129151;
 }
 
@@ -353,6 +354,7 @@ body {
 }
 
 .work-body .chapter a {
+    display: block;
     color: #333;
 }
 

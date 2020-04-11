@@ -30,31 +30,31 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <div th:if="${!#lists.isEmpty(cats.children)}"
+                    <div th:if="${!#lists.isEmpty(nav.children)}"
                          th:remove="tag"
-                         th:each="cat:${cats.children}"
-                         th:object="${cat}">
-                        <li class="dropdown" th:if="${!#lists.isEmpty(cat.children)}">
-                            <a th:href="|/c/*{slug}.html|"
+                         th:each="n:${nav.children}"
+                         th:object="${n}">
+                        <li class="dropdown" th:if="${!#lists.isEmpty(n.children)}">
+                            <a th:href="${url}"
                                class="dropdown-toggle"
                                data-toggle="dropdown"
                                role="button"
                                aria-haspopup="true"
-                               aria-expanded="false">[[${cat.name}]]<span class="caret"></span></a>
+                               aria-expanded="false">[[${n.name}]]<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="|/c/*{slug}.html|" th:text="*{name}"></a>
+                                    <a th:href="*{url}" th:text="*{name}"></a>
                                 </li>
 
                                 <div th:each="sub:*{children}" th:remove="tag" th:object="${sub}">
                                     <li>
-                                        <a th:href="|/c/*{slug}.html|" th:text="*{name}"></a>
+                                        <a th:href="*{url}" th:text="*{name}"></a>
                                     </li>
                                 </div>
                             </ul>
                         </li>
-                        <li th:if="${#lists.isEmpty(cat.children)}">
-                            <a th:href="|/c/*{slug}.html|" th:text="*{name}"></a></li>
+                        <li th:if="${#lists.isEmpty(n.children)}">
+                            <a th:href="*{url}" th:text="*{name}"></a></li>
                     </div>
                 </ul>
             </div>

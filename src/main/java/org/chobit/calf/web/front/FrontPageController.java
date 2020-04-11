@@ -4,6 +4,7 @@ import org.chobit.calf.model.*;
 import org.chobit.calf.service.*;
 import org.chobit.calf.service.entity.Author;
 import org.chobit.calf.service.entity.Chapter;
+import org.chobit.calf.service.entity.Feature;
 import org.chobit.calf.service.entity.Meta;
 import org.chobit.calf.tools.VisitCounter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 import static org.chobit.calf.constants.Config.DEFAULT_PAGE_LENGTH;
+import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
  * @author robin
@@ -64,12 +66,11 @@ public class FrontPageController extends AbstractFrontPageController {
         List<WorkModel> recommend = featureService.findRecordsByAlias("recommend");
         PageResult<WorkModel> r = workService.findWithCat(cat.getId(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
         List<WorkModel> works = r.getRows();
-        long total = workService.countWithCat(cat.getId());
         map.put("cat", cat);
         map.put("works", works);
         map.put("page", pageNo);
-        map.put("total", total);
-        map.put("totalPage", ((total > 0 ? total - 1 : 0) / DEFAULT_PAGE_LENGTH));
+        map.put("total", r.getTotal());
+        map.put("totalPage", ((r.getTotal() > 0 ? r.getTotal() - 1 : 0) / DEFAULT_PAGE_LENGTH));
         map.put("recommend", recommend);
         return view("category", map, cat.getName());
     }
@@ -86,17 +87,46 @@ public class FrontPageController extends AbstractFrontPageController {
             return redirect("/");
         }
         pageNo = null == pageNo ? 0 : pageNo;
-        List<WorkModel> recommend = featureService.findRecordsByAlias("recommend");
         PageResult<WorkModel> r = workService.findWithAuthor(author.getId(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
         List<WorkModel> works = r.getRows();
-        long total = workService.countWithAuthor(author.getId());
         map.put("author", author);
         map.put("works", works);
         map.put("page", pageNo);
-        map.put("total", total);
-        map.put("totalPage", ((total > 0 ? total - 1 : 0) / DEFAULT_PAGE_LENGTH));
-        map.put("recommend", recommend);
+        map.put("total", r.getTotal());
+        map.put("totalPage", ((r.getTotal() > 0 ? r.getTotal() - 1 : 0) / DEFAULT_PAGE_LENGTH));
         return view("author", map, author.getName());
+    }
+
+    /**
+     * 进入专题页
+     */
+    @GetMapping({"/f/{alias}", "/f/{alias}/{page}"})
+    public String feature(@PathVariable("alias") String alias,
+                          @PathVariable(value = "page", required = false) Integer pageNo,
+                          ModelMap map) {
+        Feature feature = featureService.getByAlias(alias);
+        if (null == feature) {
+            return redirect("/");
+        }
+        pageNo = null == pageNo ? 0 : pageNo;
+        PageResult<WorkModel> r = workService.findWithFeature(feature.getAlias(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
+        List<WorkModel> works = r.getRows();
+        map.put("feature", feature);
+        map.put("works", works);
+        map.put("page", pageNo);
+        map.put("total", r.getTotal());
+        map.put("totalPage", ((r.getTotal() > 0 ? r.getTotal() - 1 : 0) / DEFAULT_PAGE_LENGTH));
+        if (isNotBlank(feature.getBackground())) {
+            map.put("background", feature.getBackground());
+            map.put("bgRepeat", feature.getBgRepeat());
+        }
+        if (isNotBlank(feature.getCover())) {
+            map.put("logo", feature.getCover());
+        }
+        map.put("keywords", feature.getKeywords());
+        map.put("description", feature.getBrief());
+
+        return view("feature", map, feature.getName());
     }
 
 

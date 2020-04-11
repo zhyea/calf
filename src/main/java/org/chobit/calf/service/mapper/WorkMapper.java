@@ -62,6 +62,14 @@ public interface WorkMapper {
     List<WorkModel> findWithAuthor(@Param("p") Page p, @Param("author") int authorId);
 
 
+
+    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id ",
+            "from work w left join author a on w.author_id=a.id right join feature_record r on r.work_id=w.id left join feature f on r.feature_id=f.id",
+            "where f.alias=#{alias}",
+            "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+    List<WorkModel> findWithFeature(@Param("p") Page p, @Param("alias") String featureAlias);
+
+
     @Select({"select count(w.id)",
             "from work w",
             "where w.author_id=#{author}"

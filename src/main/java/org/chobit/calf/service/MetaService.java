@@ -15,10 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.chobit.calf.constants.MetaType.CATEGORY;
@@ -136,6 +133,26 @@ public class MetaService {
     @Cacheable(key = "'findByType' + #type")
     public List<Meta> findByType(MetaType type) {
         return metaMapper.findByType(type);
+    }
+
+
+    public List<Meta> findCandidateParentCats(int catId) {
+        List<Meta> list = findByType(CATEGORY);
+        Set<Integer> tree = new TreeSet<>();
+        tree.add(catId);
+        boolean flag = true;
+        while (flag) {
+            flag = false;
+            for (Meta m : list) {
+                if (!tree.contains(m.getId()) && tree.contains(m.getParent())) {
+                    tree.add(m.getId());
+                    flag = true;
+                }
+            }
+        }
+        return list.stream()
+                .filter(e -> !tree.contains(e.getId()))
+                .collect(Collectors.toList());
     }
 
 

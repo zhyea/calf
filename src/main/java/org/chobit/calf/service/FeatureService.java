@@ -22,6 +22,7 @@ import java.util.Map;
 
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Collections2.pairToMap;
+import static org.chobit.calf.utils.Strings.isBlank;
 import static org.chobit.calf.utils.Strings.toInt;
 
 /**
@@ -54,6 +55,7 @@ public class FeatureService {
     }
 
 
+    @Cacheable(key = "'getById' + #id")
     public Feature get(int id) {
         if (id <= 0) {
             return null;
@@ -62,8 +64,24 @@ public class FeatureService {
     }
 
 
+    @Cacheable(key = "'getByAlias' + #alias")
+    public Feature getByAlias(String alias) {
+        if (isBlank(alias)) {
+            return null;
+        }
+        return featureMapper.getByAlias(alias);
+    }
+
+
+    @Cacheable(key = "'findFeatureRecords' + #featureId")
     public List<WorkModel> findFeatureRecords(int featureId) {
         return recordMapper.findFeatureRecords(featureId);
+    }
+
+
+    @Cacheable(key = "'countFeatureRecords' + #alias")
+    public Long countFeatureRecords(String alias) {
+        return recordMapper.countFeatureRecords(alias);
     }
 
 
