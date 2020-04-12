@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import static org.chobit.calf.constants.Config.DEFAULT_PAGE_LENGTH;
 import static org.chobit.calf.utils.Strings.isNotBlank;
@@ -178,4 +179,13 @@ public class FrontPageController extends AbstractFrontPageController {
     }
 
 
+    /**
+     * 全部作者
+     */
+    @GetMapping({"/authors"})
+    public String authors(ModelMap map) {
+        TreeMap<String, List<Author>> all = authorService.allAuthors();
+        map.put("all", all);
+        return view("authors", map, "全部作者");
+    }
 }

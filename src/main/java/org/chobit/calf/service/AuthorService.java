@@ -8,6 +8,7 @@ import org.chobit.calf.service.mapper.AuthorMapper;
 import org.chobit.calf.service.mapper.WorkMapper;
 import org.chobit.calf.tools.LowerCaseKeyMap;
 import org.chobit.calf.utils.Args;
+import org.chobit.calf.utils.Pinyin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.chobit.calf.utils.Collections2.pairToMap;
@@ -116,5 +115,18 @@ public class AuthorService {
             return null;
         }
         return authorMapper.getByName(name);
+    }
+
+
+    @Cacheable(key = "'allAuthors'")
+    public TreeMap<String, List<Author>> allAuthors() {
+        TreeMap<String, List<Author>> result = new TreeMap<>();
+        List<Author> list = authorMapper.findAll();
+        for (Author a : list) {
+            String letter = Pinyin.firstChar(a.getName());
+            List<Author> tree = result.computeIfAbsent(letter, k -> new LinkedList<>());
+            tree.add(a);
+        }
+        return result;
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="header::header"></div>
+<body>
+
+<div class="wrapper">
+
+    <div th:replace="nav::nav"></div>
+
+    <div class="container notice">
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="glyphicon glyphicon-folder-open">&nbsp;首页</i></a></li>
+            <li class="active">全部作者</li>
+        </ol>
+    </div>
+
+    <div class="main">
+        <div class="work-body">
+            <div class="row" th:each="entry : ${all}">
+                <div class="col-md-12 col-xs-12 volume">
+                    <i class="glyphicon glyphicon-bookmark"></i> [[${entry.key}]]
+                </div>
+                <div class="col-md-3 col-xs-12 chapter"
+                     th:each="author:${entry.value}" th:object="${author}">
+                    <a th:href="|/author/*{id}.html|">[[*{name}]]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="footer::footer"></div>
+</div>
+
+
+<script type="text/javascript">
+    backToTop();
+</script>
+</body>

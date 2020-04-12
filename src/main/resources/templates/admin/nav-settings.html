@@ -36,14 +36,14 @@
                         <div class="form-label col-md-2 col-xs-12">名称</div>
                         <div class="form-input col-md-10 col-xs-12">
                             <input id="navName" type="text" class="form-control" name="name"
-                                   th:value="*{name}" th:readonly="*{type!='custome'}" required/>
+                                   th:value="*{name}" th:readonly="${nav.type.name()!='url'}" required/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-label col-md-2 col-xs-12">URL</div>
                         <div class="form-input col-md-10 col-xs-12">
                             <input id="navUrl" type="text" class="form-control" name="url"
-                                   th:value="*{url}" readonly required/>
+                                   th:value="*{url}" th:readonly="${nav.type.name()!='url'}" required/>
                         </div>
                     </div>
                 </div>

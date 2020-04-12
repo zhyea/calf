@@ -62,11 +62,10 @@ public interface WorkMapper {
     List<WorkModel> findWithAuthor(@Param("p") Page p, @Param("author") int authorId);
 
 
-
     @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id ",
             "from work w left join author a on w.author_id=a.id right join feature_record r on r.work_id=w.id left join feature f on r.feature_id=f.id",
             "where f.alias=#{alias}",
-            "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+            "order by w.sn desc, ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findWithFeature(@Param("p") Page p, @Param("alias") String featureAlias);
 
 
@@ -80,7 +79,7 @@ public interface WorkMapper {
     @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.category_id=#{cat}",
-            "order by sn desc, ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
+            "order by w.sn desc, ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findWithCategory(@Param("p") Page p, @Param("cat") int catId);
 
 

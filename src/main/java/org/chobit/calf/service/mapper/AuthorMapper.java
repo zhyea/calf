@@ -44,4 +44,8 @@ public interface AuthorMapper {
     @Select("select * from author where name=#{name} order by id desc limit 1")
     Author getByName(@Param("name") String name);
 
+
+    @Select("select * from author")
+    List<Author> findAll();
+
 }

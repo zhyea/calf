@@ -42,10 +42,6 @@
                                aria-haspopup="true"
                                aria-expanded="false">[[${n.name}]]<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a th:href="*{url}" th:text="*{name}"></a>
-                                </li>
-
                                 <div th:each="sub:*{children}" th:remove="tag" th:object="${sub}">
                                     <li>
                                         <a th:href="*{url}" th:text="*{name}"></a>
