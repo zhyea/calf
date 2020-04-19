@@ -23,11 +23,11 @@
 
         <div class="work-neck row">
             <div class="cover">
-                <img th:src="${w.cover}" width="80px" height="100px"/>
+                <img th:src="${w.cover}" width="100px" height="125px"/>
             </div>
 
             <div class="brief">
-                <div class="intro">[[${w.brief}]]</div>
+                <div class="intro" th:utext="${w.brief}"></div>
                 <div class="relate">
                     <i class="glyphicon glyphicon-tags"></i> [[${w.author}]]作品：
                     <a th:each="r : ${relate}" th:href="|/work/${r.id}.html|" th:text="${r.name}"></a>

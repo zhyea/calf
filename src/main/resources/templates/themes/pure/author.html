@@ -20,8 +20,7 @@
             <div class="work-header">
                 <span class="title">[[${author.name}]]</span>
             </div>
-            <div class="row work-neck">
-                [[${#strings.isEmpty(author.bio) ? '无作者信息，待完善' : author.bio}]]
+            <div class="row work-neck" th:utext="${#strings.isEmpty(author.bio) ? '无作者信息，待完善' : author.bio}">
             </div>
         </div>
 

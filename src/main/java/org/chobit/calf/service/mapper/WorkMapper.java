@@ -15,13 +15,13 @@ import java.util.List;
 @Mapper
 public interface WorkMapper {
 
-    @Insert({"insert into work (author_id, category_id, cover, file, name, brief)",
+    @Insert({"insert into work (author_id, category_id, cover, file, name, brief, keywords)",
             "values",
-            "(#{authorId}, #{categoryId}, #{cover}, #{file}, #{name}, #{brief})"})
+            "(#{authorId}, #{categoryId}, #{cover}, #{file}, #{name}, #{brief}, #{keywords})"})
     int insert(Work work);
 
 
-    @Update({"update work set author_id=#{authorId}, category_id=#{categoryId}, cover=#{cover}, file=#{file}, name=#{name}, brief=#{brief}",
+    @Update({"update work set author_id=#{authorId}, category_id=#{categoryId}, cover=#{cover}, file=#{file}, name=#{name}, brief=#{brief}, keywords=#{keywords}",
             "where id=#{id}"})
     boolean update(Work work);
 
@@ -114,7 +114,7 @@ public interface WorkMapper {
                         @Param("newCat") int newCateId);
 
 
-    @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat, m.slug as cat_slug ",
+    @Select({"select w.id, w.name, w.cover, w.brief, w.keywords, a.name as author, a.id as author_id, m.name as cat, m.slug as cat_slug ",
             "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
             "where w.id=#{id}"})
     WorkModel getDetail(@Param("id") int id);

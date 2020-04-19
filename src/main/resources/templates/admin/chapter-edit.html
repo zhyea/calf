@@ -50,6 +50,10 @@
                     <textarea name="content" id="calf_chapter_editor" th:text="*{content}"></textarea>
                     <script> CKEDITOR.replace('calf_chapter_editor');</script>
                 </div>
+                <div class="row">
+                    <input type="text" class="form-control" placeholder="关键字"
+                           name="keywords" th:value="*{keywords}" required autofocus/>
+                </div>
 
 
                 <div class="row">

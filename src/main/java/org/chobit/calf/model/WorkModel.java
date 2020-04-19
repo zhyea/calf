@@ -29,6 +29,8 @@ public class WorkModel {
 
     private String brief;
 
+    private String keywords;
+
 
     public WorkModel() {
     }
@@ -43,6 +45,7 @@ public class WorkModel {
         this.country = author.getCountry();
         this.catId = meta.getId();
         this.cat = meta.getName();
+        this.keywords = work.getKeywords();
     }
 
     public int getId() {
@@ -123,5 +126,13 @@ public class WorkModel {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

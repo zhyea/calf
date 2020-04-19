@@ -15,6 +15,8 @@ public class RemoteWorkRequest {
 
     private String brief;
 
+    private String keywords;
+
     public RemoteWorkRequest() {
     }
 
@@ -56,5 +58,13 @@ public class RemoteWorkRequest {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

@@ -44,7 +44,7 @@ public class ChapterService {
 
     @CacheEvict(cacheNames = {"work", "vol", "chapter"}, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void maintain(int id, int workId, String name, int volumeId, String volume, String newVolume, String content) {
+    public void maintain(int id, int workId, String name, int volumeId, String volume, String newVolume, String content, String keywords) {
         Args.checkPositive(workId, "找不到作品信息");
         Args.checkNotBlank(name, "章节名称不能为空");
         Args.checkNotBlank(content, "章节内容不能为空");
@@ -69,6 +69,7 @@ public class ChapterService {
         chapter.setVolumeId(volumeId);
         chapter.setName(name);
         chapter.setContent(content);
+        chapter.setKeywords(keywords);
 
         if (id <= 0) {
             chapterMapper.insert(chapter);

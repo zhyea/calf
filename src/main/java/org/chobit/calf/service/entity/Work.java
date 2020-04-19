@@ -18,7 +18,9 @@ public class Work extends AbstractEntity {
 
     private String brief;
 
-    private long counter;
+    private long sn;
+
+    private String keywords;
 
     public int getAuthorId() {
         return authorId;
@@ -68,11 +70,19 @@ public class Work extends AbstractEntity {
         this.brief = brief;
     }
 
-    public long getCounter() {
-        return counter;
+    public long getSn() {
+        return sn;
     }
 
-    public void setCounter(long counter) {
-        this.counter = counter;
+    public void setSn(long sn) {
+        this.sn = sn;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

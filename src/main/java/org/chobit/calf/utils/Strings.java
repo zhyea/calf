@@ -143,6 +143,14 @@ public abstract class Strings {
     }
 
 
+    public static String toHtmlRow(String s) {
+        if (isBlank(s)) {
+            return s;
+        }
+        return s.replaceAll("\n", "<BR/>");
+    }
+
+
     private Strings() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }

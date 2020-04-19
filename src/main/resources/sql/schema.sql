@@ -116,6 +116,7 @@ create table if not exists work
     name        varchar(64),
     brief       varchar(1024),
     sn          bigint             default 0,
+    keywords    varchar(64),
 
     op_time     timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM

@@ -12,6 +12,9 @@ import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
+import static org.chobit.calf.constants.Constants.DESCRIPTION;
+import static org.chobit.calf.constants.Constants.KEYWORDS;
+
 /**
  * @author robin
  */
@@ -33,11 +36,14 @@ public abstract class AbstractFrontPageController extends AbstractPageController
         map.put("siteName", settings.getName());
         map.put("notice", settings.getNotice());
 
-        if (!map.containsKey("keywords")) {
-            map.put("keywords", settings.getKeywords());
+        if (!map.containsKey(KEYWORDS)) {
+            map.put(KEYWORDS, settings.getKeywords());
+        } else {
+            String s = map.getAttribute(KEYWORDS) + "," + settings.getKeywords();
+            map.put(KEYWORDS, s);
         }
-        if (!map.containsKey("description")) {
-            map.put("description", settings.getDescription());
+        if (!map.containsKey(DESCRIPTION)) {
+            map.put(DESCRIPTION, settings.getDescription());
         }
         if (!map.containsKey("logo")) {
             map.put("logo", settings.getLogo());

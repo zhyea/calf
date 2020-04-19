@@ -7,6 +7,7 @@ import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Feature;
 import org.chobit.calf.service.entity.Meta;
 import org.chobit.calf.tools.VisitCounter;
+import org.chobit.calf.utils.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 import static org.chobit.calf.constants.Config.DEFAULT_PAGE_LENGTH;
+import static org.chobit.calf.constants.Constants.DESCRIPTION;
+import static org.chobit.calf.constants.Constants.KEYWORDS;
 import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
@@ -67,6 +70,7 @@ public class FrontPageController extends AbstractFrontPageController {
         List<WorkModel> recommend = featureService.findRecordsByAlias("recommend");
         PageResult<WorkModel> r = workService.findWithCat(cat.getId(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
         List<WorkModel> works = r.getRows();
+        map.put(KEYWORDS, cat.getName());
         map.put("cat", cat);
         map.put("works", works);
         map.put("page", pageNo);
@@ -87,9 +91,12 @@ public class FrontPageController extends AbstractFrontPageController {
         if (null == author) {
             return redirect("/");
         }
+        author.setBio(Strings.toHtmlRow(author.getBio()));
         pageNo = null == pageNo ? 0 : pageNo;
         PageResult<WorkModel> r = workService.findWithAuthor(author.getId(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
         List<WorkModel> works = r.getRows();
+        map.put(KEYWORDS, author.getName());
+        map.put(DESCRIPTION, author.getBio());
         map.put("author", author);
         map.put("works", works);
         map.put("page", pageNo);
@@ -109,9 +116,12 @@ public class FrontPageController extends AbstractFrontPageController {
         if (null == feature) {
             return redirect("/");
         }
+        feature.setBrief(Strings.toHtmlRow(feature.getBrief()));
         pageNo = null == pageNo ? 0 : pageNo;
         PageResult<WorkModel> r = workService.findWithFeature(feature.getAlias(), new Page(pageNo, DEFAULT_PAGE_LENGTH));
         List<WorkModel> works = r.getRows();
+        map.put(KEYWORDS, feature.getName() + "," + feature.getKeywords());
+        map.put(DESCRIPTION, feature.getBrief());
         map.put("feature", feature);
         map.put("works", works);
         map.put("page", pageNo);
@@ -142,10 +152,13 @@ public class FrontPageController extends AbstractFrontPageController {
             return redirect("/");
         }
 
+        work.setBrief(Strings.toHtmlRow(work.getBrief()));
         VisitCounter.add(workId, 1);
 
         PageResult<WorkModel> r = workService.findWithAuthor(work.getAuthorId(), new Page(0, 7));
         List<VolumeModel> vols = chapterService.chapters(workId);
+        map.put(KEYWORDS, work.getName() + "," + work.getAuthor() + "," + work.getKeywords());
+        map.put(DESCRIPTION, work.getBrief());
         map.put("w", work);
         map.put("relate", r.getRows());
         map.put("vols", vols);
@@ -170,6 +183,8 @@ public class FrontPageController extends AbstractFrontPageController {
         Chapter last = chapterService.getLast(chapter.getWorkId(), chapter.getId());
         Chapter next = chapterService.getNext(chapter.getWorkId(), chapter.getId());
 
+        map.put(KEYWORDS, work.getName() + "," + work.getAuthor() + "," + chapter.getName() + "," + chapter.getKeywords());
+        map.put(DESCRIPTION, chapter.getContent().substring(0, 180));
         map.put("w", work);
         map.put("c", chapter);
         map.put("last", null == last ? 0 : last.getId());

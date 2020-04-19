@@ -74,8 +74,9 @@ public class ChapterPageController extends AbstractAdminPageController {
                        @RequestParam int volumeId,
                        @RequestParam String volume,
                        @RequestParam String newVolume,
-                       @RequestParam String content) {
-        chapterService.maintain(id, workId, name, volumeId, volume, newVolume, content);
+                       @RequestParam String content,
+                       @RequestParam String keywords) {
+        chapterService.maintain(id, workId, name, volumeId, volume, newVolume, content, keywords);
         interactMsg("章节信息保存成功");
         if (id <= 0) {
             return redirect("/admin/chapter/all/" + workId);

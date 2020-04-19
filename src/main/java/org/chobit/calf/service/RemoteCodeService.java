@@ -137,7 +137,7 @@ public class RemoteCodeService {
         workService.maintain(0, request.getWorkName(),
                 author.getId(), author.getName(), author.getCountry(),
                 meta.getId(), meta.getName(),
-                request.getBrief(), null);
+                request.getBrief(), request.getKeywords(), null);
         return new RemoteResponse(true, "新增作品成功");
     }
 }

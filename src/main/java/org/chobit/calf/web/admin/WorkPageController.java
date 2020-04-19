@@ -50,8 +50,9 @@ public class WorkPageController extends AbstractAdminPageController {
                            @RequestParam int catId,
                            @RequestParam String cat,
                            @RequestParam String brief,
+                           @RequestParam String keywords,
                            @RequestParam MultipartFile cover) {
-        workService.maintain(id, name, authorId, author, country, catId, cat, brief, cover);
+        workService.maintain(id, name, authorId, author, country, catId, cat, brief, keywords, cover);
         interactMsg("作品信息维护成功");
         if (id > 0) {
             return redirect("/admin/work/settings/" + id);

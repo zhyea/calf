@@ -58,7 +58,7 @@ public class WorkService {
     public void maintain(int id, String name,
                          int authorId, String author, String country,
                          int catId, String cat,
-                         String brief, MultipartFile cover) {
+                         String brief, String keywords, MultipartFile cover) {
         Args.checkNotBlank(name, "作品名称不能为空");
         Args.checkNotBlank(author, "作者信息不能为空");
         Args.checkNotBlank(country, "作者国籍不能为空");
@@ -77,6 +77,7 @@ public class WorkService {
         work.setAuthorId(authorId);
         work.setCategoryId(catId);
         work.setBrief(brief);
+        work.setKeywords(keywords);
         String pathCover = work.getCover();
 
         pathCover = uploadComponent.uploadCover(cover, pathCover);
