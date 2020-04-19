@@ -223,7 +223,7 @@ create table if not exists script
     id      int       not null auto_increment primary key,
     name    varchar(64),
     code    varchar(32),
-    script  varchar(512),
+    script  varchar(1024),
     remark  varchar(256),
     op_time timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM
