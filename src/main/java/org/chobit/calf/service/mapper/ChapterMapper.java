@@ -13,14 +13,14 @@ import java.util.List;
 public interface ChapterMapper {
 
 
-    @Insert({"insert into chapter (volume_id, work_id, name, keywords, content)",
+    @Insert({"insert into chapter (volume_id, work_id, name, keywords, content, summary)",
             "values",
-            "(#{volumeId}, #{workId}, #{name}, #{keywords}, #{content})"})
+            "(#{volumeId}, #{workId}, #{name}, #{keywords}, #{content}, #{summary})"})
     int insert(Chapter chapter);
 
 
     @Update({"update chapter set ",
-            "volume_id=#{volumeId}, work_id=#{workId}, name=#{name}, keywords=#{keywords}, content=#{content}",
+            "volume_id=#{volumeId}, work_id=#{workId}, name=#{name}, keywords=#{keywords}, content=#{content}, summary=#{summary}",
             "where id=#{id}"})
     boolean update(Chapter chapter);
 

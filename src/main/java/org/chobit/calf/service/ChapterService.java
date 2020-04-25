@@ -6,6 +6,7 @@ import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Volume;
 import org.chobit.calf.service.entity.Work;
 import org.chobit.calf.service.mapper.ChapterMapper;
+import org.chobit.calf.tools.ContentExtractor;
 import org.chobit.calf.utils.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,6 +217,14 @@ public class ChapterService {
         chapter.setVolumeId(vol.getId());
         chapter.setName(chapterName);
         chapter.setContent(content);
+
+        String keywords = ContentExtractor.extractKeywords2(content, 6);
+        chapter.setKeywords(keywords);
+        String summary = ContentExtractor.extractSummary(content, 5);
+        if (summary.length() > 384) {
+            summary = summary.substring(0, 384);
+        }
+        chapter.setSummary(summary);
 
         chapterMapper.insert(chapter);
     }

@@ -1,5 +1,7 @@
 package org.chobit.calf.tools;
 
+import org.chobit.calf.model.Visitor;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +16,10 @@ public abstract class VisitCounter {
             counter = new ConcurrentHashMap<>(128);
 
     public static void add(Integer workId, double step) {
+        Visitor visitor = VisitorHolder.get();
+        if (null == visitor || visitor.isSpider()) {
+            return;
+        }
         DoubleAdder c = counter.get(workId);
         if (null == c) {
             c = counter.putIfAbsent(workId, new DoubleAdder());

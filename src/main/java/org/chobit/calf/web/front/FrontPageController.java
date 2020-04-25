@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import static org.chobit.calf.constants.Config.DEFAULT_PAGE_LENGTH;
 import static org.chobit.calf.constants.Constants.DESCRIPTION;
 import static org.chobit.calf.constants.Constants.KEYWORDS;
+import static org.chobit.calf.utils.Strings.isBlank;
 import static org.chobit.calf.utils.Strings.isNotBlank;
 
 /**
@@ -184,7 +185,7 @@ public class FrontPageController extends AbstractFrontPageController {
         Chapter next = chapterService.getNext(chapter.getWorkId(), chapter.getId());
 
         map.put(KEYWORDS, work.getName() + "," + work.getAuthor() + "," + chapter.getName() + "," + chapter.getKeywords());
-        map.put(DESCRIPTION, chapter.getContent().substring(0, 180));
+        map.put(DESCRIPTION, isBlank(chapter.getSummary()) ? Strings.substr(chapter.getContent(), 180) : chapter.getSummary());
         map.put("w", work);
         map.put("c", chapter);
         map.put("last", null == last ? 0 : last.getId());

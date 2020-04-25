@@ -1,7 +1,10 @@
 package org.chobit.calf.spring.ext;
 
+import org.chobit.calf.model.Visitor;
 import org.chobit.calf.service.entity.User;
+import org.chobit.calf.tools.CalfTools;
 import org.chobit.calf.tools.SessionHolder;
+import org.chobit.calf.tools.VisitorHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +23,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+
         String uri = request.getRequestURI();
         if (uri.equals("/api/remote/work")) {
             return null != request.getHeader("code");
@@ -40,6 +44,13 @@ public class SessionInterceptor implements HandlerInterceptor {
             return false;
         } else if (uri.startsWith("/login")) {
             SessionHolder.add(request);
+        } else {
+            String ip = CalfTools.clientIp(request);
+            String ua = request.getHeader("user-agent");
+            Visitor visitor = new Visitor();
+            visitor.setSpider(ua.contains("bot") || ua.contains("pider"));
+            logger.debug("visitor info: ip:[{}], user-agent:[{}]", ip, ua);
+            VisitorHolder.add(visitor);
         }
         return true;
     }

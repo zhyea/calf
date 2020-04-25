@@ -55,7 +55,7 @@ public abstract class SessionHolder {
 
     public static void addAlert(AlertMessage alertMessage) {
         HttpSession session = get();
-        if (null != session && null == session.getAttribute(KEY_ALERT)) {
+        if (null != session && null == getAttribute(KEY_ALERT)) {
             addAttribute(KEY_ALERT, alertMessage);
         }
     }
@@ -122,7 +122,7 @@ public abstract class SessionHolder {
             return user;
         } else {
             HttpSession session = request.getSession();
-            Object obj = session.getAttribute(KEY_USER);
+            Object obj = getAttribute(KEY_USER);
             if (obj instanceof User) {
                 SessionHolder.addDirectly(session);
                 return (User) obj;

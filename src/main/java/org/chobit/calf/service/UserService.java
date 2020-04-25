@@ -5,6 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.chobit.calf.except.CalfArgsException;
 import org.chobit.calf.service.entity.User;
 import org.chobit.calf.service.mapper.UserMapper;
+import org.chobit.calf.tools.CalfTools;
 import org.chobit.calf.tools.SessionHolder;
 import org.chobit.calf.utils.Args;
 import org.chobit.calf.utils.MD5;
@@ -91,7 +92,7 @@ public class UserService implements InitializingBean {
      * 校验用户名和密码
      */
     public User check(String username, String password, HttpServletRequest request) {
-        String ip = request.getRemoteHost();
+        String ip = CalfTools.clientIp(request);
         Long lastUserTime = userCache.getIfPresent(username);
         Long lastIpTime = ipCache.getIfPresent(ip);
 

@@ -44,10 +44,11 @@
                     <a th:href="|/chapter/${chp.id}.html|">[[${chp.name}]]</a>
                 </div>
             </div>
-            <div class="row">
-                <div th:remove="tag" th:if="${!#strings.isEmpty(third_party_comments)}"
-                     th:utext="${third_party_comments}"></div>
-            </div>
+        </div>
+
+        <div class="row chapter-content">
+            <div th:remove="tag" th:if="${!#strings.isEmpty(third_party_comments)}"
+                 th:utext="${third_party_comments}"></div>
         </div>
     </div>
 

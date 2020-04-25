@@ -16,7 +16,7 @@ public class ScheduleConfig {
     @Autowired
     private WorkService workService;
 
-    @Scheduled(cron = "0 0 0-6 * * ?")
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void updateSn() {
         logger.info("------------>> update work sn");
         workService.updateSn();

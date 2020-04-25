@@ -146,6 +146,7 @@ create table if not exists chapter
 
     name      varchar(64),
     keywords  varchar(64),
+    summary   varchar(512),
     content   mediumtext,
 
     op_time   timestamp not null default current_timestamp on update current_timestamp

@@ -16,6 +16,8 @@ public class Chapter extends AbstractEntity {
 
     private String content;
 
+    private String summary;
+
     public int getWorkId() {
         return workId;
     }
@@ -54,5 +56,13 @@ public class Chapter extends AbstractEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

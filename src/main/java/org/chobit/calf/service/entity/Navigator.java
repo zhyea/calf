@@ -11,7 +11,7 @@ public class Navigator extends AbstractEntity {
 
     private String name;
 
-    private NavType type;
+    private NavType type = NavType.category;
 
     private String url;
 
