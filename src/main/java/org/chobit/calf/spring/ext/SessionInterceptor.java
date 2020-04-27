@@ -31,10 +31,12 @@ public class SessionInterceptor implements HandlerInterceptor {
             if (uri.startsWith("/admin/static")) {
                 return true;
             }
-            SessionHolder.add(request);
-            User user = SessionHolder.getUser(request);
-            if (null != user) {
-                return true;
+            if (null != request.getSession(false)) {
+                SessionHolder.add(request);
+                User user = SessionHolder.getUser(request);
+                if (null != user) {
+                    return true;
+                }
             }
             try {
                 response.sendRedirect("/");

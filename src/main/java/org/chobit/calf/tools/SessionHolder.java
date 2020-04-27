@@ -24,24 +24,24 @@ public abstract class SessionHolder {
     private static final ThreadLocal<HttpSession> SESSION_HOLDER = new ThreadLocal<>();
 
 
-    public static void add(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session.isNew() || null == SESSION_HOLDER.get()) {
-            SESSION_HOLDER.set(request.getSession());
+    public synchronized static void add(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (null != session) {
+            SESSION_HOLDER.set(session);
         }
     }
 
-    public static void addDirectly(HttpSession session) {
+    public synchronized static void addDirectly(HttpSession session) {
         SESSION_HOLDER.set(session);
     }
 
 
-    public static HttpSession get() {
+    public synchronized static HttpSession get() {
         return SESSION_HOLDER.get();
     }
 
 
-    public static void clear() {
+    public synchronized static void clear() {
         HttpSession session = get();
         if (null != session) {
             try {
@@ -53,20 +53,20 @@ public abstract class SessionHolder {
     }
 
 
-    public static void addAlert(AlertMessage alertMessage) {
+    public synchronized static void addAlert(AlertMessage alertMessage) {
         HttpSession session = get();
-        if (null != session && null == getAttribute(KEY_ALERT)) {
+        if (null != session && null == getAttribute(null, KEY_ALERT)) {
             addAttribute(KEY_ALERT, alertMessage);
         }
     }
 
 
-    public static AlertMessage takeAlert() {
+    public synchronized static AlertMessage takeAlert() {
         return SessionHolder.takeAttribute(KEY_ALERT);
     }
 
 
-    public static <T> void addAttribute(String attributeName, T value) {
+    public synchronized static <T> void addAttribute(String attributeName, T value) {
         HttpSession session = get();
         if (null != session) {
             try {
@@ -78,7 +78,7 @@ public abstract class SessionHolder {
     }
 
 
-    public static <T> T takeAttribute(String attributeName) {
+    public synchronized static <T> T takeAttribute(String attributeName) {
         HttpSession session = get();
         if (null != session) {
             try {
@@ -94,8 +94,9 @@ public abstract class SessionHolder {
         return null;
     }
 
-    public static <T> T getAttribute(String attributeName) {
-        HttpSession session = get();
+
+    public synchronized static <T> T getAttribute(HttpSession session, String attributeName) {
+        session = null == session ? get() : session;
         if (null != session) {
             try {
                 Object obj = session.getAttribute(attributeName);
@@ -111,18 +112,18 @@ public abstract class SessionHolder {
     }
 
 
-    public static User getUser() {
-        return getAttribute(KEY_USER);
+    public synchronized static User getUser() {
+        return getAttribute(null, KEY_USER);
     }
 
 
-    public static User getUser(HttpServletRequest request) {
+    public synchronized static User getUser(HttpServletRequest request) {
         User user = getUser();
         if (null != user) {
             return user;
         } else {
             HttpSession session = request.getSession();
-            Object obj = getAttribute(KEY_USER);
+            Object obj = getAttribute(session, KEY_USER);
             if (obj instanceof User) {
                 SessionHolder.addDirectly(session);
                 return (User) obj;
@@ -132,13 +133,13 @@ public abstract class SessionHolder {
     }
 
 
-    public static void addUser(HttpServletRequest request, User user) {
+    public synchronized static void addUser(HttpServletRequest request, User user) {
         addDirectly(request.getSession());
         addAttribute(KEY_USER, user);
     }
 
 
-    public static User removeUser() {
+    public synchronized static User removeUser() {
         User user = takeAttribute(KEY_USER);
         SESSION_HOLDER.remove();
         return user;
