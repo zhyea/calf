@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author robin
  */
-public abstract class SessionHolder {
+public final class SessionHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(SessionHolder.class);
 

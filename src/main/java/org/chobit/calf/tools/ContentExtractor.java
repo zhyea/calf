@@ -10,7 +10,7 @@ import static org.chobit.calf.utils.Strings.isBlank;
 /**
  * @author robin
  */
-public abstract class ContentExtractor {
+public final class ContentExtractor {
 
 
     public static String extractKeywords(String content, int num) {

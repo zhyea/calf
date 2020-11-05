@@ -24,4 +24,8 @@ public final class Config {
      */
     public static final String PATH_DEFAULT_COVER = "/upload/default/cover/nocover.png";
 
+
+    private Config() {
+        throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
+    }
 }

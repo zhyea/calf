@@ -6,7 +6,7 @@ import org.chobit.calf.model.Page;
 import org.chobit.calf.model.PageResult;
 import org.chobit.calf.model.WorkModel;
 import org.chobit.calf.service.entity.Author;
-import org.chobit.calf.service.entity.Meta;
+import org.chobit.calf.service.entity.Category;
 import org.chobit.calf.service.entity.Work;
 import org.chobit.calf.service.mapper.AuthorMapper;
 import org.chobit.calf.service.mapper.WorkMapper;
@@ -41,7 +41,7 @@ public class WorkService {
     @Autowired
     private AuthorMapper authorMapper;
     @Autowired
-    private MetaService metaService;
+    private CategoryService categoryService;
     @Autowired
     private VolumeService volumeService;
     @Autowired
@@ -115,9 +115,9 @@ public class WorkService {
         if (null == work) {
             return null;
         }
-        Meta meta = metaService.get(work.getCategoryId());
+        Category category = categoryService.get(work.getCategoryId());
         Author author = authorMapper.get(work.getAuthorId());
-        return new WorkModel(work, author, meta);
+        return new WorkModel(work, author, category);
     }
 
 
@@ -249,8 +249,8 @@ public class WorkService {
     @Cacheable(key = "'homeWorks'")
     public List<CategoryWork> homeWorks() {
         List<CategoryWork> result = new LinkedList<>();
-        List<Meta> cats = metaService.findByType(MetaType.CATEGORY);
-        for (Meta c : cats) {
+        List<Category> cats = categoryService.findByType(MetaType.CATEGORY);
+        for (Category c : cats) {
             PageResult<WorkModel> r = findWithCat(c.getId(), new Page(18));
             if (isEmpty(r.getRows())) {
                 continue;

@@ -5,7 +5,7 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 /**
  * @author robin
  */
-public abstract class Pinyin {
+public final class Pinyin {
 
     private static final String DEFAULT_BLANK = "";
 

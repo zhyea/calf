@@ -17,7 +17,7 @@ import java.util.Date;
 
 import static org.chobit.calf.constants.Config.PATH_DEFAULT_COVER;
 import static org.chobit.calf.constants.Config.URI_UPLOAD;
-import static org.chobit.calf.utils.Dates.format;
+import static org.chobit.calf.utils.DateKit.format;
 import static org.chobit.calf.utils.Strings.*;
 
 /**

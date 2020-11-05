@@ -3,9 +3,9 @@ package org.chobit.calf.web.front;
 import org.chobit.calf.model.*;
 import org.chobit.calf.service.*;
 import org.chobit.calf.service.entity.Author;
+import org.chobit.calf.service.entity.Category;
 import org.chobit.calf.service.entity.Chapter;
 import org.chobit.calf.service.entity.Feature;
-import org.chobit.calf.service.entity.Meta;
 import org.chobit.calf.tools.VisitCounter;
 import org.chobit.calf.utils.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class FrontPageController extends AbstractFrontPageController {
 
 
     @Autowired
-    private MetaService metaService;
+    private CategoryService categoryService;
     @Autowired
     private WorkService workService;
     @Autowired
@@ -64,7 +64,7 @@ public class FrontPageController extends AbstractFrontPageController {
                            @PathVariable(value = "page", required = false) Integer pageNo,
                            ModelMap map) {
         pageNo = null == pageNo ? 0 : pageNo;
-        Meta cat = metaService.getBySlug(catSlug);
+        Category cat = categoryService.getBySlug(catSlug);
         if (null == cat) {
             return redirect("/");
         }

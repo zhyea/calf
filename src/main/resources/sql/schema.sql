@@ -19,8 +19,8 @@ from dual
 where not exists(select 1 from user where id <= 1);
 
 --
--- meta data
-create table if not exists meta
+-- category data
+create table if not exists category
 (
     id      int                not null auto_increment primary key,
 
@@ -38,10 +38,10 @@ create table if not exists meta
 ) ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
 
-insert into meta (type, name, slug)
+insert into category (type, name, slug)
 select 'CATEGORY', '默认', 'default'
 from dual
-where not exists(select 1 from meta where id <= 1);
+where not exists(select 1 from category where id <= 1);
 
 
 --
@@ -184,6 +184,7 @@ create table if not exists feature_record
     type       tinyint            default 1,
     feature_id int,
     work_id    int,
+    sn         int,
 
     op_time    timestamp not null default current_timestamp on update current_timestamp
 ) ENGINE = MyISAM

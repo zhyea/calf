@@ -9,7 +9,7 @@ import static org.chobit.calf.utils.Strings.isNotBlank;
 /**
  * @author robin
  */
-public abstract class Args {
+public final class Args {
 
     public static void check(boolean expect, String errMsg) {
         if (!expect) {

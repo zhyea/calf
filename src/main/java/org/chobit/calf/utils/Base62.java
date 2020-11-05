@@ -4,7 +4,7 @@ package org.chobit.calf.utils;
 /**
  * @author robin
  */
-public abstract class Base62 {
+public final class Base62 {
 
     private static final char[] digitsChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     private static final int BASE = digitsChar.length;

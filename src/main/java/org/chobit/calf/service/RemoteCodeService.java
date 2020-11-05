@@ -32,7 +32,7 @@ public class RemoteCodeService {
     @Autowired
     private AuthorService authorService;
     @Autowired
-    private MetaService metaService;
+    private CategoryService categoryService;
 
     public RemoteCode add() {
         User user = SessionHolder.getUser();
@@ -130,13 +130,13 @@ public class RemoteCodeService {
         if (null == author) {
             throw new CalfRemoteException("作者不存在");
         }
-        Meta meta = metaService.getByName(request.getCatName());
-        if (null == meta) {
+        Category category = categoryService.getByName(request.getCatName());
+        if (null == category) {
             throw new CalfRemoteException("分类信息不存在");
         }
         workService.maintain(0, request.getWorkName(),
                 author.getId(), author.getName(), author.getCountry(),
-                meta.getId(), meta.getName(),
+                category.getId(), category.getName(),
                 request.getBrief(), request.getKeywords(), null);
         return new RemoteResponse(true, "新增作品成功");
     }

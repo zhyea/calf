@@ -5,7 +5,7 @@ import org.chobit.calf.model.Visitor;
 /**
  * @author robin
  */
-public abstract class VisitorHolder {
+public final class VisitorHolder {
 
 
     private static final ThreadLocal<Visitor> visitors = new ThreadLocal<>();

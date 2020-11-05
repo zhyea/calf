@@ -1,12 +1,11 @@
 package org.chobit.calf.service;
 
 import org.chobit.calf.constants.MetaType;
-import org.chobit.calf.model.Category;
 import org.chobit.calf.model.MetaNode;
 import org.chobit.calf.model.Pair;
 import org.chobit.calf.service.entity.AbstractEntity;
-import org.chobit.calf.service.entity.Meta;
-import org.chobit.calf.service.mapper.MetaMapper;
+import org.chobit.calf.service.entity.Category;
+import org.chobit.calf.service.mapper.CategoryMapper;
 import org.chobit.calf.utils.Args;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -28,38 +27,38 @@ import static org.chobit.calf.utils.Strings.isBlank;
  */
 @Service
 @CacheConfig(cacheNames = "meta")
-public class MetaService {
+public class CategoryService {
 
 
     @Autowired
-    private MetaMapper metaMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
     private WorkService workService;
 
     public static final int DEFAULT_CATEGORY_ID = 1;
 
 
-    public List<Category> findCatByParent(int parent) {
-        List<Meta> cats = metaMapper.findByParent(parent, CATEGORY);
+    public List<org.chobit.calf.model.Category> findCatByParent(int parent) {
+        List<Category> cats = categoryMapper.findByParent(parent, CATEGORY);
         if (isEmpty(cats)) {
             return new LinkedList<>();
         }
         List<Integer> ids = cats.stream().map(AbstractEntity::getId).collect(Collectors.toList());
-        List<Pair<Integer, Long>> pairs = metaMapper.countChildrenCat(ids, CATEGORY);
+        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids, CATEGORY);
         Map<Integer, Long> map = pairToMap(pairs);
-        List<Category> list = new LinkedList<>();
-        for (Meta m : cats) {
-            list.add(new Category(m, map.getOrDefault(m.getId(), 0L).intValue()));
+        List<org.chobit.calf.model.Category> list = new LinkedList<>();
+        for (Category m : cats) {
+            list.add(new org.chobit.calf.model.Category(m, map.getOrDefault(m.getId(), 0L).intValue()));
         }
         return list;
     }
 
 
-    public Meta get(int id) {
+    public Category get(int id) {
         if (id <= 0) {
             return null;
         }
-        return metaMapper.get(id);
+        return categoryMapper.get(id);
     }
 
 
@@ -68,21 +67,21 @@ public class MetaService {
         Args.check(id >= 0, "请求数据异常");
         Args.checkNotBlank(name, "分类名称不能为空");
         Args.checkNotBlank(slug, "缩略名不能为空");
-        Integer flag = metaMapper.checkNameAndSlug(id, name, slug);
+        Integer flag = categoryMapper.checkNameAndSlug(id, name, slug);
         Args.check(null == flag, "名称或缩略名已存在");
 
-        Meta meta = new Meta();
-        meta.setId(id);
-        meta.setParent(parent);
-        meta.setType(CATEGORY.name());
-        meta.setName(name);
-        meta.setSlug(slug.trim());
-        meta.setRemark(remark);
+        Category category = new Category();
+        category.setId(id);
+        category.setParent(parent);
+        category.setType(CATEGORY.name());
+        category.setName(name);
+        category.setSlug(slug.trim());
+        category.setRemark(remark);
 
         if (id > 0) {
-            metaMapper.update(meta);
+            categoryMapper.update(category);
         } else {
-            metaMapper.insert(meta);
+            categoryMapper.insert(category);
         }
     }
 
@@ -97,33 +96,33 @@ public class MetaService {
             return true;
         }
         ids.remove(1);
-        List<Pair<Integer, Long>> pairs = metaMapper.countChildrenCat(ids, CATEGORY);
+        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids, CATEGORY);
         List<Integer> idList = pairs.stream().map(Pair::getKey).collect(Collectors.toList());
         ids.removeAll(idList);
         if (isEmpty(ids)) {
             return true;
         }
         ids.forEach(e -> workService.changeCat(e, DEFAULT_CATEGORY_ID));
-        return metaMapper.deleteByIds(ids);
+        return categoryMapper.deleteByIds(ids);
     }
 
 
     @CacheEvict(allEntries = true)
     public boolean changerOrder(int id, int step) {
-        return metaMapper.changeOrder(id, step);
+        return categoryMapper.changeOrder(id, step);
     }
 
 
     public Pair<String, Object> findCatsSuggest(String key) {
         key = isBlank(key) ? "" : key;
-        Object value = metaMapper.findCatsByKeyword("%" + key + "%");
+        Object value = categoryMapper.findCatsByKeyword("%" + key + "%");
         return new Pair<>(key, value);
     }
 
 
     @Cacheable(key = "'buildMetaTree' + #type")
     public MetaNode buildMetaTree(MetaType type) {
-        List<Meta> list = findByType(type);
+        List<Category> list = findByType(type);
         MetaNode root = new MetaNode();
         addChildren(root, list);
         return root;
@@ -131,19 +130,19 @@ public class MetaService {
 
 
     @Cacheable(key = "'findByType' + #type")
-    public List<Meta> findByType(MetaType type) {
-        return metaMapper.findByType(type);
+    public List<Category> findByType(MetaType type) {
+        return categoryMapper.findByType(type);
     }
 
 
-    public List<Meta> findCandidateParentCats(int catId) {
-        List<Meta> list = findByType(CATEGORY);
+    public List<Category> findCandidateParentCats(int catId) {
+        List<Category> list = findByType(CATEGORY);
         Set<Integer> tree = new TreeSet<>();
         tree.add(catId);
         boolean flag = true;
         while (flag) {
             flag = false;
-            for (Meta m : list) {
+            for (Category m : list) {
                 if (!tree.contains(m.getId()) && tree.contains(m.getParent())) {
                     tree.add(m.getId());
                     flag = true;
@@ -156,7 +155,7 @@ public class MetaService {
     }
 
 
-    private void addChildren(MetaNode root, List<Meta> list) {
+    private void addChildren(MetaNode root, List<Category> list) {
         list.stream()
                 .filter(e -> e.getParent() == root.getId())
                 .forEach(e -> {
@@ -169,16 +168,16 @@ public class MetaService {
 
 
     @Cacheable(key = "'getBySlug' + #slug")
-    public Meta getBySlug(String slug) {
-        return metaMapper.getBySlug(slug);
+    public Category getBySlug(String slug) {
+        return categoryMapper.getBySlug(slug);
     }
 
 
     @Cacheable(key = "'getByName' + #name")
-    public Meta getByName(String name) {
+    public Category getByName(String name) {
         if (isBlank(name)) {
             return null;
         }
-        return metaMapper.getByName(name);
+        return categoryMapper.getByName(name);
     }
 }

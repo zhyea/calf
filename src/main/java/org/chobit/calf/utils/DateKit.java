@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * @author robin
  */
-public abstract class Dates {
+public final class DateKit {
 
 
     public static final String PATTERN_DATE = "yyyyMMdd";
@@ -55,7 +55,7 @@ public abstract class Dates {
     }
 
 
-    private Dates() {
+    private DateKit() {
         throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
     }
 

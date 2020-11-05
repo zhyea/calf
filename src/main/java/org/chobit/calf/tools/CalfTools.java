@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author robin
  */
-public class CalfTools {
+public final class CalfTools {
 
     public static String clientIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Real-IP");

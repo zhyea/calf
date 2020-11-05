@@ -1,7 +1,5 @@
 package org.chobit.calf.model;
 
-import org.chobit.calf.service.entity.Meta;
-
 /**
  * @author robin
  */
@@ -22,12 +20,12 @@ public class Category {
     public Category() {
     }
 
-    public Category(Meta meta, int childrenNum) {
-        this.id = meta.getId();
-        this.parent = meta.getParent();
-        this.name = meta.getName();
-        this.slug = meta.getSlug();
-        this.sn = meta.getSn();
+    public Category(org.chobit.calf.service.entity.Category category, int childrenNum) {
+        this.id = category.getId();
+        this.parent = category.getParent();
+        this.name = category.getName();
+        this.slug = category.getSlug();
+        this.sn = category.getSn();
         this.subCount = childrenNum;
     }
 

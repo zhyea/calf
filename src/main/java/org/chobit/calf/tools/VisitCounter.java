@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.DoubleAdder;
 /**
  * @author robin
  */
-public abstract class VisitCounter {
+public final class VisitCounter {
 
     private static final ConcurrentHashMap<Integer, DoubleAdder>
             counter = new ConcurrentHashMap<>(128);

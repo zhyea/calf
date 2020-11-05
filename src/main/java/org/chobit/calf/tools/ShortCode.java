@@ -6,7 +6,7 @@ import org.chobit.calf.utils.Base62;
 import java.text.DecimalFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class ShortCode {
+public final class ShortCode {
 
 
     private static final AtomicInteger SEQ = new AtomicInteger(1);

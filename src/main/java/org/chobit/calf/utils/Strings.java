@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  *
  * @author robin
  */
-public abstract class Strings {
+public final class Strings {
 
 
     /**

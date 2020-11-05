@@ -1,10 +1,6 @@
 
-*/.idea
-.idea/
 Would skip repository zero/
-!/logs/
 logs/
 target/
-!/src/main/resources/application-prod.yml
-!/src/main/resources/templates/themes/pure/static/imgs/favicon.ico
-!/src/test/java/org/chobit/calf/spider/
+*.iml
+.idea/

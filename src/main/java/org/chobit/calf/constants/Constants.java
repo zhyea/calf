@@ -5,7 +5,7 @@ package org.chobit.calf.constants;
  *
  * @author robin
  */
-public abstract class Constants {
+public final class Constants {
 
 
     public static final String REDIRECT_PREFIX = "redirect:";
@@ -14,5 +14,11 @@ public abstract class Constants {
 
     public static final String DESCRIPTION = "description";
 
+
+
+
+    private Constants() {
+        throw new UnsupportedOperationException("Private constructor, cannot be accessed.");
+    }
 
 }

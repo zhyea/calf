@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
 /**
+ * 后台管理页抽象Controller
+ *
  * @author robin
  */
 public class AbstractAdminPageController extends AbstractPageController {

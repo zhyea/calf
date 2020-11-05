@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author robin
  */
-public abstract class Collections2 {
+public final class Collections2 {
 
 
     /**

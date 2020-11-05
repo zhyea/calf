@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 /**
  * @author robin
  */
-public abstract class MD5 {
+public final class MD5 {
 
 
     private static final Logger logger = LoggerFactory.getLogger(MD5.class);

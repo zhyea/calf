@@ -36,7 +36,7 @@ public class NavService {
     @Autowired
     private NavMapper navMapper;
     @Autowired
-    private MetaService metaService;
+    private CategoryService categoryService;
     @Autowired
     private FeatureService featureService;
 
@@ -144,7 +144,7 @@ public class NavService {
         TreeViewNode customs = new TreeViewNode("自定义");
         customs.setExt2(NavType.url.name());
 
-        MetaNode root = metaService.buildMetaTree(MetaType.CATEGORY);
+        MetaNode root = categoryService.buildMetaTree(MetaType.CATEGORY);
         copyCatsTree(root, cats);
 
         List<Feature> featureList = featureService.findFeatures();

@@ -1,7 +1,7 @@
 package org.chobit.calf.model;
 
 import org.chobit.calf.service.entity.Author;
-import org.chobit.calf.service.entity.Meta;
+import org.chobit.calf.service.entity.Category;
 import org.chobit.calf.service.entity.Work;
 
 /**
@@ -35,7 +35,7 @@ public class WorkModel {
     public WorkModel() {
     }
 
-    public WorkModel(Work work, Author author, Meta meta) {
+    public WorkModel(Work work, Author author, Category category) {
         this.id = work.getId();
         this.name = work.getName();
         this.cover = work.getCover();
@@ -43,8 +43,8 @@ public class WorkModel {
         this.authorId = author.getId();
         this.author = author.getName();
         this.country = author.getCountry();
-        this.catId = meta.getId();
-        this.cat = meta.getName();
+        this.catId = category.getId();
+        this.cat = category.getName();
         this.keywords = work.getKeywords();
     }
 
