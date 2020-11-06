@@ -22,6 +22,11 @@ public enum NavType {
      */
     feature("专题"),
 
+    /**
+     * 自定义
+     */
+    custom("自定义"),
+
     ;
 
 

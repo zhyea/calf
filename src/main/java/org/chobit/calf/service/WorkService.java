@@ -1,6 +1,5 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.constants.MetaType;
 import org.chobit.calf.model.CategoryWork;
 import org.chobit.calf.model.Page;
 import org.chobit.calf.model.PageResult;
@@ -249,7 +248,7 @@ public class WorkService {
     @Cacheable(key = "'homeWorks'")
     public List<CategoryWork> homeWorks() {
         List<CategoryWork> result = new LinkedList<>();
-        List<Category> cats = categoryService.findByType(MetaType.CATEGORY);
+        List<Category> cats = categoryService.findAll();
         for (Category c : cats) {
             PageResult<WorkModel> r = findWithCat(c.getId(), new Page(18));
             if (isEmpty(r.getRows())) {

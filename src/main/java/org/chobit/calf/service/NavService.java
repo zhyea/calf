@@ -1,8 +1,7 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.constants.MetaType;
 import org.chobit.calf.constants.NavType;
-import org.chobit.calf.model.MetaNode;
+import org.chobit.calf.model.TreeNode;
 import org.chobit.calf.model.NavNode;
 import org.chobit.calf.model.Pair;
 import org.chobit.calf.model.TreeViewNode;
@@ -144,7 +143,7 @@ public class NavService {
         TreeViewNode customs = new TreeViewNode("自定义");
         customs.setExt2(NavType.url.name());
 
-        MetaNode root = categoryService.buildMetaTree(MetaType.CATEGORY);
+        TreeNode root = categoryService.buildCatTree();
         copyCatsTree(root, cats);
 
         List<Feature> featureList = featureService.findFeatures();
@@ -163,8 +162,8 @@ public class NavService {
         return list;
     }
 
-    private void copyCatsTree(MetaNode metaRoot, TreeViewNode viewRoot) {
-        TreeViewNode viewNode = new TreeViewNode(metaRoot.getId(), metaRoot.getName(), metaRoot.getSlug());
+    private void copyCatsTree(TreeNode root, TreeViewNode viewRoot) {
+        TreeViewNode viewNode = new TreeViewNode(root.getId(), root.getName(), root.getSlug());
         if (isBlank(viewNode.getText()) || isBlank(viewNode.getExt())) {
             viewNode = viewRoot;
         } else {
@@ -172,7 +171,7 @@ public class NavService {
             viewNode.setExt2(NavType.category.name());
             viewRoot.addNode(viewNode);
         }
-        for (MetaNode n : metaRoot.getChildren()) {
+        for (TreeNode n : root.getChildren()) {
             copyCatsTree(n, viewNode);
         }
     }

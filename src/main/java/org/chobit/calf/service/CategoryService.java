@@ -1,7 +1,6 @@
 package org.chobit.calf.service;
 
-import org.chobit.calf.constants.MetaType;
-import org.chobit.calf.model.MetaNode;
+import org.chobit.calf.model.TreeNode;
 import org.chobit.calf.model.Pair;
 import org.chobit.calf.service.entity.AbstractEntity;
 import org.chobit.calf.service.entity.Category;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.chobit.calf.constants.MetaType.CATEGORY;
 import static org.chobit.calf.utils.Collections2.isEmpty;
 import static org.chobit.calf.utils.Collections2.pairToMap;
 import static org.chobit.calf.utils.Strings.isBlank;
@@ -26,7 +24,7 @@ import static org.chobit.calf.utils.Strings.isBlank;
  * @author robin
  */
 @Service
-@CacheConfig(cacheNames = "meta")
+@CacheConfig(cacheNames = "cat")
 public class CategoryService {
 
 
@@ -39,12 +37,12 @@ public class CategoryService {
 
 
     public List<org.chobit.calf.model.Category> findCatByParent(int parent) {
-        List<Category> cats = categoryMapper.findByParent(parent, CATEGORY);
+        List<Category> cats = categoryMapper.findByParent(parent);
         if (isEmpty(cats)) {
             return new LinkedList<>();
         }
         List<Integer> ids = cats.stream().map(AbstractEntity::getId).collect(Collectors.toList());
-        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids, CATEGORY);
+        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids);
         Map<Integer, Long> map = pairToMap(pairs);
         List<org.chobit.calf.model.Category> list = new LinkedList<>();
         for (Category m : cats) {
@@ -73,7 +71,6 @@ public class CategoryService {
         Category category = new Category();
         category.setId(id);
         category.setParent(parent);
-        category.setType(CATEGORY);
         category.setName(name);
         category.setSlug(slug.trim());
         category.setRemark(remark);
@@ -96,7 +93,7 @@ public class CategoryService {
             return true;
         }
         ids.remove(1);
-        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids, CATEGORY);
+        List<Pair<Integer, Long>> pairs = categoryMapper.countChildrenCat(ids);
         List<Integer> idList = pairs.stream().map(Pair::getKey).collect(Collectors.toList());
         ids.removeAll(idList);
         if (isEmpty(ids)) {
@@ -120,23 +117,23 @@ public class CategoryService {
     }
 
 
-    @Cacheable(key = "'buildMetaTree' + #type")
-    public MetaNode buildMetaTree(MetaType type) {
-        List<Category> list = findByType(type);
-        MetaNode root = new MetaNode();
+    @Cacheable(key = "'buildCatTree'")
+    public TreeNode buildCatTree() {
+        List<Category> list = findAll();
+        TreeNode root = new TreeNode();
         addChildren(root, list);
         return root;
     }
 
 
-    @Cacheable(key = "'findByType' + #type")
-    public List<Category> findByType(MetaType type) {
-        return categoryMapper.findByType(type);
+    @Cacheable(key = "'findAll'")
+    public List<Category> findAll() {
+        return categoryMapper.findAll();
     }
 
 
     public List<Category> findCandidateParentCats(int catId) {
-        List<Category> list = findByType(CATEGORY);
+        List<Category> list = findAll();
         Set<Integer> tree = new TreeSet<>();
         tree.add(catId);
         boolean flag = true;
@@ -155,11 +152,11 @@ public class CategoryService {
     }
 
 
-    private void addChildren(MetaNode root, List<Category> list) {
+    private void addChildren(TreeNode root, List<Category> list) {
         list.stream()
                 .filter(e -> e.getParent() == root.getId())
                 .forEach(e -> {
-                    MetaNode node = new MetaNode(e.getId(), e.getName());
+                    TreeNode node = new TreeNode(e.getId(), e.getName());
                     node.setSlug(e.getSlug());
                     root.addChild(node);
                     addChildren(node, list);

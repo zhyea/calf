@@ -36,27 +36,27 @@ public interface WorkMapper {
 
 
     @Select({"select w.id, w.name, a.name as author, a.id as author_id, m.name as cat ",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.name like #{p.search} or brief like #{p.search} or a.name like #{p.search} or m.name like #{p.search}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findInPage(@Param("p") Page p);
 
 
     @Select({"select count(w.id)",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.name like #{search} or brief like #{search} or a.name like #{search} or m.name like #{search}"
     })
     long countForSearch(@Param("search") String search);
 
 
     @Select({"select w.id, w.name, a.name as author, m.name as cat ",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.name like #{key} or brief like #{key} or a.name like #{key} or m.name like #{key}"})
     List<WorkModel> findWithKeywords(@Param("key") String key);
 
 
     @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.author_id=#{author}",
             "order by ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findWithAuthor(@Param("p") Page p, @Param("author") int authorId);
@@ -77,7 +77,7 @@ public interface WorkMapper {
 
 
     @Select({"select w.id, w.name, w.cover, w.brief, a.name as author, a.id as author_id, m.name as cat ",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.category_id=#{cat}",
             "order by w.sn desc, ${p.sort} ${p.order} limit ${p.offset}, ${p.limit}"})
     List<WorkModel> findWithCategory(@Param("p") Page p, @Param("cat") int catId);
@@ -115,7 +115,7 @@ public interface WorkMapper {
 
 
     @Select({"select w.id, w.name, w.cover, w.brief, w.keywords, a.name as author, a.id as author_id, m.name as cat, m.slug as cat_slug ",
-            "from work w left join author a on w.author_id=a.id left join meta m on w.category_id=m.id",
+            "from work w left join author a on w.author_id=a.id left join category m on w.category_id=m.id",
             "where w.id=#{id}"})
     WorkModel getDetail(@Param("id") int id);
 

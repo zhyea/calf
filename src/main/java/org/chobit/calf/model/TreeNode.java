@@ -1,35 +1,31 @@
 package org.chobit.calf.model;
 
-import org.chobit.calf.constants.MetaType;
-
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author robin
  */
-public class MetaNode {
+public class TreeNode {
 
     private int id;
-
-    private MetaType type = MetaType.CATEGORY;
 
     private String name;
 
     private String slug;
 
-    private List<MetaNode> children = new LinkedList<>();
+    private List<TreeNode> children = new LinkedList<>();
 
 
-    public MetaNode() {
+    public TreeNode() {
     }
 
-    public MetaNode(int id, String name) {
+    public TreeNode(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public void addChild(MetaNode node) {
+    public void addChild(TreeNode node) {
         this.children.add(node);
     }
 
@@ -39,14 +35,6 @@ public class MetaNode {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public MetaType getType() {
-        return type;
-    }
-
-    public void setType(MetaType type) {
-        this.type = type;
     }
 
     public String getName() {
@@ -65,11 +53,11 @@ public class MetaNode {
         this.slug = slug;
     }
 
-    public List<MetaNode> getChildren() {
+    public List<TreeNode> getChildren() {
         return children;
     }
 
-    public void setChildren(List<MetaNode> children) {
+    public void setChildren(List<TreeNode> children) {
         this.children = children;
     }
 }
