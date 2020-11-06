@@ -1,6 +1,8 @@
 package org.chobit.calf.service.entity;
 
 /**
+ * tables of settings
+ *
  * @author robin
  */
 public class PairRecord extends AbstractEntity {

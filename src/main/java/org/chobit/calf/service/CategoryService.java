@@ -73,7 +73,7 @@ public class CategoryService {
         Category category = new Category();
         category.setId(id);
         category.setParent(parent);
-        category.setType(CATEGORY.name());
+        category.setType(CATEGORY);
         category.setName(name);
         category.setSlug(slug.trim());
         category.setRemark(remark);

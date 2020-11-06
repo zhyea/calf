@@ -1,6 +1,8 @@
 package org.chobit.calf.service.entity;
 
 /**
+ * table author
+ *
  * @author robin
  */
 public class Author extends AbstractEntity {

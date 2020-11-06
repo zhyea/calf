@@ -3,6 +3,8 @@ package org.chobit.calf.service.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
+ * table user
+ *
  * @author robin
  */
 public class User extends AbstractEntity {

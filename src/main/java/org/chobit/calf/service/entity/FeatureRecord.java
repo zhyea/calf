@@ -1,6 +1,8 @@
 package org.chobit.calf.service.entity;
 
 /**
+ * table: feature_record
+ *
  * @author robin
  */
 public class FeatureRecord extends AbstractEntity {

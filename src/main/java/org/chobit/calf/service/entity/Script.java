@@ -3,6 +3,8 @@ package org.chobit.calf.service.entity;
 import org.chobit.calf.tools.ShortCode;
 
 /**
+ * table script
+ *
  * @author robin
  */
 public class Script extends AbstractEntity {

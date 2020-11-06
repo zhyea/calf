@@ -3,6 +3,8 @@ package org.chobit.calf.service.entity;
 import org.chobit.calf.constants.NavType;
 
 /**
+ * table navigator
+ *
  * @author robin
  */
 public class Navigator extends AbstractEntity {

@@ -1,6 +1,8 @@
 package org.chobit.calf.service.entity;
 
 /**
+ * table remote_code
+ *
  * @author robin
  */
 public class RemoteCode extends AbstractEntity {

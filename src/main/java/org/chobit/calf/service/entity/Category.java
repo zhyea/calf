@@ -1,13 +1,17 @@
 package org.chobit.calf.service.entity;
 
+import org.chobit.calf.constants.MetaType;
+
 /**
+ * table: category
+ *
  * @author robin
  */
 public class Category extends AbstractEntity {
 
     private int parent;
 
-    private String type;
+    private MetaType type;
 
     private String name;
 
@@ -25,11 +29,11 @@ public class Category extends AbstractEntity {
         this.parent = parent;
     }
 
-    public String getType() {
+    public MetaType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MetaType type) {
         this.type = type;
     }
 
